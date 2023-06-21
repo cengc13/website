@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+subtitle: <a href='#'>Northeastern University</a>. 100 Fore Street, Portland, ME 04101
 
 profile:
   align: right
