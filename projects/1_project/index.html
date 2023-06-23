@@ -35,8 +35,6 @@
 
     <!-- Styles -->
     
-    <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
-    
     <link rel="stylesheet" href="/website/assets/css/main.css">
     <link rel="canonical" href="https://cengc13.github.io/website/projects/1_project/">
 
@@ -51,7 +49,7 @@
   </head>
 
   <!-- Body -->
-  <body class="fixed-top-nav ">
+  <body class="fixed-top-nav sticky-bottom-footer">
 
     <!-- Header -->
     <header>
@@ -89,21 +87,7 @@
                 <a class="nav-link" href="/website/projects/">projects</a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link" href="/website/repositories/">repositories</a>
-              </li>
-              <li class="nav-item ">
                 <a class="nav-link" href="/website/cv/">cv</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="/website/teaching/">teaching</a>
-              </li>
-              <li class="nav-item dropdown ">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">submenus</a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/website/publications/">publications</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/website/projects/">projects</a>
-                </div>
               </li>
 
               <!-- Toogle theme mode -->
@@ -159,10 +143,6 @@ img: /assets/img/12.jpg
 
   <picture>
     
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/website/assets/img/1-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/website/assets/img/1-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/website/assets/img/1-1400.webp"></source>
-    
 
     <!-- Fallback to the original file -->
     <img src="/website/assets/img/1.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
@@ -177,10 +157,6 @@ img: /assets/img/12.jpg
 
   <picture>
     
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/website/assets/img/3-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/website/assets/img/3-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/website/assets/img/3-1400.webp"></source>
-    
 
     <!-- Fallback to the original file -->
     <img src="/website/assets/img/3.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
@@ -194,10 +170,6 @@ img: /assets/img/12.jpg
         <figure>
 
   <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/website/assets/img/5-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/website/assets/img/5-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/website/assets/img/5-1400.webp"></source>
     
 
     <!-- Fallback to the original file -->
@@ -217,10 +189,6 @@ img: /assets/img/12.jpg
         <figure>
 
   <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/website/assets/img/5-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/website/assets/img/5-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/website/assets/img/5-1400.webp"></source>
     
 
     <!-- Fallback to the original file -->
@@ -246,10 +214,6 @@ You describe how you toiled, sweated, <em>bled</em> for your project, and thenâ€
 
   <picture>
     
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/website/assets/img/6-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/website/assets/img/6-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/website/assets/img/6-1400.webp"></source>
-    
 
     <!-- Fallback to the original file -->
     <img src="/website/assets/img/6.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
@@ -263,10 +227,6 @@ You describe how you toiled, sweated, <em>bled</em> for your project, and thenâ€
         <figure>
 
   <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/website/assets/img/11-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/website/assets/img/11-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/website/assets/img/11-1400.webp"></source>
     
 
     <!-- Fallback to the original file -->
@@ -305,11 +265,10 @@ Hereâ€™s the code for the last row of images above:</p>
       
     </div>
 
-    <!-- Footer -->    
-    <footer class="fixed-bottom">
-      <div class="container mt-0">
-        Â© Copyright 2023 Cheng  Zeng. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a>. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>.
-
+    <!-- Footer -->    <footer class="sticky-bottom mt-5">
+      <div class="container">
+        Â© Copyright 2023 Cheng  Zeng. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="external nofollow noopener">al-folio</a> theme.
+Last updated: June 23, 2023.
       </div>
     </footer>
 
