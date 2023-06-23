@@ -2,10 +2,10 @@
 layout: page
 title: projects
 permalink: /projects/
-description: A growing collection of your cool projects.
+description: A collection of research, machine learning and life projects.
 nav: true
-nav_order: 2
-display_categories: [work, fun]
+nav_order: 3
+display_categories: [research, machine learning, life]
 horizontal: false
 ---
 

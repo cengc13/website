@@ -2,96 +2,77 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
+      value: Cheng Zeng
     - name: Languages
-      value: English, German
+      value: English (work proficiency), Chinese (native)
+
+- title: Research Interests
+  type: nested_list
+  contents:
+    - title: Computational catalysis
+      items:
+        - Electronic structure methods
+        - Nanoparticle alloy catalysts
+        - Machine learning potentials
+        - Atomistic physical models
+        - Advanced optimization algorithms
+    - title: AI-driven Materials Design for Advanced manufacturing
+      items:
+        - Corrosion-resistant high-entropy alloys
+        - Brittle particle cold spray
+        - Multiscale and Multiphysics simulations
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: PhD in Chemical Engineering
+      institution: Brown University, Rhode Island, USA
+      year: 2017-2022
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
+        - "Thesis: <a href='https://www.proquest.com/openview/c208c50bedc912aef97424e59b55d5f6/1?pq-origsite=gscholar&cbl=18750&diss=y'>Molecular Simulations by Exploiting Atomic Forces</a>"
+        - SIGMA XI Full Member
+        - Presidential Fellow (~10 PhD students every year)
+        - Open Grudate Fellow (~10 PhD students every year)
+    - title: Master in Data Science
+      institution: Brown University, Rhode Island, USA
+      year: 2019-2022
       description:
-        - Description 1.
-        - Description 2.
+          - "Relevant course work: Prob & Stats & Machine Learning, Statistical Learning, Deep Learning, Data Engineering, Causal Inference/Missing Data, Hands-on Data Science, Data and Society"
+          - "Kaggle competition master (Highest global rank: 270/146783)"
+    - title: Master in Materials Science and Engineering
+      institution: Tsinghua University, Beijing, China
+      year: 2013-2016
+      description:
+        - Research on electrochemical synthesis of oxide films used for hydrogen permeation resistance
+        - Outstanding graduate leadership award (1 for each department)
+        - Outstanding Master's graduate in Beijing (4/120)
+    - title: Bachelor in Materials Science and Engineering
+      institution: Tsinghua University, Beijing, China
+      year: 2009-2013
+      description:
+        - National Encouragement Scholarship (top 5%)
+        - Zhang Xiaowen Scholarship (4 out of 89)
+        - Academic Excellence Scholarship (2 out of 89)
 
 - title: Experience
   type: time_table
   contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
-      year: 1933 - 1955
+    - title: Postdoctoral Fellow
+      institution: Roux Institute, Northeastern University
+      year: 2022-present
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Visiting Professor
-      institution: California Institute of Technology, Pasadena, California, US
-      year: 1933
+        - Research on Machine learning accelerated materials discovery
+        - Research proposal development for funding opportunies from federal agency or industrial partners
+
+    - title: Research Associate
+      institution: State Power Investment Corporation Research Institute, Beijing, China
+      year: 2016-2017
       description:
-        - Description 1.
-        - Description 2.
-
-    - title: Director
-      institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
-      year: 1917-1933
-
-    - title: Professor of Theoretical Physics
-      institution: Karl-Ferdinand University, Prague, Czechoslovakia
-      year: 1911 - 1917
-      description:
-
-    - title: Associate Professor of Theoretical Physics
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1909 - 1911
+        - First-principles simulations of hydrogen adsorption on nuclear materials
 
 - title: Open Source Projects
   type: time_table
   contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
-
-- title: Honors and Awards
-  type: time_table
-  contents:
-    - year: 1921
-      items: 
-        - Nobel Prize in Physics 
-        - Matteucci Medal
-    - year: 2029
-      items: 
-        - Max Planck Medal
-
-- title: Academic Interests
-  type: nested_list
-  contents:
-    - title: Topic 1.
-      items: 
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
-      items:
-        - Description 1.
-        - Description 2.
-
-- title: Other Interests
-  type: list
-  contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+    - title: <a href="https://bitbucket.org/andrewpeterson/amp/src">AMP</a>
+      year: 2019-now
+      description: Atomistic Machine Learning package based on atom-centered neural networks

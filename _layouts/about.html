@@ -42,19 +42,19 @@ layout: default
 
           <!-- News -->
           {% if page.news and site.announcements.enabled -%}
-            <h2><a href="{{ '/news/' | relative_url }}" style="color: inherit;">news</a></h2>
+            <h3>Recent news <a href="{{ '/news/' | relative_url }}" style="color: gitdimmed;">[earlier]</a></h3>
             {%- include news.html limit=true %}
           {%- endif %}
 
           <!-- Latest posts -->
           {% if page.latest_posts -%}
-            <h2><a href="{{ '/blog/' | relative_url }}" style="color: inherit;">latest posts</a></h2>
+            <h3>Latest posts <a href="{{ '/blog/' | relative_url }}" style="color: gitdimmed;">[earlier]</a></h3>
             {%- include latest_posts.html %}
           {%- endif %}
 
           <!-- Selected papers -->
           {% if page.selected_papers -%}
-            <h2><a href="{{ '/publications/' | relative_url }}" style="color: inherit;">selected publications</a></h2>
+            <h3>Selected publications <a href="{{ '/publications/' | relative_url }}" style="color: gitdimmed;">[full list]</a></h3>
             {%- include selected_papers.html %}
           {%- endif %}
 
