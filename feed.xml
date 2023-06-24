@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://www.cheng.zeng1.com/website/feed.xml" rel="self" type="application/atom+xml" /><link href="http://www.cheng.zeng1.com/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-24T15:53:25+00:00</updated><id>http://www.cheng.zeng1.com/website/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://www.cheng.zeng1.com/website/feed.xml" rel="self" type="application/atom+xml" /><link href="http://www.cheng.zeng1.com/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-24T17:45:35+00:00</updated><id>http://www.cheng.zeng1.com/website/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 </subtitle><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Final Blog</title><link href="http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Final Blog" /><published>2020-05-08T00:00:00+00:00</published><updated>2020-05-08T00:00:00+00:00</updated><id>http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html"><![CDATA[<p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
 
 <p>This blog summarizes relevant techniques employed to improving the model performance, which is evaluated by the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/leaderboard">public leaderboard score</a> on Kaggle. I will start with the basic BERT multilingual model, after which I will illustrate how we can improve the model by tackling the three main challenges for this competition.</p>
@@ -282,7 +282,7 @@ The notebook is available on <a href="https://colab.research.google.com/drive/1P
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/final-blog/model_summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/model_summary.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -328,7 +328,7 @@ The notebook is available on <a href="https://colab.research.google.com/drive/1P
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/final-blog/training_loss_history.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/training_loss_history.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -348,7 +348,7 @@ The notebook is available on <a href="https://colab.research.google.com/drive/1P
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/final-blog/pred_prob.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/pred_prob.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -392,7 +392,7 @@ increases the LB score to 0.9401 with the best maximum length.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/final-blog/focal_loss.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/focal_loss.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -432,7 +432,7 @@ increases the LB score to 0.9401 with the best maximum length.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/final-blog/pub_lb.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/pub_lb.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -650,7 +650,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT_MLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT_MLM.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -685,7 +685,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -719,7 +719,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/midway-blog/XLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/XLM.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -867,7 +867,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/train_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/train_header.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -885,7 +885,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="validation data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_header.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="validation data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -903,7 +903,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_header.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -921,7 +921,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_languages.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -939,7 +939,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_languages.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -978,7 +978,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_wordcloud.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -1003,7 +1003,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/toxic_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/toxic_wordcloud.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -1024,7 +1024,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_words.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_words.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -1042,7 +1042,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_sentences.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_sentences.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -1064,7 +1064,7 @@ The splitting ratio is 8:2.</p>
     
 
     <!-- Fallback to the original file -->
-    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/balance.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/balance.png" style="position:relative; top:20px; border:none;" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
