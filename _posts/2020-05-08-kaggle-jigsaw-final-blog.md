@@ -408,7 +408,7 @@ Further combining my own best submission with public top-score submissions, I am
 
 ## Annotated Citations
 
-- Jay Alammer. (2019, November 26). *A Visual Guide to Using BERT for the First Time*. Retrieved from [https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb](https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb). The vivid figures for illustration of key components in a language model are taken from this awesome blog.
+- Jay Alammer. (2019, November 26). *A Visual Guide to Using BERT for the First Time*. Retrieved from [BERT notebook](https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb). The vivid figures for illustration of key components in a language model are taken from this awesome blog.
 
 
 - Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2019. This is the original paper for the basic BERT model.

@@ -2,10 +2,10 @@
 layout: page
 title: projects
 permalink: /projects/
-description: A collection of research, machine learning and life projects.
+description: A collection of research and data science projects.
 nav: true
 nav_order: 3
-display_categories: [research, machine learning, life]
+display_categories: [Research, Data science]
 horizontal: false
 ---
 
