@@ -39,7 +39,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html">
+    <link rel="canonical" href="https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html">
 
     <!-- Dark Mode -->
     
@@ -151,7 +151,7 @@
   <article class="post-content">
     
     <div id="markdown-content">
-      <p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification" rel="external nofollow noopener" target="_blank">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/" rel="external nofollow noopener" target="_blank">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/" rel="external nofollow noopener" target="_blank">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX" rel="external nofollow noopener" target="_blank">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
+      <p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification" rel="external nofollow noopener" target="_blank">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX" rel="external nofollow noopener" target="_blank">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
 
 <p>This blog summarizes relevant techniques employed to improving the model performance, which is evaluated by the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/leaderboard" rel="external nofollow noopener" target="_blank">public leaderboard score</a> on Kaggle. I will start with the basic BERT multilingual model, after which I will illustrate how we can improve the model by tackling the three main challenges for this competition.</p>
 
@@ -221,7 +221,7 @@
     <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">Tokenization step 1 and 2</a></figcaption>
 </div>
 
-<p>Lastly, the tokens are embedded into its id using the embedding model-specific table component. As we mentioned in the <a href="https://cengc13.github.io/final-project-midway-blog/" rel="external nofollow noopener" target="_blank">second blog</a>, BERT uses word-piece tokenization while XLM uses Byte-Pair Encoding to grasp the most common sub-words across all languages.</p>
+<p>Lastly, the tokens are embedded into its id using the embedding model-specific table component. As we mentioned in the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, BERT uses word-piece tokenization while XLM uses Byte-Pair Encoding to grasp the most common sub-words across all languages.</p>
 
 <div class="img-div" style="text-align:center">
   <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-2-token-ids.png" width="800px"></image>
