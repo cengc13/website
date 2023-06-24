@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <!-- Metadata, OpenGraph and Schema.org -->
+    
+
+    <!-- Standard metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Jigsaw Multilingual Toxic Comment Classification-Final Blog | Cheng  Zeng</title>
+    <meta name="author" content="Cheng  Zeng">
+    <meta name="description" content="Kaggle competition blog">
+    <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
+
+
+    <!-- Bootstrap & MDB -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+
+    <!-- Bootstrap Table -->
+    <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
+
+    
+    <!-- Sidebar Table of Contents -->
+    <link href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css" rel="stylesheet">
+    
+
+    <!-- Styles -->
+    
+    <link rel="stylesheet" href="/website/assets/css/main.css">
+    <link rel="canonical" href="http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html">
+
+    <!-- Dark Mode -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark">
+
+    <script src="/website/assets/js/theme.js"></script>
+    <script src="/website/assets/js/dark_mode.js"></script>
+    
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav sticky-bottom-footer">
+
+    <!-- Header -->
+    <header>
+
+      <!-- Nav Bar -->
+      <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+          <a class="navbar-brand title font-weight-lighter" href="/website/"><span class="font-weight-bold">Cheng </span>Zeng</a>
+          <!-- Navbar Toggle -->
+          <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+
+          <div class="collapse navbar-collapse text-right" id="navbarNav">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+
+              <!-- About -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/">about</a>
+              </li>
+              
+              <!-- Blog -->
+              <li class="nav-item active">
+                <a class="nav-link" href="/website/blog/">blog<span class="sr-only">(current)</span></a>
+              </li>
+
+              <!-- Other pages -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/publications/">publications</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/projects/">projects</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/cv/">cv</a>
+              </li>
+
+              <!-- Toogle theme mode -->
+              <li class="toggle-container">
+                <button id="light-toggle" title="Change theme">
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Scrolling Progress Bar -->
+      <progress id="progress" value="0">
+        <div class="progress-container">
+          <span class="progress-bar"></span>
+        </div>
+      </progress>
+    </header>
+
+
+    <!-- Content -->
+    <div class="container mt-5">
+      
+        
+        <div class="row">
+          <!-- sidebar, which will move to the top on a small screen -->
+          <div class="col-sm-3">
+            <nav id="toc-sidebar" class="sticky-top"></nav>
+          </div>
+          <!-- main content area -->
+          <div class="col-sm-9">
+            <!-- _layouts/post.html -->
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Jigsaw Multilingual Toxic Comment Classification-Final Blog</h1>
+    <p class="post-meta">May 8, 2020</p>
+    <p class="post-tags">
+      <a href="/website/blog/2020"> <i class="fas fa-calendar fa-sm"></i> 2020 </a>
+        ·  
+        <a href="/website/blog/tag/nlp">
+          <i class="fas fa-hashtag fa-sm"></i> nlp</a>  
+          <a href="/website/blog/tag/data-science">
+          <i class="fas fa-hashtag fa-sm"></i> data-science</a>  
+          
+        ·  
+        <a href="/website/blog/category/kaggle">
+          <i class="fas fa-tag fa-sm"></i> kaggle</a>  
+          
+
+    </p>
+  </header>
+
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification" rel="external nofollow noopener" target="_blank">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/" rel="external nofollow noopener" target="_blank">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/" rel="external nofollow noopener" target="_blank">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX" rel="external nofollow noopener" target="_blank">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
+
+<p>This blog summarizes relevant techniques employed to improving the model performance, which is evaluated by the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/leaderboard" rel="external nofollow noopener" target="_blank">public leaderboard score</a> on Kaggle. I will start with the basic BERT multilingual model, after which I will illustrate how we can improve the model by tackling the three main challenges for this competition.</p>
+
+<p>Honestly this is my first NLP project. I chose a project on Kaggle because the Kaggle community is an awesome place to share and learn machine learning knowledge. I would like to thank all those great participants on Kaggle, who make this learning process so rewarding and enjoyable.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="https://www.freelancinggig.com/blog/wp-content/uploads/2017/07/Natural-Language-Processing.png" width="600px"></image>
+  <br>
+  <figcaption>Natural Language Processing. Image source:
+    <a href="https://medium.com/voice-tech-podcast/predicting-the-type-of-event-based-on-comments-using-natural-language-processing-dd9c04546159/" rel="external nofollow noopener" target="_blank">Medium</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[The Basic BERT Model](#basic-bert)**
+  * The Objective
+  * Tokenizer, Transformer and Classifier
+  * Model Evaluation
+* **[Model Refinement](#model-refinement)**
+  * Model Architectures
+  * Hyper-parameter Tuning
+  * Data Augmentation
+  * Ensemble Magic
+
+</div> -->
+
+<h2 id="the-basic-bert-model-"><a href="#basic-bert" name="basic-bert">The Basic BERT Model </a></h2>
+
+<h3 id="the-objective">The Objective</h3>
+
+<p>Our goal is to take a comment text as input, and produce either 1(the comment is toxic) or 0 (the comment is non-toxic). It is basically a binary classification problem. There are three significant challenges regarding this competition that one needs to take care of.</p>
+
+<ul>
+  <li>
+    <p><strong>Data Size Issue</strong>: the training dataset consists of more than 200,000 data, which thus requires a huge amount of time to clean and pre-process the data. In addition, training on regular GPUs might not be able to give us a decent model in a limited time. For example ,the commit time should be less than three hours on Kaggle, which is almost impossible for a typical multilingual model of 100 million parameters to converge on such a large size dataset.</p>
+  </li>
+  <li>
+    <p><strong>Imbalance Issue</strong>: the training and validation set is highly unbalanced with a toxic/nontoxic ratio around 1:9. Therefore, this competition uses the ROC-AUC value as the evaluation metric. In other words, if we train the model based on the unbalanced dataset, the model should predict better on nontoxic comments than toxic ones.</p>
+  </li>
+  <li>
+    <p><strong>Multilingual Issue</strong>: the training set is written in English. The validation is given in three languages, Turkish, Spanish, and Italian. Besides the multilingual validation set, the testing set is written in three more types of languages, i.e. Russian, French and Portuguese.</p>
+  </li>
+</ul>
+
+<p>We will discuss how we can circumvent or mitigate those three issues in the  model refinement part.</p>
+
+<h3 id="tokenizer-transformer-and-classifier">Tokenizer, Transformer and Classifier</h3>
+
+<p>Simply for demonstration of a multilingual model, we  will use the BERT tokenizer and transformer as implemented in the <a href="https://huggingface.co/" rel="external nofollow noopener" target="_blank">HuggingFace package</a>. In the following we use the example illustrated in Jay’s <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">awesome blog</a> to show how we encode a comment text, pass it through the model and finally do the classification.</p>
+
+<h4 id="tokenizer">Tokenizer</h4>
+
+<p>The first step is to split the words into tokens. Then special tokens are added for the purpose of classification. For example, [CLS] is added as the first position of a comment/review, and [SEP] is added at the end of each sentence. Note that a comment/review may consist of many sentences, therefore we could have many [SEP]s in one comment, but only one [CLS].</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-1.png" width="800px"></image>
+  <br>
+  <figcaption>Tokenization: step 1 and 2 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">Tokenization step 1 and 2</a></figcaption>
+</div>
+
+<p>Lastly, the tokens are embedded into its id using the embedding model-specific table component. As we mentioned in the <a href="https://cengc13.github.io/final-project-midway-blog/" rel="external nofollow noopener" target="_blank">second blog</a>, BERT uses word-piece tokenization while XLM uses Byte-Pair Encoding to grasp the most common sub-words across all languages.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-2-token-ids.png" width="800px"></image>
+  <br>
+  <figcaption>Tokenization: step 3 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">Tokenization step 3</a></figcaption>
+</div>
+
+<p>Now the input comment is ready to be sent to a language model which  is typically made up of stacks of RNN.</p>
+
+<h4 id="transformer">Transformer</h4>
+
+<p>A normal transformer usually comprises of an encoder and a decoder. Yet for BERT, it is made up by stacks of only encoders. When an embedded input sequence passes through the model, the output would be a vector for each input token, which is made up of 768 float numbers for a BERT model. As this is a sentence classification problem, we take out the first vector associated with the [CLS] token, which is also the one we send to the classifier. The illustrative figure in the following recaps the journey of a comment</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-input-to-output-tensor-recap.png" width="800px"></image>
+  <br>
+  <figcaption>Recap of the journey of a comment. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">Recap</a></figcaption>
+</div>
+
+<p>With the output of the transformer, we can slice the important hidden states for classification.</p>
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-output-tensor-selection.png" width="800px"></image>
+  <br>
+  <figcaption>Slice the important output hidden states for classification. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">Slice the output</a></figcaption>
+</div>
+
+<h4 id="classifier">Classifier</h4>
+
+<p>In terms of the classifier, since we already put everything in a neural network, it is straightforward to do the same for the classification.
+If we use a dense layer with only one output activated by a <code class="language-plaintext highlighter-rouge">sigmoid</code> function as the last layer, it is intrinsically a logistic regression classifier. Alternatively, we can add 
+additional dense layers to extract more non-linear features between the output vector of the transformer layer and the prediction of probability.</p>
+
+<h3 id="evaluation-metrics">Evaluation Metrics</h3>
+
+<p>The dataset is highly skewed towards the non-toxic comments. ROC-AUC is taken as the evaluation metric to represent the extent to which the comments are misclassified. Intuitively, the higher the AUC value, the less overlap the prediction for the two classes will be. In light of this characteristic of AUC metric, further separating the two classes distribution or reduce the variance of the prediction will be helpful to increase the AUC.</p>
+
+<h3 id="the-code">The Code</h3>
+
+<p>This section describes the code to train a multilingual model using BERT. 
+The notebook is available on <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT" rel="external nofollow noopener" target="_blank">colab</a>. The framework of the codes are from <a href="https://www.kaggle.com/xhlulu/jigsaw-tpu-xlm-roberta" rel="external nofollow noopener" target="_blank">this kernel by xhlulu</a>.</p>
+
+<p>Let’s start by importing some useful packages</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="n">tqdm</span><span class="p">.</span><span class="nf">pandas</span><span class="p">()</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.metrics</span> <span class="kn">import</span> <span class="n">AUC</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ModelCheckpoint</span><span class="p">,</span> <span class="n">Callback</span><span class="p">,</span><span class="n">LearningRateScheduler</span><span class="p">)</span>
+<span class="kn">import</span> <span class="n">tensorflow.keras.backend</span> <span class="k">as</span> <span class="n">K</span>
+</code></pre></div></div>
+
+<p>Download the latest Huggingface <code class="language-plaintext highlighter-rouge">transformers</code> and <code class="language-plaintext highlighter-rouge">tokenizer</code> packages. Then we import necessary modules.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">tokenizers</span><span class="o">==</span><span class="mf">0.7</span><span class="p">.</span><span class="mi">0</span>
+<span class="err">!</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">transformers</span>
+<span class="kn">from</span> <span class="n">tokenizers</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="n">tokenizers</span> <span class="kn">import</span> <span class="n">BertWordPieceTokenizer</span>
+<span class="kn">import</span> <span class="n">transformers</span>
+<span class="kn">from</span> <span class="n">transformers</span> <span class="kn">import</span> <span class="n">TFAutoModel</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+</code></pre></div></div>
+
+<p><strong>Configure TPU environment</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Detect hardware, return appropriate distribution strategy
+# Change the runtime type to TPU if you are on colab or Kaggle
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># TPU detection. No parameters necessary if TPU_NAME environment variable is
+</span>    <span class="c1"># set
+</span>    <span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">cluster_resolver</span><span class="p">.</span><span class="nc">TPUClusterResolver</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Running on TPU </span><span class="sh">'</span><span class="p">,</span> <span class="n">tpu</span><span class="p">.</span><span class="nf">master</span><span class="p">())</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="n">tpu</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">if</span> <span class="n">tpu</span><span class="p">:</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="nf">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">tpu</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="nf">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="nc">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Default distribution strategy in Tensorflow. Works on CPU and single GPU.
+</span>    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="nf">get_strategy</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">REPLICAS: </span><span class="sh">"</span><span class="p">,</span> <span class="n">strategy</span><span class="p">.</span><span class="n">num_replicas_in_sync</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Nowadays Kaggle and Colab provide TPU running time. If you already turn on the TPU, it will print “REPLICAS:  8”.</p>
+
+<p>Next we load the data. Note that if you do not save the competition on your Google drive, there is an alternative way doing that, as we show in the simple <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS" rel="external nofollow noopener" target="_blank">logistic regression notebook</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_FOLDER</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="o">-</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">competition</span><span class="o">-</span><span class="n">data</span><span class="p">]</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/train.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/validation.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/test.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/sample_submission.csv</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Shuffle the train set
+</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">1.</span><span class="p">).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then we define some configurations for tokenization, model architecture and training settings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AUTO</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="n">AUTOTUNE</span>
+<span class="c1"># Configuration
+</span><span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">*</span> <span class="n">strategy</span><span class="p">.</span><span class="n">num_replicas_in_sync</span>
+<span class="n">MAX_LEN</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">MODEL</span> <span class="o">=</span> <span class="sh">'</span><span class="s">bert-base-cased</span><span class="sh">'</span>
+</code></pre></div></div>
+
+<p>Load the tokenizer and save the configuration files for the vocabulary library and the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># First load the real tokenizer
+</span><span class="n">save_path</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">./</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="sh">'</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">save_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="nf">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="p">.</span><span class="nf">save_pretrained</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+<span class="n">fast_tokenizer</span> <span class="o">=</span> <span class="nc">BertWordPieceTokenizer</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s">/vocab.txt</span><span class="sh">'</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Define the encode function. Basically it splits a comment text into chunks of length 256. The EDA shows that the majority of the comment texts are of length less than 200. Therefore, for most of the cases, we only deal with one-chunk tokenization.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    From:
+    https://www.kaggle.com/xhlulu/jigsaw-tpu-distilbert-with-huggingface-and-keras
+    </span><span class="sh">"""</span>
+    <span class="n">tokenizer</span><span class="p">.</span><span class="nf">enable_truncation</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">maxlen</span><span class="p">)</span>
+    <span class="n">tokenizer</span><span class="p">.</span><span class="nf">enable_padding</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">maxlen</span><span class="p">)</span>
+    <span class="n">all_ids</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">texts</span><span class="p">),</span> <span class="n">chunk_size</span><span class="p">)):</span>
+        <span class="n">text_chunk</span> <span class="o">=</span> <span class="n">texts</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">chunk_size</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
+        <span class="n">encs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">encode_batch</span><span class="p">(</span><span class="n">text_chunk</span><span class="p">)</span>
+        <span class="n">all_ids</span><span class="p">.</span><span class="nf">extend</span><span class="p">([</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span> <span class="k">for</span> <span class="n">enc</span> <span class="ow">in</span> <span class="n">encs</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">all_ids</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Tokenize the train, validation and test sets in the same manner. Also extract the labels for train and validation sets. Note  till now we do not conduct cross-validation since for an effective model using XLM architecture, it requires an average training time of 75 minutes. Therefore, performing k-fold CV will exceed the time limit on Kaggle (less than 3 hours for a TPU commit).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">time</span>
+<span class="c1">## tokenization
+</span><span class="n">x_train</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">comment_text</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="n">x_valid</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">valid</span><span class="p">.</span><span class="n">comment_text</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">test</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="c1">## Extract the labels
+</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">toxic</span><span class="p">.</span><span class="n">values</span>
+<span class="n">y_valid</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">toxic</span><span class="p">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<p><strong>Build the <code class="language-plaintext highlighter-rouge">Dataset</code> objects</strong> for fast data fetching</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">repeat</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">shuffle</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">valid_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">((</span><span class="n">x_valid</span><span class="p">,</span> <span class="n">y_valid</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">cache</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>We then build the BERT model and the model structure is as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">time</span>
+<span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="sh">'</span><span class="s">binary_crossentropy</span><span class="sh">'</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="n">input_word_ids</span> <span class="o">=</span> <span class="nc">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">max_len</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">input_word_ids</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">sequence_output</span> <span class="o">=</span> <span class="nf">transformer</span><span class="p">(</span><span class="n">input_word_ids</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># extract the vector for [CLS] token
+</span>    <span class="n">cls_token</span> <span class="o">=</span> <span class="n">sequence_output</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.35</span><span class="p">)(</span><span class="n">cls_token</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">sigmoid</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="nc">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_word_ids</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="nc">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span> <span class="n">loss</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="nc">AUC</span><span class="p">()])</span>
+    
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">with</span> <span class="n">strategy</span><span class="p">.</span><span class="nf">scope</span><span class="p">():</span>
+    <span class="n">transformer_layer</span> <span class="o">=</span> <span class="n">transformers</span><span class="p">.</span><span class="n">TFBertModel</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="n">MODEL</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">transformer_layer</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/model_summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Model structure</figcaption>
+</div>
+
+<p>We pass the <code class="language-plaintext highlighter-rouge">Dataset</code> object into the model and start training.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_steps</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">BATCH_SIZE</span>
+<span class="n">train_history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span>
+    <span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="n">valid_dataset</span><span class="p">,</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now that the model is trained. We can visualize the training history using the following function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="k">def</span> <span class="nf">plot_loss</span><span class="p">(</span><span class="n">his</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span><span class="sh">'</span><span class="s">ggplot</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">epoch</span><span class="p">),</span> <span class="n">his</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">train_loss</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">epoch</span><span class="p">),</span> <span class="n">his</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Epoch #</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="sh">'</span><span class="s">upper right</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+<span class="nf">plot_loss</span><span class="p">(</span><span class="n">train_history</span><span class="p">,</span> <span class="n">EPOCHS</span><span class="p">,</span> <span class="sh">"</span><span class="s">training loss</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/training_loss_history.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>History of training and validation losses. </figcaption>
+</div>
+
+<p>The training history shows that although there is a bump from Epoch 5 to Epoch 6 for the validation loss, the overall loss for both train and validation decreases gradually.</p>
+
+<p>Also, we can look at the distributions of the prediction probabilities on the validation set. It indicates that if the predicted probability is below 0.3, the comment is more likely to be non-toxic. In contrast, a probability of above 0.6 will predict toxic for the comment. In the probability region between those two, there is some overlap, which means it is challenging to predict the nature of the comment if it falls into this intermediate region.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/pred_prob.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>History of predicted probabilities on validation set. </figcaption>
+</div>
+
+<h2 id="model-refinement"><a href="#model-refinement" name="model-refinement">Model Refinement</a></h2>
+
+<p>Next we will discussion various techniques to improve the model performance.</p>
+
+<h3 id="model-architectures">Model Architectures</h3>
+
+<p>The model architecture is mainly associated with the “Multilingual Issue”. Since different architectures are pre-trained on varying size dataset and targeted on different semi-unsupervised tasks, their capability of mining cross-lingual knowledge is different.</p>
+
+<p>The Basic BERT model performs not too bad on this multilingual task, which has a public LB score of around 0.916. As we mentioned in the second blog, the most successful multilingual model is probably the XLM-RoBERTa model, especially the large XLM-R model. The large XLM-R model has more than 500 million parameters, and it demonstrates to be superior to other language models in multilingual modeling. With XLM-R architecture, our baseline LB score goes up to 0.9365, a significant improvement compared to BERT.</p>
+
+<h3 id="hyperparameter-tuning">Hyperparameter Tuning</h3>
+
+<p>The hyperparameter tuning aims to the resolve the “Data Size Issue” and “Unbalance Issue”. However, we are not able to tune too many hyperparameters due to such a limited time for this final project. 
+Instead, I will elaborate the techniques I tried and the reasoning.</p>
+
+<ul>
+  <li>
+    <p>Adjust the maximum length for the input vector sequence. I tried lengths of 150, 192, 210, and 224. 224 maximum length gives the best LB score of 0.9378.</p>
+  </li>
+  <li>
+    <p>Change the data size of training set. Only a fraction of the training data corresponding to non-toxic comments is selected. It was found that sub-sampling the non-toxic comments help a lot in balancing the dataset. It 
+increases the LB score to 0.9401 with the best maximum length.</p>
+  </li>
+  <li>
+    <p>Tweak the loss function. The most typical loss function for a binary classification problem is the <code class="language-plaintext highlighter-rouge">binary_crossentropy</code> as implemented in <code class="language-plaintext highlighter-rouge">Tensorflow</code>. Yet, a great work by <a href="https://arxiv.org/pdf/1708.02002.pdf" rel="external nofollow noopener" target="_blank">Lin et.al</a> proves that a novel loss they term “Focal Loss” that adds a pre-factor to the standard cross entropy criterion can boost the model accuracy. The name “focal” comes from the fact that the model now pays less attention to the well classified samples while putting more focus on hard, misclassified examples. A weighting factor is also introduced to mitigate the class unbalance issue. The figure below shows why Focal loss focuses more on the misclassified data. Unfortunately, models with focal loss perform similarly compared to the standard binary cross entropy.</p>
+  </li>
+</ul>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/focal_loss.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Focal Loss trend with different hyperparameters. Source:
+    <a href="https://arxiv.org/pdf/1708.02002.pdf" rel="external nofollow noopener" target="_blank">focal loss</a></figcaption>
+</div>
+
+<ul>
+  <li>Other random efforts. We add an additional dense layer and a dropout layer right ahead of the final layer. Then the dropout rate and the number of nodes in the dense layer are tuned. Although the model does not improve a lot in terms of the validation accuracy and the LB score, we believe that it will be helpful because adding regularization into a model will increase the generalization capability on unseen data. Moreover, I also tried a learning rate scheduler. However, no significant improvement was observed.</li>
+</ul>
+
+<h3 id="data-augmentation">Data Augmentation</h3>
+
+<p>This strategy is of central importance as in the training data we only have English-written comments while in the validation and test set, we have comments written in other languages. Although the multilingual model can capture some of the shared knowledge between various languages, data augmentation is necessary to improve the model performance. As of now, two approaches are tested.</p>
+
+<ul>
+  <li>
+    <p>Translate the training set to other languages and keep the validation and test set unchanged. This approach gives me a best LB score of 0.9365.</p>
+  </li>
+  <li>
+    <p>Translate the validation and test set to English. This model performs a little better, with a LB score of 0.9378.</p>
+  </li>
+</ul>
+
+<h3 id="ensemble-magic">Ensemble Magic</h3>
+
+<p>I did weighted ensemble on four models. The LB score for individual models are 0.9427, 0.9416, 0.9401 and 0.9365, respectively. By carefully tuning the weights, I arrived at a LB score of 0.9453.</p>
+
+<p>Further combining my own best submission with public top-score submissions, I am able to achieve a Public LB score of 0.9476, which leads to a top 5% position out of more than 800 teams. The following snapshot for the Public ranking is taken on May 6th.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/pub_lb.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Snapshot of the public leaderboard, taken on May 6th, 2020. </figcaption>
+</div>
+
+<h3 id="next-steps">Next steps</h3>
+
+<ul>
+  <li>
+    <p>Metric learning: post process the prediction to further improve the ranking on public leaderboard.</p>
+  </li>
+  <li>
+    <p>Transfer learning: using the trained model for other purposes such as predicting the state of a reddit post, which can be mainly categorized as upvote and downvote.</p>
+  </li>
+</ul>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>Jay Alammer. (2019, November 26). <em>A Visual Guide to Using BERT for the First Time</em>. Retrieved from <a href="https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb" rel="external nofollow noopener" target="_blank">https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb</a>. The vivid figures for illustration of key components in a language model are taken from this awesome blog.</p>
+  </li>
+  <li>
+    <p>Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2019. This is the original paper for the basic BERT model.</p>
+  </li>
+  <li>
+    <p>Tsung-Yi Lin et al. Focal Loss for Dense Object Detection. 2017. This paper introduces the idea of using <em>Focal Loss</em> to make the model focus more on those misclassified images.</p>
+  </li>
+</ul>
+
+
+    </div>
+  </article>
+</div>
+
+          </div>
+        </div>
+        
+      
+    </div>
+
+    <!-- Footer -->    <footer class="sticky-bottom mt-5">
+      <div class="container">
+        © Copyright 2023 Cheng  Zeng. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="external nofollow noopener">al-folio</a> theme.
+Last updated: June 24, 2023.
+      </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Bootsrap & MDB scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+
+    <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script defer src="/website/assets/js/masonry.js" type="text/javascript"></script>
+    
+  <!-- Medium Zoom JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script defer src="/website/assets/js/zoom.js"></script>
+  <!-- Sidebar Table of Contents -->
+  <script defer src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+
+  <!-- Bootstrap Table -->
+  <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+  <!-- Load Common JS -->
+  <script src="/website/assets/js/no_defer.js"></script>
+  <script defer src="/website/assets/js/common.js"></script>
+  <script defer src="/website/assets/js/copy_code.js" type="text/javascript"></script>
+
+    
+
+    <!-- MathJax -->
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        tags: 'ams'
+      }
+    };
+  </script>
+  <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    
+    
+
+<!-- Scrolling Progress Bar -->
+<script type="text/javascript">
+  /*
+   * This JavaScript code has been adapted from the article 
+   * https://css-tricks.com/reading-position-indicator/ authored by Pankaj Parashar, 
+   * published on the website https://css-tricks.com on the 7th of May, 2014.
+   * Couple of changes were made to the original code to make it compatible 
+   * with the `al-foio` theme.
+   */
+  const progressBar = $("#progress");
+  /*
+   * We set up the bar after all elements are done loading.
+   * In some cases, if the images in the page are larger than the intended
+   * size they'll have on the page, they'll be resized via CSS to accomodate
+   * the desired size. This mistake, however, breaks the computations as the
+   * scroll size is computed as soon as the elements finish loading.
+   * To account for this, a minimal delay was introduced before computing the
+   * values.
+   */
+  window.onload = function () {
+    setTimeout(progressBarSetup, 50);
+  };
+  /*
+   * We set up the bar according to the browser.
+   * If the browser supports the progress element we use that.
+   * Otherwise, we resize the bar thru CSS styling
+   */
+  function progressBarSetup() {
+    if ("max" in document.createElement("progress")) {
+      initializeProgressElement();
+      $(document).on("scroll", function() {
+        progressBar.attr({ value: getCurrentScrollPosition() });
+      });
+      $(window).on("resize", initializeProgressElement);
+    } else {
+      resizeProgressBar();
+      $(document).on("scroll", resizeProgressBar);
+      $(window).on("resize", resizeProgressBar);
+    }
+  }
+  /*
+   * The vertical scroll position is the same as the number of pixels that
+   * are hidden from view above the scrollable area. Thus, a value > 0 is
+   * how much the user has scrolled from the top
+   */
+  function getCurrentScrollPosition() {
+    return $(window).scrollTop();
+  }
+
+  function initializeProgressElement() {
+    let navbarHeight = $("#navbar").outerHeight(true);
+    $("body").css({ "padding-top": navbarHeight });
+    $("progress-container").css({ "padding-top": navbarHeight });
+    progressBar.css({ top: navbarHeight });
+    progressBar.attr({
+      max: getDistanceToScroll(),
+      value: getCurrentScrollPosition(),
+    });
+  }
+  /*
+   * The offset between the html document height and the browser viewport
+   * height will be greater than zero if vertical scroll is possible.
+   * This is the distance the user can scroll
+   */
+  function getDistanceToScroll() {
+    return $(document).height() - $(window).height();
+  }
+
+  function resizeProgressBar() {
+    progressBar.css({ width: getWidthPercentage() + "%" });
+  }
+  // The scroll ratio equals the percentage to resize the bar
+  function getWidthPercentage() {
+    return (getCurrentScrollPosition() / getDistanceToScroll()) * 100;
+  }
+</script>
+
+  </body>
+</html>

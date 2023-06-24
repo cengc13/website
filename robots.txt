@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://cengc13.github.io/website/sitemap.xml
+Sitemap: http://www.cheng.zeng1.com/website/sitemap.xml

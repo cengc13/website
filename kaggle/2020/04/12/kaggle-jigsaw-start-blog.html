@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <!-- Metadata, OpenGraph and Schema.org -->
+    
+
+    <!-- Standard metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Jigsaw Multilingual Toxic Comment Classification-Start Blog | Cheng  Zeng</title>
+    <meta name="author" content="Cheng  Zeng">
+    <meta name="description" content="Kaggle competition blog">
+    <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
+
+
+    <!-- Bootstrap & MDB -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+
+    <!-- Bootstrap Table -->
+    <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
+
+    
+    <!-- Sidebar Table of Contents -->
+    <link href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css" rel="stylesheet">
+    
+
+    <!-- Styles -->
+    
+    <link rel="stylesheet" href="/website/assets/css/main.css">
+    <link rel="canonical" href="http://www.cheng.zeng1.com/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html">
+
+    <!-- Dark Mode -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark">
+
+    <script src="/website/assets/js/theme.js"></script>
+    <script src="/website/assets/js/dark_mode.js"></script>
+    
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav sticky-bottom-footer">
+
+    <!-- Header -->
+    <header>
+
+      <!-- Nav Bar -->
+      <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+          <a class="navbar-brand title font-weight-lighter" href="/website/"><span class="font-weight-bold">Cheng </span>Zeng</a>
+          <!-- Navbar Toggle -->
+          <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+
+          <div class="collapse navbar-collapse text-right" id="navbarNav">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+
+              <!-- About -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/">about</a>
+              </li>
+              
+              <!-- Blog -->
+              <li class="nav-item active">
+                <a class="nav-link" href="/website/blog/">blog<span class="sr-only">(current)</span></a>
+              </li>
+
+              <!-- Other pages -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/publications/">publications</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/projects/">projects</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/cv/">cv</a>
+              </li>
+
+              <!-- Toogle theme mode -->
+              <li class="toggle-container">
+                <button id="light-toggle" title="Change theme">
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Scrolling Progress Bar -->
+      <progress id="progress" value="0">
+        <div class="progress-container">
+          <span class="progress-bar"></span>
+        </div>
+      </progress>
+    </header>
+
+
+    <!-- Content -->
+    <div class="container mt-5">
+      
+        
+        <div class="row">
+          <!-- sidebar, which will move to the top on a small screen -->
+          <div class="col-sm-3">
+            <nav id="toc-sidebar" class="sticky-top"></nav>
+          </div>
+          <!-- main content area -->
+          <div class="col-sm-9">
+            <!-- _layouts/post.html -->
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Jigsaw Multilingual Toxic Comment Classification-Start Blog</h1>
+    <p class="post-meta">April 12, 2020</p>
+    <p class="post-tags">
+      <a href="/website/blog/2020"> <i class="fas fa-calendar fa-sm"></i> 2020 </a>
+        ·  
+        <a href="/website/blog/tag/nlp">
+          <i class="fas fa-hashtag fa-sm"></i> nlp</a>  
+          <a href="/website/blog/tag/data-science">
+          <i class="fas fa-hashtag fa-sm"></i> data-science</a>  
+          
+        ·  
+        <a href="/website/blog/category/kaggle">
+          <i class="fas fa-tag fa-sm"></i> kaggle</a>  
+          
+
+    </p>
+  </header>
+
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p>This is the first of three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification" rel="external nofollow noopener" target="_blank">toxic comment classification kaggle competition</a>. It is a natural language processing (NLP) task. I chose this topic as the final project because NLP is a very hot topic nowadays and I am new to this area. I hope to take advantages of this opportunity to learn more about deep learning targeted towards the state-of-art application in NLP.</p>
+
+<p>In the first blog, I walk you through an overview of the competition, the exploratory data analysis, and  the basics of language models for this project.</p>
+
+<!-- <center><img src="https://i.imgur.com/4WNesOq.png" width="400px"></center> -->
+
+<div class="img-div" style="text-align:center">
+  <image src="https://i.imgur.com/4WNesOq.png" width="400px"></image>
+  <br>
+  <figcaption>Competition Logo. Source:
+    <a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge" rel="external nofollow noopener" target="_blank">Logo</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[Part 1: Introduction](#part-1-introduction-and-background)**
+  * Background & Motivation
+  * Description of The Competition
+  * Evaluation Metrics and Submission Requirements
+* **[Part 2: Data Exploration](#part-2-eda)**
+  * Dataset
+  * Preprocessing
+  * Exploratory data analysis
+* **[Part 3: Basics of Language Models](#part-3-basics-of-language-models)**
+  * What is a Language Model?
+  * Word Embeddings
+  * Attention
+
+</div> -->
+
+<h2 id="part-1-introduction-"><a href="#part-1-introduction-and-background" name="part-1-introduction-and-background">Part 1: Introduction </a></h2>
+
+<h3 id="background--motivation">Background &amp; Motivation</h3>
+<p>Thanks to the rapid development of deep learning techniques and computational hardwares, NLP has been gaining its momentum in the past two decades. As believed by machine learning experts, NLP is experiencing a boom in the short-term future, same as computer vision once did. The popularity of it brought a great amount of investment. Recently Kaggle released two NLP competitions (<a href="https://www.kaggle.com/c/tweet-sentiment-extraction" rel="external nofollow noopener" target="_blank">tweet sentiment extraction</a> and <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification" rel="external nofollow noopener" target="_blank">comment toxicity analysis</a>). Of focus here is the second one because it is based off two previous Kaggle competitions regarding the same topic (<a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge" rel="external nofollow noopener" target="_blank">2018 toxicity</a> and <a href="https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification" rel="external nofollow noopener" target="_blank">2019 toxicity</a>). For the very first competion, contestants are challenged to buld multi-headed models to recognize toxicity and several subtypes of toxicity. <em>Toxicity is defined as anything rude, disrespectful or other wise likely to make someone leave a discussion</em>. The 2019 Challenges asks Kagglers to work across a diverse range of conversations. The main purpose of this final project is to understand the basics of deep learning techniques applied to NLP. So it would be more doable to work on a project in such a limited time for which there exist many established references/documents.</p>
+
+<h3 id="description-of-the-competition">Description of The Competition</h3>
+<p>Taking advantage of Kaggle’s TPU support, this competition aims to build multilingual models with English-only training data. The model will be tested on Wikipedia talk page comments in several different languages. It is supported by The Conversation AI team, which is funded by <a href="https://jigsaw.google.com/" rel="external nofollow noopener" target="_blank">Jiasaw</a> and Google.</p>
+
+<h3 id="evaluation-metrics-and-submission-requirements">Evaluation Metrics and Submission Requirements</h3>
+<p>Basically it is a classification problem. The model performance is evaluated by the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic" rel="external nofollow noopener" target="_blank">area under the ROC curve</a> between the predictions and the observations.</p>
+
+<p>The submission file consists of two columns. The first column indicates the comment <code class="language-plaintext highlighter-rouge">id</code> and the second one is the probability for the <code class="language-plaintext highlighter-rouge">toxicity</code> variable. Following is a sample submission file.</p>
+
+<table class="features-table">
+  <tr>
+    <th class="mdc-text-light-green-600">
+    id
+    </th>
+    <th class="mdc-text-purple-600">
+    toxic
+    </th>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      0
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.3
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      1
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.7
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+     2
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.9
+    </td>
+  </tr>
+</table>
+
+<p>In addition to the well defined metrics evaluated on the given testing set. We might also want to further apply the language model to additional applications. For example,</p>
+
+<ul>
+  <li>
+    <p>As mentioned before, there is another NLP competition on Kaggle, which challenges contestants to analyze the tweet sentiment. Basically there are three types of sentiment, including <em>neural</em>, <em>negative</em> and <em>positive</em>.</p>
+  </li>
+  <li>
+    <p>Another possible application is to scrape comments from some social media, say “reddit”, and predict whether the comment will receive upvote, downvote or be removed.</p>
+  </li>
+</ul>
+
+<h2 id="part-2-data-exploration-"><a href="#part-2-eda" name="part-2-eda">Part 2: Data Exploration </a></h2>
+
+<h3 id="dataset">Dataset</h3>
+<p>Following is the list of the datasets we have for this project. The primary data is the <code class="language-plaintext highlighter-rouge">comment_text</code> column which contains the text of comment to be classified as toxic or non-toxic (0…1 in the <code class="language-plaintext highlighter-rouge">toxic</code> column). The trainingset’s comments are mostly written in English whereas the validation and testing sets’ comments are composed of multiple non-English languages. A detailed explanation of the dataset can be found on the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/data" rel="external nofollow noopener" target="_blank">competition web page</a></p>
+
+<!-- <div class="img-div" markdown="0" style="text-align:center">
+  <image src="/assets/img/kaggle-jigsaw/starter-blog/datasets.png"/>
+  <br />
+</div> -->
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/train_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the training set</figcaption>
+</div>
+
+<p><br></p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="validation data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the validation set</figcaption>
+</div>
+
+<p>Below shows the five top rows of the training set, validation set and testing set. There are mainly four columns for all datasets, in which <code class="language-plaintext highlighter-rouge">id</code> is the identifier, <code class="language-plaintext highlighter-rouge">commen_text</code> is the text of comment, <code class="language-plaintext highlighter-rouge">lang</code> is the language of the comment, and <code class="language-plaintext highlighter-rouge">toxic</code> is whether or not the comment is toxic. In the training set, we can see 5 additional columns which represent the subtypes of toxic comment. Moreover, we do not have the <code class="language-plaintext highlighter-rouge">toxic</code> column in the testing set.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the testing set</figcaption>
+</div>
+
+<p>As mentioned before, most comments in the training set are in English while most comments in validation and testing set are in Non-English, including Spanish, French, Turkish and Portuguese etc. The number for all types of languages in validation and test set are summarized at below.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Language-specific data counts in the validation set</figcaption>
+</div>
+
+<p><br></p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <br>
+  <figcaption>Language counts in the test set</figcaption>
+</div>
+
+<h3 id="preprocessing">Preprocessing</h3>
+<p>We can do a few data preprocessing steps before feeding the data into a language model.</p>
+
+<ul>
+  <li>
+    <p>Clean up the comment texts by dropping redundant information, such as usernames, emails, hyperlinks and line breakers.</p>
+  </li>
+  <li>
+    <p>Remove unnecessary columns in the trainingset such as the subtypes of toxicity because the target for submission is only the <code class="language-plaintext highlighter-rouge">toxic</code>.</p>
+  </li>
+  <li>
+    <p>Tokenize the words, which can be also considered as a step for building up a model.</p>
+  </li>
+</ul>
+
+<h3 id="exploratory-data-analysis-eda">Exploratory data analysis (EDA)</h3>
+
+<p><strong>Note that</strong> the analysis for “wordcloud” is  inspired by this kernel <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models" rel="external nofollow noopener" target="_blank">EDA and Modeling Kernel</a>.</p>
+
+<h4 id="comment-wordcloud">Comment Wordcloud</h4>
+<p>Firstly we take a look at the comments in the training set.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+</div>
+
+<p>The most common words include “Wikipedia”, “article”, “will” and “see”.</p>
+
+<p>Another plot in the following shows the wordcloud for common words in the toxic comments.</p>
+
+<blockquote class="block-warning">
+  <h5 id="warning">WARNING</h5>
+
+  <p>The following figure contains text that may be considered profane, vulgar, or offensive.</p>
+</blockquote>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/toxic_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+</div>
+
+<p>As expected, there exist more insulting or hateful words, such as “die” and “pig”.</p>
+
+<h4 id="histograms-of-number-of-words-and-sentences-in-all-comments">Histograms of number of words and sentences in all comments</h4>
+
+<p>The figure below shows the distribution for number of words in all comments. One can see that the distribution is right-skewed, and it is peaked at 13 words per comment.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_words.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Histogram of # words</figcaption>
+</div>
+
+<h4 id="histogram-of-number-of-sentences-in-all-comments">Histogram of number of sentences in all comments</h4>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_sentences.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Histogram of # sentences</figcaption>
+</div>
+
+<p>The distribution for number of sentences is also right skewed.</p>
+
+<h4 id="balance-of-training-set">Balance of training set</h4>
+
+<p>This bar plot indicates that the balance of the dataset is about 90%. The dataset is hence highly unbalanced.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/balance.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Counts of toxic and non-toxic comments</figcaption>
+</div>
+
+<h2 id="part-3-basics-of-language-models-"><a href="#part-3-basics-of-language-models" name="part-3-basics-of-language-models">Part 3: Basics of Language Models </a></h2>
+
+<h3 id="what-is-a-language-model">What is a Language Model?</h3>
+<p>A language model is basically a machine learning model that looks at part of a sentence and is able to predict the next one, such as next word recommendation for cellphone keyboard typing.</p>
+
+<p>Statistically, a language model is a probability distribution over sequence of words. Most language models rely on the basic assumption that the probability of a word only depends on the previous <em>n</em> words, which is known as the <em>n</em>-gram model. Language models are useful in many scenarios such speech recognition, parsing and information retrieval. Please refer to the <a href="https://en.wikipedia.org/wiki/Language_model" rel="external nofollow noopener" target="_blank">Wiki  page</a> for more information.</p>
+
+<h3 id="word-embeddings">Word Embeddings</h3>
+<p>Word embedding is a type of word representation that allows words with similar meaning to have a similar representation. It is a groundbreaking progress for developing high-performance deep learning models for NLP. The intuitive approach to word representation is the <strong>one-hot</strong> encoding. To represent each word, we create a zero vector with length equal to the vocabulary. Then one is placed in the index that corresponds to the word. In that sense, we will create a sparse vector. An alternative approach is to encode each word with a unique number so that the resulting vector is short and dense. However, the way how each word is encoded is arbitrary, and we do not know the relationship between the words. Here comes the technique of <strong>word embeddings</strong>. In this scenario, we do not have to specify the encoding by hand. Instead of manually defining the embedding vector, the values of the vector are trained in the same way a model learns weights of a dense layer. A high-dimensional embedding can capture fine relationships between words.</p>
+
+<h3 id="attention">Attention</h3>
+
+<p>The key idea of Attention is to focus on the most relevant parts of the input sequence as needed. It provides a direct path to the inputs. So it also alleviates the vanishing gradient issue. This significantly improves the model performance when confronting with long sentence analysis.</p>
+
+<p>For a typical language model, it is composed of an encoder and a decoder.
+The encoder processes each item in the input sequence, and then compile the transformed information into a vector. After processing the entire input sequence, the encoder send the context to the decoder for the next step. Both the encoder and decoder are intrinsically recurrent nueral networks (RNN) which processes the input vector and previous hidden state, and produces the next-step hidden state and output at that time step.</p>
+
+<p>At a high level of abstraction, an attention model differs in two main ways. Firstly, instead of passing only the last hidden state at the encoder side, the attention model holds all the hidden states and passes all hidden state to the decoder. Secondly, in the decoder side it does one more step before calculating its output. The basic idea is that each hidden state produced at the encoder side is associated with a certain word in the input sequence, thus we can assign a score to each hidden state and use that to amplify the word with high score and drown out words with low scores. A illustrative and comprehensive tutorial of an attention model can be found in the blog <a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/" rel="external nofollow noopener" target="_blank">visualizing a neural machine translation model</a>.</p>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>Tarun Paparaju. (2020, March). <em>Jigsaw Multilingual Toxicity : EDA + Models</em>. Retrieved from <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models" rel="external nofollow noopener" target="_blank">https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models</a>. The function for plotting the WordCloud is adapted from this kernel.</p>
+  </li>
+  <li>
+    <p>Jay Alammer. (2018, May 9). <em>Visualizing A Neural Machine Translation Model</em>. Retrieved from <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models" rel="external nofollow noopener" target="_blank">https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/</a>.  Some explanation for <strong>attention</strong> comes from this blog.</p>
+  </li>
+  <li>
+    <p>Barry Clark. (2016, March). <em>Build a Jekyll blog in minutes, without touching the command line</em>. Retrieved from <a href="https://github.com/barryclark/jekyll-now" rel="external nofollow noopener" target="_blank">https://github.com/barryclark/jekyll-now</a>.This site offers the github page template using <code class="language-plaintext highlighter-rouge">Jekyll</code>.</p>
+  </li>
+  <li>
+    <p>Jason Brownlee. (2017, October 11). <em>What Are Word Embeddings for Text?</em> Retrieved from <a href="https://machinelearningmastery.com/what-are-word-embeddings/" rel="external nofollow noopener" target="_blank">https://machinelearningmastery.com/what-are-word-embeddings/</a>. This site provides some examples to explain the idea of <strong>word embedding</strong>.</p>
+  </li>
+  <li>
+    <p>Mohammed Terry-Jack. (2019, April 21). <em>NLP: Everything about Embeddings</em>. Retrieved from <a href="https://medium.com/@b.terryjack/nlp-everything-about-word-embeddings-9ea21f51ccfe" rel="external nofollow noopener" target="_blank">https://medium.com/@b.terryjack/nlp-everything-about-word-embeddings-9ea21f51ccfe</a>. More explanation about the word embedding can be found in this Medium blog.</p>
+  </li>
+  <li>
+    <p>Anusha Lihala. (2019, March 29). <em>Attention and its Different Forms</em>. Retrieved from <a href="https://towardsdatascience.com/attention-and-its-different-forms-7fc3674d14dc" rel="external nofollow noopener" target="_blank">https://towardsdatascience.com/attention-and-its-different-forms-7fc3674d14dc</a>. The original attention and its variants are detailed and compared in this Medium blog.</p>
+  </li>
+  <li>
+    <p>Sean Robertson. (2017). <em>NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTION</em>. Retrieved from <a href="https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html" rel="external nofollow noopener" target="_blank">https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html</a>. Code implementation in the framework of <code class="language-plaintext highlighter-rouge">PyTorch</code> is discussed in this web page.</p>
+  </li>
+</ul>
+
+    </div>
+  </article>
+</div>
+
+          </div>
+        </div>
+        
+      
+    </div>
+
+    <!-- Footer -->    <footer class="sticky-bottom mt-5">
+      <div class="container">
+        © Copyright 2023 Cheng  Zeng. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="external nofollow noopener">al-folio</a> theme.
+Last updated: June 24, 2023.
+      </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Bootsrap & MDB scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+
+    <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script defer src="/website/assets/js/masonry.js" type="text/javascript"></script>
+    
+  <!-- Medium Zoom JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script defer src="/website/assets/js/zoom.js"></script>
+  <!-- Sidebar Table of Contents -->
+  <script defer src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+
+  <!-- Bootstrap Table -->
+  <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+  <!-- Load Common JS -->
+  <script src="/website/assets/js/no_defer.js"></script>
+  <script defer src="/website/assets/js/common.js"></script>
+  <script defer src="/website/assets/js/copy_code.js" type="text/javascript"></script>
+
+    
+
+    <!-- MathJax -->
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        tags: 'ams'
+      }
+    };
+  </script>
+  <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    
+    
+
+<!-- Scrolling Progress Bar -->
+<script type="text/javascript">
+  /*
+   * This JavaScript code has been adapted from the article 
+   * https://css-tricks.com/reading-position-indicator/ authored by Pankaj Parashar, 
+   * published on the website https://css-tricks.com on the 7th of May, 2014.
+   * Couple of changes were made to the original code to make it compatible 
+   * with the `al-foio` theme.
+   */
+  const progressBar = $("#progress");
+  /*
+   * We set up the bar after all elements are done loading.
+   * In some cases, if the images in the page are larger than the intended
+   * size they'll have on the page, they'll be resized via CSS to accomodate
+   * the desired size. This mistake, however, breaks the computations as the
+   * scroll size is computed as soon as the elements finish loading.
+   * To account for this, a minimal delay was introduced before computing the
+   * values.
+   */
+  window.onload = function () {
+    setTimeout(progressBarSetup, 50);
+  };
+  /*
+   * We set up the bar according to the browser.
+   * If the browser supports the progress element we use that.
+   * Otherwise, we resize the bar thru CSS styling
+   */
+  function progressBarSetup() {
+    if ("max" in document.createElement("progress")) {
+      initializeProgressElement();
+      $(document).on("scroll", function() {
+        progressBar.attr({ value: getCurrentScrollPosition() });
+      });
+      $(window).on("resize", initializeProgressElement);
+    } else {
+      resizeProgressBar();
+      $(document).on("scroll", resizeProgressBar);
+      $(window).on("resize", resizeProgressBar);
+    }
+  }
+  /*
+   * The vertical scroll position is the same as the number of pixels that
+   * are hidden from view above the scrollable area. Thus, a value > 0 is
+   * how much the user has scrolled from the top
+   */
+  function getCurrentScrollPosition() {
+    return $(window).scrollTop();
+  }
+
+  function initializeProgressElement() {
+    let navbarHeight = $("#navbar").outerHeight(true);
+    $("body").css({ "padding-top": navbarHeight });
+    $("progress-container").css({ "padding-top": navbarHeight });
+    progressBar.css({ top: navbarHeight });
+    progressBar.attr({
+      max: getDistanceToScroll(),
+      value: getCurrentScrollPosition(),
+    });
+  }
+  /*
+   * The offset between the html document height and the browser viewport
+   * height will be greater than zero if vertical scroll is possible.
+   * This is the distance the user can scroll
+   */
+  function getDistanceToScroll() {
+    return $(document).height() - $(window).height();
+  }
+
+  function resizeProgressBar() {
+    progressBar.css({ width: getWidthPercentage() + "%" });
+  }
+  // The scroll ratio equals the percentage to resize the bar
+  function getWidthPercentage() {
+    return (getCurrentScrollPosition() / getDistanceToScroll()) * 100;
+  }
+</script>
+
+  </body>
+</html>

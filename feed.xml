@@ -1,155 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-23T19:39:12+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">a post with custom blockquotes</title><link href="https://cengc13.github.io/website/blog/2023/custom-blockquotes/" rel="alternate" type="text/html" title="a post with custom blockquotes" /><published>2023-05-12T19:53:00+00:00</published><updated>2023-05-12T19:53:00+00:00</updated><id>https://cengc13.github.io/website/blog/2023/custom-blockquotes</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2023/custom-blockquotes/"><![CDATA[<p>This post shows how to add custom styles for blockquotes. Based on <a href="https://github.com/sighingnow/jekyll-gitbook">jekyll-gitbook</a> implementation.</p>
-
-<p>We decided to support the same custom blockquotes as in <a href="https://sighingnow.github.io/jekyll-gitbook/jekyll/2022-06-30-tips_warnings_dangers.html">jekyll-gitbook</a>, which are also found in a lot of other sites’ styles. The styles definitions can be found on the <a href="https://github.com/alshedivat/al-folio/blob/master/_sass/_base.scss">_base.scss</a> file, more specifically:</p>
-
-<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Tips, warnings, and dangers */</span>
-<span class="nc">.post</span> <span class="nc">.post-content</span> <span class="nt">blockquote</span> <span class="p">{</span>
-    <span class="k">&amp;</span><span class="nc">.block-tip</span> <span class="p">{</span>
-    <span class="nl">border-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block</span><span class="p">);</span>
-    <span class="nl">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block-bg</span><span class="p">);</span>
-
-    <span class="nt">p</span> <span class="p">{</span>
-      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block-text</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="nt">h1</span><span class="o">,</span> <span class="nt">h2</span><span class="o">,</span> <span class="nt">h3</span><span class="o">,</span> <span class="nt">h4</span><span class="o">,</span> <span class="nt">h5</span><span class="o">,</span> <span class="nt">h6</span> <span class="p">{</span>
-      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block-title</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="k">&amp;</span><span class="nc">.block-warning</span> <span class="p">{</span>
-    <span class="nl">border-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block</span><span class="p">);</span>
-    <span class="nl">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block-bg</span><span class="p">);</span>
-
-    <span class="nt">p</span> <span class="p">{</span>
-      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block-text</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="nt">h1</span><span class="o">,</span> <span class="nt">h2</span><span class="o">,</span> <span class="nt">h3</span><span class="o">,</span> <span class="nt">h4</span><span class="o">,</span> <span class="nt">h5</span><span class="o">,</span> <span class="nt">h6</span> <span class="p">{</span>
-      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block-title</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="k">&amp;</span><span class="nc">.block-danger</span> <span class="p">{</span>
-    <span class="nl">border-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block</span><span class="p">);</span>
-    <span class="nl">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block-bg</span><span class="p">);</span>
-
-    <span class="nt">p</span> <span class="p">{</span>
-      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block-text</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="nt">h1</span><span class="o">,</span> <span class="nt">h2</span><span class="o">,</span> <span class="nt">h3</span><span class="o">,</span> <span class="nt">h4</span><span class="o">,</span> <span class="nt">h5</span><span class="o">,</span> <span class="nt">h6</span> <span class="p">{</span>
-      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block-title</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>A regular blockquote can be used as following:</p>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; This is a regular blockquote</span>
-<span class="gt">&gt; and it can be used as usual</span>
-</code></pre></div></div>
-
-<blockquote>
-  <p>This is a regular blockquote
-and it can be used as usual</p>
-</blockquote>
-
-<p>These custom styles can be used by adding the specific class to the blockquote, as follows:</p>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### TIP</span>
-<span class="gt">&gt;</span>
-<span class="gt">&gt; A tip can be used when you want to give advice</span>
-<span class="gt">&gt; related to a certain content.</span>
-{: .block-tip }
-</code></pre></div></div>
-
-<blockquote class="block-tip">
-  <h5 id="tip">TIP</h5>
-
-  <p>A tip can be used when you want to give advice
-related to a certain content.</p>
-</blockquote>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### WARNING</span>
-<span class="gt">&gt;</span>
-<span class="gt">&gt; This is a warning, and thus should</span>
-<span class="gt">&gt; be used when you want to warn the user</span>
-{: .block-warning }
-</code></pre></div></div>
-
-<blockquote class="block-warning">
-  <h5 id="warning">WARNING</h5>
-
-  <p>This is a warning, and thus should
-be used when you want to warn the user</p>
-</blockquote>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### DANGER</span>
-<span class="gt">&gt;</span>
-<span class="gt">&gt; This is a danger zone, and thus should</span>
-<span class="gt">&gt; be used carefully</span>
-{: .block-danger }
-</code></pre></div></div>
-
-<blockquote class="block-danger">
-  <h5 id="danger">DANGER</h5>
-
-  <p>This is a danger zone, and thus should
-be used carefully</p>
-</blockquote>]]></content><author><name></name></author><category term="sample-posts" /><category term="blockquotes" /><summary type="html"><![CDATA[an example of a blog post with custom blockquotes]]></summary></entry><entry><title type="html">a post with table of contents on a sidebar</title><link href="https://cengc13.github.io/website/blog/2023/sidebar-table-of-contents/" rel="alternate" type="text/html" title="a post with table of contents on a sidebar" /><published>2023-04-25T14:14:00+00:00</published><updated>2023-04-25T14:14:00+00:00</updated><id>https://cengc13.github.io/website/blog/2023/sidebar-table-of-contents</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2023/sidebar-table-of-contents/"><![CDATA[<p>This post shows how to add a table of contents as a sidebar.</p>
-
-<h2 id="adding-a-table-of-contents">Adding a Table of Contents</h2>
-
-<p>To add a table of contents to a post as a sidebar, simply add</p>
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">toc</span><span class="pi">:</span>
-  <span class="na">sidebar</span><span class="pi">:</span> <span class="s">left</span>
-</code></pre></div></div>
-<p>to the front matter of the post. The table of contents will be automatically generated from the headings in the post. If you wish to display the sidebar to the right, simply change <code class="language-plaintext highlighter-rouge">left</code> to <code class="language-plaintext highlighter-rouge">right</code>.</p>
-
-<h3 id="example-of-sub-heading-1">Example of Sub-Heading 1</h3>
-
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>
-
-<h3 id="example-of-another-sub-heading-1">Example of another Sub-Heading 1</h3>
-
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>
-
-<h2 data-toc-text="Customizing" id="customizing-your-table-of-contents">Customizing Your Table of Contents</h2>
-
-<p>If you want to learn more about how to customize the table of contents of your sidebar, you can check the <a href="https://afeld.github.io/bootstrap-toc/">bootstrap-toc</a> documentation. Notice that you can even customize the text of the heading that will be displayed on the sidebar.</p>
-
-<h3 id="example-of-sub-heading-2">Example of Sub-Heading 2</h3>
-
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>
-
-<h3 id="example-of-another-sub-heading-2">Example of another Sub-Heading 2</h3>
-
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>]]></content><author><name></name></author><category term="sample-posts" /><category term="toc" /><category term="sidebar" /><summary type="html"><![CDATA[an example of a blog post with table of contents on a sidebar]]></summary></entry><entry><title type="html">a post with audios</title><link href="https://cengc13.github.io/website/blog/2023/audios/" rel="alternate" type="text/html" title="a post with audios" /><published>2023-04-25T10:25:00+00:00</published><updated>2023-04-25T10:25:00+00:00</updated><id>https://cengc13.github.io/website/blog/2023/audios</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2023/audios/"><![CDATA[<p>This is an example post with audios. It supports local audio files.</p>
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
-
-  <audio src="/website/assets/audio/epicaly-short-113909.mp3" controls="" />
-
-</figure>
-
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
-
-  <audio src="https://cdn.pixabay.com/download/audio/2022/06/25/audio_69a61cd6d6.mp3" controls="" />
-
-</figure>
-
-    </div>
-</div>
-<div class="caption">
-    A simple, elegant caption looks good between video rows, after each row, or doesn't have to be there at all.
-</div>]]></content><author><name></name></author><category term="sample-posts" /><category term="including" /><category term="audios" /><summary type="html"><![CDATA[this is what included audios could look like]]></summary></entry><entry><title type="html">a post with videos</title><link href="https://cengc13.github.io/website/blog/2023/videos/" rel="alternate" type="text/html" title="a post with videos" /><published>2023-04-24T21:01:00+00:00</published><updated>2023-04-24T21:01:00+00:00</updated><id>https://cengc13.github.io/website/blog/2023/videos</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2023/videos/"><![CDATA[<p>This is an example post with videos. It supports local video files.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://www.cheng.zeng1.com/website/feed.xml" rel="self" type="application/atom+xml" /><link href="http://www.cheng.zeng1.com/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-24T01:48:12+00:00</updated><id>http://www.cheng.zeng1.com/website/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">a post with videos, audios and twitter</title><link href="http://www.cheng.zeng1.com/website/blog-tricks/2023/06/23/videos-audios-twitter.html" rel="alternate" type="text/html" title="a post with videos, audios and twitter" /><published>2023-06-23T00:00:00+00:00</published><updated>2023-06-23T00:00:00+00:00</updated><id>http://www.cheng.zeng1.com/website/blog-tricks/2023/06/23/videos-audios-twitter</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/blog-tricks/2023/06/23/videos-audios-twitter.html"><![CDATA[<h4 id="videos">Videos</h4>
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
@@ -216,7 +66,47 @@ be used carefully</p>
 </figure>
 
     </div>
-</div>]]></content><author><name></name></author><category term="sample-posts" /><category term="including" /><category term="videos" /><summary type="html"><![CDATA[this is what included videos could look like]]></summary></entry><entry><title type="html">displaying beautiful tables with Bootstrap Tables</title><link href="https://cengc13.github.io/website/blog/2023/tables/" rel="alternate" type="text/html" title="displaying beautiful tables with Bootstrap Tables" /><published>2023-03-20T18:37:00+00:00</published><updated>2023-03-20T18:37:00+00:00</updated><id>https://cengc13.github.io/website/blog/2023/tables</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2023/tables/"><![CDATA[<p>Using markdown to display tables is easy. Just use the following syntax:</p>
+</div>
+
+<hr />
+<h4 id="audios">Audios</h4>
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <audio src="/website/assets/audio/epicaly-short-113909.mp3" controls="" />
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <audio src="https://cdn.pixabay.com/download/audio/2022/06/25/audio_69a61cd6d6.mp3" controls="" />
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    A simple, elegant caption looks good between video rows, after each row, or doesn't have to be there at all.
+</div>
+
+<hr />
+<h4 id="twitter">Twitter</h4>
+
+<h5 id="tweet">Tweet</h5>
+<p>An example of displaying a tweet:</p>
+<div class="jekyll-twitter-plugin"><blockquote class="twitter-tweet"><p lang="sv" dir="ltr">jekyll-twitter-plugin (1.0.0): A Liquid tag plugin for Jekyll that renders Tweets from Twitter API <a href="http://t.co/m4EIQPM9h4">http://t.co/m4EIQPM9h4</a></p>&mdash; RubyGems (@rubygems) <a href="https://twitter.com/rubygems/status/518821243320287232?ref_src=twsrc%5Etfw">October 5, 2014</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<h5 id="timeline">Timeline</h5>
+<p>An example of pulling from a timeline:</p>
+<div class="jekyll-twitter-plugin"><a class="twitter-timeline" data-width="500" data-tweet-limit="3" href="https://twitter.com/jekyllrb?ref_src=twsrc%5Etfw">Tweets by jekyllrb</a>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>]]></content><author><name></name></author><category term="blog-tricks" /><category term="videos" /><category term="audios" /><category term="twitter" /><summary type="html"><![CDATA[Including videos, audios and twitter in your blog]]></summary></entry><entry><title type="html">a post for formatting tables, math, code and backquotes</title><link href="http://www.cheng.zeng1.com/website/tables/math/code/backquotes/2023/03/21/tables-math-code-backquotes.html" rel="alternate" type="text/html" title="a post for formatting tables, math, code and backquotes" /><published>2023-03-21T18:37:00+00:00</published><updated>2023-03-21T18:37:00+00:00</updated><id>http://www.cheng.zeng1.com/website/tables/math/code/backquotes/2023/03/21/tables-math-code-backquotes</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/tables/math/code/backquotes/2023/03/21/tables-math-code-backquotes.html"><![CDATA[<h3 id="tables">Tables</h3>
+<p>Using markdown to display tables is easy. Just use the following syntax:</p>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Left aligned | Center aligned | Right aligned |
 | :----------- | :------------: | ------------: |
@@ -313,64 +203,142 @@ be used carefully</p>
       <th data-field="price" data-halign="right" data-align="left" data-sortable="true">Item Price</th>
     </tr>
   </thead>
-</table>]]></content><author><name></name></author><category term="sample-posts" /><summary type="html"><![CDATA[an example of how to use Bootstrap Tables]]></summary></entry><entry><title type="html">a post with table of contents</title><link href="https://cengc13.github.io/website/blog/2023/table-of-contents/" rel="alternate" type="text/html" title="a post with table of contents" /><published>2023-03-20T15:59:00+00:00</published><updated>2023-03-20T15:59:00+00:00</updated><id>https://cengc13.github.io/website/blog/2023/table-of-contents</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2023/table-of-contents/"><![CDATA[<p>This post shows how to add a table of contents in the beginning of the post.</p>
+</table>
 
-<h2 id="adding-a-table-of-contents">Adding a Table of Contents</h2>
+<hr />
+<h3 id="math">Math</h3>
+<p>This theme supports rendering beautiful math in inline and display modes using <a href="https://www.mathjax.org/">MathJax 3</a> engine. You just need to surround your math expression with <code class="language-plaintext highlighter-rouge">$$</code>, like <code class="language-plaintext highlighter-rouge">$$ E = mc^2 $$</code>. If you leave it inside a paragraph, it will produce an inline expression, just like \(E = mc^2\).</p>
 
-<p>To add a table of contents to a post, simply add</p>
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">toc</span><span class="pi">:</span>
-  <span class="na">beginning</span><span class="pi">:</span> <span class="kc">true</span>
-</code></pre></div></div>
-<p>to the front matter of the post. The table of contents will be automatically generated from the headings in the post.</p>
+<p>To use display mode, again surround your expression with <code class="language-plaintext highlighter-rouge">$$</code> and place it as a separate paragraph. Here is an example:</p>
 
-<h3 id="example-of-sub-heading-1">Example of Sub-Heading 1</h3>
+\[\sum_{k=1}^\infty |\langle x, e_k \rangle|^2 \leq \|x\|^2\]
 
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>
+<p>You can also use <code class="language-plaintext highlighter-rouge">\begin{equation}...\end{equation}</code> instead of <code class="language-plaintext highlighter-rouge">$$</code> for display mode math.
+MathJax will automatically number equations:</p>
 
-<h3 id="example-of-another-sub-heading-1">Example of another Sub-Heading 1</h3>
+<p>\begin{equation}
+\label{eq:cauchy-schwarz}
+\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+\end{equation}</p>
 
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>
+<p>and by adding <code class="language-plaintext highlighter-rouge">\label{...}</code> inside the equation environment, we can now refer to the equation using <code class="language-plaintext highlighter-rouge">\eqref</code>.</p>
 
-<h2 id="table-of-contents-options">Table of Contents Options</h2>
+<p>Note that MathJax 3 is <a href="https://docs.mathjax.org/en/latest/upgrading/whats-new-3.0.html">a major re-write of MathJax</a> that brought a significant improvement to the loading and rendering speed, which is now <a href="http://www.intmath.com/cg5/katex-mathjax-comparison.php">on par with KaTeX</a>.</p>
 
-<p>If you want to learn more about how to customize the table of contents, you can check the <a href="https://github.com/toshimaru/jekyll-toc">jekyll-toc</a> repository.</p>
+<hr />
+<h3 id="code">Code</h3>
 
-<h3 id="example-of-sub-heading-2">Example of Sub-Heading 2</h3>
+<p>This theme implements a built-in Jekyll feature, the use of Rouge, for syntax highlighting.
+It supports more than 100 languages.
+This example is in C++.
+All you have to do is wrap your code in markdown code tags:</p>
 
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>
-
-<h3 id="example-of-another-sub-heading-2">Example of another Sub-Heading 2</h3>
-
-<p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>]]></content><author><name></name></author><category term="sample-posts" /><category term="toc" /><summary type="html"><![CDATA[an example of a blog post with table of contents]]></summary></entry><entry><title type="html">a post with giscus comments</title><link href="https://cengc13.github.io/website/blog/2022/giscus-comments/" rel="alternate" type="text/html" title="a post with giscus comments" /><published>2022-12-10T15:59:00+00:00</published><updated>2022-12-10T15:59:00+00:00</updated><id>https://cengc13.github.io/website/blog/2022/giscus-comments</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2022/giscus-comments/"><![CDATA[<p>This post shows how to add GISCUS comments.</p>]]></content><author><name></name></author><category term="sample-posts" /><category term="external-services" /><summary type="html"><![CDATA[an example of a blog post with giscus comments]]></summary></entry><entry><title type="html">a post with redirect</title><link href="https://cengc13.github.io/website/blog/2022/redirect/" rel="alternate" type="text/html" title="a post with redirect" /><published>2022-02-01T17:39:00+00:00</published><updated>2022-02-01T17:39:00+00:00</updated><id>https://cengc13.github.io/website/blog/2022/redirect</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2022/redirect/"><![CDATA[<p>Redirecting to another page.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[you can also redirect to assets like pdf]]></summary></entry><entry><title type="html">a post with diagrams</title><link href="https://cengc13.github.io/website/blog/2021/diagrams/" rel="alternate" type="text/html" title="a post with diagrams" /><published>2021-07-04T17:39:00+00:00</published><updated>2021-07-04T17:39:00+00:00</updated><id>https://cengc13.github.io/website/blog/2021/diagrams</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2021/diagrams/"><![CDATA[<p>This theme supports generating various diagrams from a text description using <a href="https://github.com/zhustec/jekyll-diagrams" target="\_blank">jekyll-diagrams</a> plugin.
-Below, we generate a few examples of such diagrams using languages such as <a href="https://mermaid-js.github.io/mermaid/" target="\_blank">mermaid</a>, <a href="https://plantuml.com/" target="\_blank">plantuml</a>, <a href="https://vega.github.io/vega-lite/" target="\_blank">vega-lite</a>, etc.</p>
-
-<p><strong>Note:</strong> different diagram-generation packages require external dependencies to be installed on your machine.
-Also, be mindful of that because of diagram generation the fist time you build your Jekyll website after adding new diagrams will be SLOW.
-For any other details, please refer to <a href="https://github.com/zhustec/jekyll-diagrams" target="\_blank">jekyll-diagrams</a> README.</p>
-
-<h2 id="mermaid">Mermaid</h2>
-
-<p>Install mermaid using <code class="language-plaintext highlighter-rouge">node.js</code> package manager <code class="language-plaintext highlighter-rouge">npm</code> by running the following command:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">-g</span> mermaid.cli
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">c++
+</span><span class="n">code</span> <span class="n">code</span> <span class="n">code</span>
+<span class="p">```</span>
 </code></pre></div></div>
 
-<p>The diagram below was generated by the following code:</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="k">const</span> <span class="err">\</span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">myString</span><span class="p">;</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% mermaid %}
-sequenceDiagram
-    participant John
-    participant Alice
-    Alice-&gt;&gt;John: Hello John, how are you?
-    John--&gt;&gt;Alice: Great!
-{% endmermaid %}
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"input a string: "</span><span class="p">;</span>
+    <span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">myString</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">myString</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+
+    <span class="kt">char</span> <span class="n">charArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">[</span><span class="n">length</span><span class="p">];</span>
+
+    <span class="n">charArray</span> <span class="o">=</span> <span class="n">myString</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">charArray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
-<div class="jekyll-diagrams diagrams mermaid">
-  <svg id="mermaid-1687549153779" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:450px;" viewBox="-50 -10 450 231"><style>#mermaid-1687549153779 .label{font-family:trebuchet ms,verdana,arial;color:#333}#mermaid-1687549153779 .node circle,#mermaid-1687549153779 .node ellipse,#mermaid-1687549153779 .node polygon,#mermaid-1687549153779 .node rect{fill:#ececff;stroke:#9370db;stroke-width:1px}#mermaid-1687549153779 .node.clickable{cursor:pointer}#mermaid-1687549153779 .arrowheadPath{fill:#333}#mermaid-1687549153779 .edgePath .path{stroke:#333;stroke-width:1.5px}#mermaid-1687549153779 .edgeLabel{background-color:#e8e8e8}#mermaid-1687549153779 .cluster rect{fill:#ffffde!important;stroke:#aa3!important;stroke-width:1px!important}#mermaid-1687549153779 .cluster text{fill:#333}#mermaid-1687549153779 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:trebuchet ms,verdana,arial;font-size:12px;background:#ffffde;border:1px solid #aa3;border-radius:2px;pointer-events:none;z-index:100}#mermaid-1687549153779 .actor{stroke:#ccf;fill:#ececff}#mermaid-1687549153779 text.actor{fill:#000;stroke:none}#mermaid-1687549153779 .actor-line{stroke:grey}#mermaid-1687549153779 .messageLine0{marker-end:"url(#arrowhead)"}#mermaid-1687549153779 .messageLine0,#mermaid-1687549153779 .messageLine1{stroke-width:1.5;stroke-dasharray:"2 2";stroke:#333}#mermaid-1687549153779 #arrowhead{fill:#333}#mermaid-1687549153779 #crosshead path{fill:#333!important;stroke:#333!important}#mermaid-1687549153779 .messageText{fill:#333;stroke:none}#mermaid-1687549153779 .labelBox{stroke:#ccf;fill:#ececff}#mermaid-1687549153779 .labelText,#mermaid-1687549153779 .loopText{fill:#000;stroke:none}#mermaid-1687549153779 .loopLine{stroke-width:2;stroke-dasharray:"2 2";marker-end:"url(#arrowhead)";stroke:#ccf}#mermaid-1687549153779 .note{stroke:#aa3;fill:#fff5ad}#mermaid-1687549153779 .noteText{fill:#000;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:14px}#mermaid-1687549153779 .section{stroke:none;opacity:.2}#mermaid-1687549153779 .section0{fill:rgba(102,102,255,.49)}#mermaid-1687549153779 .section2{fill:#fff400}#mermaid-1687549153779 .section1,#mermaid-1687549153779 .section3{fill:#fff;opacity:.2}#mermaid-1687549153779 .sectionTitle0,#mermaid-1687549153779 .sectionTitle1,#mermaid-1687549153779 .sectionTitle2,#mermaid-1687549153779 .sectionTitle3{fill:#333}#mermaid-1687549153779 .sectionTitle{text-anchor:start;font-size:11px;text-height:14px}#mermaid-1687549153779 .grid .tick{stroke:#d3d3d3;opacity:.3;shape-rendering:crispEdges}#mermaid-1687549153779 .grid path{stroke-width:0}#mermaid-1687549153779 .today{fill:none;stroke:red;stroke-width:2px}#mermaid-1687549153779 .task{stroke-width:2}#mermaid-1687549153779 .taskText{text-anchor:middle;font-size:11px}#mermaid-1687549153779 .taskTextOutsideRight{fill:#000;text-anchor:start;font-size:11px}#mermaid-1687549153779 .taskTextOutsideLeft{fill:#000;text-anchor:end;font-size:11px}#mermaid-1687549153779 .taskText0,#mermaid-1687549153779 .taskText1,#mermaid-1687549153779 .taskText2,#mermaid-1687549153779 .taskText3{fill:#fff}#mermaid-1687549153779 .task0,#mermaid-1687549153779 .task1,#mermaid-1687549153779 .task2,#mermaid-1687549153779 .task3{fill:#8a90dd;stroke:#534fbc}#mermaid-1687549153779 .taskTextOutside0,#mermaid-1687549153779 .taskTextOutside1,#mermaid-1687549153779 .taskTextOutside2,#mermaid-1687549153779 .taskTextOutside3{fill:#000}#mermaid-1687549153779 .active0,#mermaid-1687549153779 .active1,#mermaid-1687549153779 .active2,#mermaid-1687549153779 .active3{fill:#bfc7ff;stroke:#534fbc}#mermaid-1687549153779 .activeText0,#mermaid-1687549153779 .activeText1,#mermaid-1687549153779 .activeText2,#mermaid-1687549153779 .activeText3{fill:#000!important}#mermaid-1687549153779 .done0,#mermaid-1687549153779 .done1,#mermaid-1687549153779 .done2,#mermaid-1687549153779 .done3{stroke:grey;fill:#d3d3d3;stroke-width:2}#mermaid-1687549153779 .doneText0,#mermaid-1687549153779 .doneText1,#mermaid-1687549153779 .doneText2,#mermaid-1687549153779 .doneText3{fill:#000!important}#mermaid-1687549153779 .crit0,#mermaid-1687549153779 .crit1,#mermaid-1687549153779 .crit2,#mermaid-1687549153779 .crit3{stroke:#f88;fill:red;stroke-width:2}#mermaid-1687549153779 .activeCrit0,#mermaid-1687549153779 .activeCrit1,#mermaid-1687549153779 .activeCrit2,#mermaid-1687549153779 .activeCrit3{stroke:#f88;fill:#bfc7ff;stroke-width:2}#mermaid-1687549153779 .doneCrit0,#mermaid-1687549153779 .doneCrit1,#mermaid-1687549153779 .doneCrit2,#mermaid-1687549153779 .doneCrit3{stroke:#f88;fill:#d3d3d3;stroke-width:2;cursor:pointer;shape-rendering:crispEdges}#mermaid-1687549153779 .activeCritText0,#mermaid-1687549153779 .activeCritText1,#mermaid-1687549153779 .activeCritText2,#mermaid-1687549153779 .activeCritText3,#mermaid-1687549153779 .doneCritText0,#mermaid-1687549153779 .doneCritText1,#mermaid-1687549153779 .doneCritText2,#mermaid-1687549153779 .doneCritText3{fill:#000!important}#mermaid-1687549153779 .titleText{text-anchor:middle;font-size:18px;fill:#000}#mermaid-1687549153779 g.classGroup text{fill:#9370db;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:10px}#mermaid-1687549153779 g.classGroup rect{fill:#ececff;stroke:#9370db}#mermaid-1687549153779 g.classGroup line{stroke:#9370db;stroke-width:1}#mermaid-1687549153779 .classLabel .box{stroke:none;stroke-width:0;fill:#ececff;opacity:.5}#mermaid-1687549153779 .classLabel .label{fill:#9370db;font-size:10px}#mermaid-1687549153779 .relation{stroke:#9370db;stroke-width:1;fill:none}#mermaid-1687549153779 #compositionEnd,#mermaid-1687549153779 #compositionStart{fill:#9370db;stroke:#9370db;stroke-width:1}#mermaid-1687549153779 #aggregationEnd,#mermaid-1687549153779 #aggregationStart{fill:#ececff;stroke:#9370db;stroke-width:1}#mermaid-1687549153779 #dependencyEnd,#mermaid-1687549153779 #dependencyStart,#mermaid-1687549153779 #extensionEnd,#mermaid-1687549153779 #extensionStart{fill:#9370db;stroke:#9370db;stroke-width:1}#mermaid-1687549153779 .branch-label,#mermaid-1687549153779 .commit-id,#mermaid-1687549153779 .commit-msg{fill:#d3d3d3;color:#d3d3d3}</style><style>#mermaid-1687549153779 {
-    color: rgb(0, 0, 0);
-    font: normal normal 400 normal 16px / normal "Times New Roman";
-  }</style><g></g><g><line id="actor0" x1="75" y1="5" x2="75" y2="220" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="75" dy="0">John</tspan></text></g><g><line id="actor1" x1="275" y1="5" x2="275" y2="220" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="275" dy="0">Alice</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0, 0;"></path><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0, 0;"></path></marker></defs><g><text x="175" y="93" class="messageText" style="text-anchor: middle;">Hello John, how are you?</text><line x1="275" y1="100" x2="75" y2="100" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="175" y="128" class="messageText" style="text-anchor: middle;">Great!</text><line x1="75" y1="135" x2="275" y2="135" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><rect x="0" y="155" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="187.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="75" dy="0">John</tspan></text></g><g><rect x="200" y="155" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="187.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="275" dy="0">Alice</tspan></text></g></svg>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[an example of a blog post with diagrams]]></summary></entry><entry><title type="html">a distill-style blog post</title><link href="https://cengc13.github.io/website/blog/2021/distill/" rel="alternate" type="text/html" title="a distill-style blog post" /><published>2021-05-22T00:00:00+00:00</published><updated>2021-05-22T00:00:00+00:00</updated><id>https://cengc13.github.io/website/blog/2021/distill</id><content type="html" xml:base="https://cengc13.github.io/website/blog/2021/distill/"><![CDATA[<h2 id="equations">Equations</h2>
+<p>By default, it does not display line numbers. If you want to display line numbers for every code block, you can set <code class="language-plaintext highlighter-rouge">kramdown.syntax_highlighter_opts.block.line_numbers</code> to true in your <code class="language-plaintext highlighter-rouge">_config.yml</code> file.</p>
+
+<p>If you want to display line numbers for a specific code block, all you have to do is wrap your code in a liquid tag:</p>
+
+<p>{% highlight c++ linenos %}  <br /> code code code <br /> {% endhighlight %}</p>
+
+<p>The keyword <code class="language-plaintext highlighter-rouge">linenos</code> triggers display of line numbers.
+Produces something like this:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="k">const</span> <span class="err">\</span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">myString</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"input a string: "</span><span class="p">;</span>
+    <span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">myString</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">myString</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+
+    <span class="kt">char</span> <span class="n">charArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">[</span><span class="n">length</span><span class="p">];</span>
+
+    <span class="n">charArray</span> <span class="o">=</span> <span class="n">myString</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">charArray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<hr />
+<h3 id="backquotes">Backquotes</h3>
+
+<blockquote class="block-tip">
+  <h5 id="tip">TIP</h5>
+
+  <p>A tip can be used when you want to give advice
+related to a certain content.</p>
+</blockquote>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### WARNING</span>
+<span class="gt">&gt;</span>
+<span class="gt">&gt; This is a warning, and thus should</span>
+<span class="gt">&gt; be used when you want to warn the user</span>
+{: .block-warning }
+</code></pre></div></div>
+
+<blockquote class="block-warning">
+  <h5 id="warning">WARNING</h5>
+
+  <p>This is a warning, and thus should
+be used when you want to warn the user</p>
+</blockquote>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### DANGER</span>
+<span class="gt">&gt;</span>
+<span class="gt">&gt; This is a danger zone, and thus should</span>
+<span class="gt">&gt; be used carefully</span>
+{: .block-danger }
+</code></pre></div></div>
+
+<blockquote class="block-danger">
+  <h5 id="danger">DANGER</h5>
+
+  <p>This is a danger zone, and thus should
+be used carefully</p>
+</blockquote>]]></content><author><name></name></author><category term="tables" /><category term="math" /><category term="code" /><category term="backquotes" /><category term="formatting" /><summary type="html"><![CDATA[Tables Using markdown to display tables is easy. Just use the following syntax:]]></summary></entry><entry><title type="html">a distill-style blog post</title><link href="http://www.cheng.zeng1.com/website/2021/05/22/distill.html" rel="alternate" type="text/html" title="a distill-style blog post" /><published>2021-05-22T00:00:00+00:00</published><updated>2021-05-22T00:00:00+00:00</updated><id>http://www.cheng.zeng1.com/website/2021/05/22/distill</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/2021/05/22/distill.html"><![CDATA[<h2 id="equations">Equations</h2>
 
 <p>This theme supports rendering beautiful math in inline and display modes using <a href="https://www.mathjax.org/">MathJax 3</a> engine.
 You just need to surround your math expression with <code class="language-plaintext highlighter-rouge">$$</code>, like <code class="language-plaintext highlighter-rouge">$$ E = mc^2 $$</code>.
@@ -658,4 +626,1236 @@ This line is part of the same quote.</p>
 <p>This line is separated from the one above by two newlines, so it will be a <em>separate paragraph</em>.</p>
 
 <p>This line is also a separate paragraph, but…
-This line is only separated by a single newline, so it’s a separate line in the <em>same paragraph</em>.</p>]]></content><author><name>Albert Einstein</name></author><summary type="html"><![CDATA[an example of a distill-style blog post and main elements]]></summary></entry></feed>
+This line is only separated by a single newline, so it’s a separate line in the <em>same paragraph</em>.</p>]]></content><author><name>Albert Einstein</name></author><category term="formatting" /><summary type="html"><![CDATA[an example of a distill-style blog post and main elements]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Final Blog</title><link href="http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Final Blog" /><published>2020-05-08T00:00:00+00:00</published><updated>2020-05-08T00:00:00+00:00</updated><id>http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html"><![CDATA[<p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
+
+<p>This blog summarizes relevant techniques employed to improving the model performance, which is evaluated by the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/leaderboard">public leaderboard score</a> on Kaggle. I will start with the basic BERT multilingual model, after which I will illustrate how we can improve the model by tackling the three main challenges for this competition.</p>
+
+<p>Honestly this is my first NLP project. I chose a project on Kaggle because the Kaggle community is an awesome place to share and learn machine learning knowledge. I would like to thank all those great participants on Kaggle, who make this learning process so rewarding and enjoyable.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="https://www.freelancinggig.com/blog/wp-content/uploads/2017/07/Natural-Language-Processing.png" width="600px" />
+  <br />
+  <figcaption>Natural Language Processing. Image source:
+    <a href="https://medium.com/voice-tech-podcast/predicting-the-type-of-event-based-on-comments-using-natural-language-processing-dd9c04546159/">Medium</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[The Basic BERT Model](#basic-bert)**
+  * The Objective
+  * Tokenizer, Transformer and Classifier
+  * Model Evaluation
+* **[Model Refinement](#model-refinement)**
+  * Model Architectures
+  * Hyper-parameter Tuning
+  * Data Augmentation
+  * Ensemble Magic
+
+</div> -->
+
+<h2 id="the-basic-bert-model-"><a href="#basic-bert" name="basic-bert">The Basic BERT Model </a></h2>
+
+<h3 id="the-objective">The Objective</h3>
+
+<p>Our goal is to take a comment text as input, and produce either 1(the comment is toxic) or 0 (the comment is non-toxic). It is basically a binary classification problem. There are three significant challenges regarding this competition that one needs to take care of.</p>
+
+<ul>
+  <li>
+    <p><strong>Data Size Issue</strong>: the training dataset consists of more than 200,000 data, which thus requires a huge amount of time to clean and pre-process the data. In addition, training on regular GPUs might not be able to give us a decent model in a limited time. For example ,the commit time should be less than three hours on Kaggle, which is almost impossible for a typical multilingual model of 100 million parameters to converge on such a large size dataset.</p>
+  </li>
+  <li>
+    <p><strong>Imbalance Issue</strong>: the training and validation set is highly unbalanced with a toxic/nontoxic ratio around 1:9. Therefore, this competition uses the ROC-AUC value as the evaluation metric. In other words, if we train the model based on the unbalanced dataset, the model should predict better on nontoxic comments than toxic ones.</p>
+  </li>
+  <li>
+    <p><strong>Multilingual Issue</strong>: the training set is written in English. The validation is given in three languages, Turkish, Spanish, and Italian. Besides the multilingual validation set, the testing set is written in three more types of languages, i.e. Russian, French and Portuguese.</p>
+  </li>
+</ul>
+
+<p>We will discuss how we can circumvent or mitigate those three issues in the  model refinement part.</p>
+
+<h3 id="tokenizer-transformer-and-classifier">Tokenizer, Transformer and Classifier</h3>
+
+<p>Simply for demonstration of a multilingual model, we  will use the BERT tokenizer and transformer as implemented in the <a href="https://huggingface.co/">HuggingFace package</a>. In the following we use the example illustrated in Jay’s <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">awesome blog</a> to show how we encode a comment text, pass it through the model and finally do the classification.</p>
+
+<h4 id="tokenizer">Tokenizer</h4>
+
+<p>The first step is to split the words into tokens. Then special tokens are added for the purpose of classification. For example, [CLS] is added as the first position of a comment/review, and [SEP] is added at the end of each sentence. Note that a comment/review may consist of many sentences, therefore we could have many [SEP]s in one comment, but only one [CLS].</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-1.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 1 and 2 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 1 and 2</a></figcaption>
+</div>
+
+<p>Lastly, the tokens are embedded into its id using the embedding model-specific table component. As we mentioned in the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, BERT uses word-piece tokenization while XLM uses Byte-Pair Encoding to grasp the most common sub-words across all languages.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-2-token-ids.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 3 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 3</a></figcaption>
+</div>
+
+<p>Now the input comment is ready to be sent to a language model which  is typically made up of stacks of RNN.</p>
+
+<h4 id="transformer">Transformer</h4>
+
+<p>A normal transformer usually comprises of an encoder and a decoder. Yet for BERT, it is made up by stacks of only encoders. When an embedded input sequence passes through the model, the output would be a vector for each input token, which is made up of 768 float numbers for a BERT model. As this is a sentence classification problem, we take out the first vector associated with the [CLS] token, which is also the one we send to the classifier. The illustrative figure in the following recaps the journey of a comment</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-input-to-output-tensor-recap.png" width="800px" />
+  <br />
+  <figcaption>Recap of the journey of a comment. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Recap</a></figcaption>
+</div>
+
+<p>With the output of the transformer, we can slice the important hidden states for classification.</p>
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-output-tensor-selection.png" width="800px" />
+  <br />
+  <figcaption>Slice the important output hidden states for classification. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Slice the output</a></figcaption>
+</div>
+
+<h4 id="classifier">Classifier</h4>
+
+<p>In terms of the classifier, since we already put everything in a neural network, it is straightforward to do the same for the classification.
+If we use a dense layer with only one output activated by a <code class="language-plaintext highlighter-rouge">sigmoid</code> function as the last layer, it is intrinsically a logistic regression classifier. Alternatively, we can add 
+additional dense layers to extract more non-linear features between the output vector of the transformer layer and the prediction of probability.</p>
+
+<h3 id="evaluation-metrics">Evaluation Metrics</h3>
+
+<p>The dataset is highly skewed towards the non-toxic comments. ROC-AUC is taken as the evaluation metric to represent the extent to which the comments are misclassified. Intuitively, the higher the AUC value, the less overlap the prediction for the two classes will be. In light of this characteristic of AUC metric, further separating the two classes distribution or reduce the variance of the prediction will be helpful to increase the AUC.</p>
+
+<h3 id="the-code">The Code</h3>
+
+<p>This section describes the code to train a multilingual model using BERT. 
+The notebook is available on <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT">colab</a>. The framework of the codes are from <a href="https://www.kaggle.com/xhlulu/jigsaw-tpu-xlm-roberta">this kernel by xhlulu</a>.</p>
+
+<p>Let’s start by importing some useful packages</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="n">tqdm</span><span class="p">.</span><span class="nf">pandas</span><span class="p">()</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.metrics</span> <span class="kn">import</span> <span class="n">AUC</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ModelCheckpoint</span><span class="p">,</span> <span class="n">Callback</span><span class="p">,</span><span class="n">LearningRateScheduler</span><span class="p">)</span>
+<span class="kn">import</span> <span class="n">tensorflow.keras.backend</span> <span class="k">as</span> <span class="n">K</span>
+</code></pre></div></div>
+
+<p>Download the latest Huggingface <code class="language-plaintext highlighter-rouge">transformers</code> and <code class="language-plaintext highlighter-rouge">tokenizer</code> packages. Then we import necessary modules.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">tokenizers</span><span class="o">==</span><span class="mf">0.7</span><span class="p">.</span><span class="mi">0</span>
+<span class="err">!</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">transformers</span>
+<span class="kn">from</span> <span class="n">tokenizers</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="n">tokenizers</span> <span class="kn">import</span> <span class="n">BertWordPieceTokenizer</span>
+<span class="kn">import</span> <span class="n">transformers</span>
+<span class="kn">from</span> <span class="n">transformers</span> <span class="kn">import</span> <span class="n">TFAutoModel</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+</code></pre></div></div>
+
+<p><strong>Configure TPU environment</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Detect hardware, return appropriate distribution strategy
+# Change the runtime type to TPU if you are on colab or Kaggle
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># TPU detection. No parameters necessary if TPU_NAME environment variable is
+</span>    <span class="c1"># set
+</span>    <span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">cluster_resolver</span><span class="p">.</span><span class="nc">TPUClusterResolver</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Running on TPU </span><span class="sh">'</span><span class="p">,</span> <span class="n">tpu</span><span class="p">.</span><span class="nf">master</span><span class="p">())</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="n">tpu</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">if</span> <span class="n">tpu</span><span class="p">:</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="nf">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">tpu</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="nf">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="nc">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Default distribution strategy in Tensorflow. Works on CPU and single GPU.
+</span>    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="nf">get_strategy</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">REPLICAS: </span><span class="sh">"</span><span class="p">,</span> <span class="n">strategy</span><span class="p">.</span><span class="n">num_replicas_in_sync</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Nowadays Kaggle and Colab provide TPU running time. If you already turn on the TPU, it will print “REPLICAS:  8”.</p>
+
+<p>Next we load the data. Note that if you do not save the competition on your Google drive, there is an alternative way doing that, as we show in the simple <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS">logistic regression notebook</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_FOLDER</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="o">-</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">competition</span><span class="o">-</span><span class="n">data</span><span class="p">]</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/train.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/validation.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/test.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/sample_submission.csv</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Shuffle the train set
+</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">1.</span><span class="p">).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then we define some configurations for tokenization, model architecture and training settings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AUTO</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="n">AUTOTUNE</span>
+<span class="c1"># Configuration
+</span><span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">*</span> <span class="n">strategy</span><span class="p">.</span><span class="n">num_replicas_in_sync</span>
+<span class="n">MAX_LEN</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">MODEL</span> <span class="o">=</span> <span class="sh">'</span><span class="s">bert-base-cased</span><span class="sh">'</span>
+</code></pre></div></div>
+
+<p>Load the tokenizer and save the configuration files for the vocabulary library and the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># First load the real tokenizer
+</span><span class="n">save_path</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">./</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="sh">'</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">save_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="nf">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="p">.</span><span class="nf">save_pretrained</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+<span class="n">fast_tokenizer</span> <span class="o">=</span> <span class="nc">BertWordPieceTokenizer</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s">/vocab.txt</span><span class="sh">'</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Define the encode function. Basically it splits a comment text into chunks of length 256. The EDA shows that the majority of the comment texts are of length less than 200. Therefore, for most of the cases, we only deal with one-chunk tokenization.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    From:
+    https://www.kaggle.com/xhlulu/jigsaw-tpu-distilbert-with-huggingface-and-keras
+    </span><span class="sh">"""</span>
+    <span class="n">tokenizer</span><span class="p">.</span><span class="nf">enable_truncation</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">maxlen</span><span class="p">)</span>
+    <span class="n">tokenizer</span><span class="p">.</span><span class="nf">enable_padding</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">maxlen</span><span class="p">)</span>
+    <span class="n">all_ids</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">texts</span><span class="p">),</span> <span class="n">chunk_size</span><span class="p">)):</span>
+        <span class="n">text_chunk</span> <span class="o">=</span> <span class="n">texts</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">chunk_size</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
+        <span class="n">encs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">encode_batch</span><span class="p">(</span><span class="n">text_chunk</span><span class="p">)</span>
+        <span class="n">all_ids</span><span class="p">.</span><span class="nf">extend</span><span class="p">([</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span> <span class="k">for</span> <span class="n">enc</span> <span class="ow">in</span> <span class="n">encs</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">all_ids</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Tokenize the train, validation and test sets in the same manner. Also extract the labels for train and validation sets. Note  till now we do not conduct cross-validation since for an effective model using XLM architecture, it requires an average training time of 75 minutes. Therefore, performing k-fold CV will exceed the time limit on Kaggle (less than 3 hours for a TPU commit).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">time</span>
+<span class="c1">## tokenization
+</span><span class="n">x_train</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">comment_text</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="n">x_valid</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">valid</span><span class="p">.</span><span class="n">comment_text</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">test</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="c1">## Extract the labels
+</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">toxic</span><span class="p">.</span><span class="n">values</span>
+<span class="n">y_valid</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">toxic</span><span class="p">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<p><strong>Build the <code class="language-plaintext highlighter-rouge">Dataset</code> objects</strong> for fast data fetching</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">repeat</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">shuffle</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">valid_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">((</span><span class="n">x_valid</span><span class="p">,</span> <span class="n">y_valid</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">cache</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>We then build the BERT model and the model structure is as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">time</span>
+<span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="sh">'</span><span class="s">binary_crossentropy</span><span class="sh">'</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="n">input_word_ids</span> <span class="o">=</span> <span class="nc">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">max_len</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">input_word_ids</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">sequence_output</span> <span class="o">=</span> <span class="nf">transformer</span><span class="p">(</span><span class="n">input_word_ids</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># extract the vector for [CLS] token
+</span>    <span class="n">cls_token</span> <span class="o">=</span> <span class="n">sequence_output</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.35</span><span class="p">)(</span><span class="n">cls_token</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">sigmoid</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="nc">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_word_ids</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="nc">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span> <span class="n">loss</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="nc">AUC</span><span class="p">()])</span>
+    
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">with</span> <span class="n">strategy</span><span class="p">.</span><span class="nf">scope</span><span class="p">():</span>
+    <span class="n">transformer_layer</span> <span class="o">=</span> <span class="n">transformers</span><span class="p">.</span><span class="n">TFBertModel</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="n">MODEL</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">transformer_layer</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/model_summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Model structure</figcaption>
+</div>
+
+<p>We pass the <code class="language-plaintext highlighter-rouge">Dataset</code> object into the model and start training.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_steps</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">BATCH_SIZE</span>
+<span class="n">train_history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span>
+    <span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="n">valid_dataset</span><span class="p">,</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now that the model is trained. We can visualize the training history using the following function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="k">def</span> <span class="nf">plot_loss</span><span class="p">(</span><span class="n">his</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span><span class="sh">'</span><span class="s">ggplot</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">epoch</span><span class="p">),</span> <span class="n">his</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">train_loss</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">epoch</span><span class="p">),</span> <span class="n">his</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Epoch #</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="sh">'</span><span class="s">upper right</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+<span class="nf">plot_loss</span><span class="p">(</span><span class="n">train_history</span><span class="p">,</span> <span class="n">EPOCHS</span><span class="p">,</span> <span class="sh">"</span><span class="s">training loss</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/training_loss_history.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>History of training and validation losses. </figcaption>
+</div>
+
+<p>The training history shows that although there is a bump from Epoch 5 to Epoch 6 for the validation loss, the overall loss for both train and validation decreases gradually.</p>
+
+<p>Also, we can look at the distributions of the prediction probabilities on the validation set. It indicates that if the predicted probability is below 0.3, the comment is more likely to be non-toxic. In contrast, a probability of above 0.6 will predict toxic for the comment. In the probability region between those two, there is some overlap, which means it is challenging to predict the nature of the comment if it falls into this intermediate region.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/pred_prob.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>History of predicted probabilities on validation set. </figcaption>
+</div>
+
+<h2 id="model-refinement"><a href="#model-refinement" name="model-refinement">Model Refinement</a></h2>
+
+<p>Next we will discussion various techniques to improve the model performance.</p>
+
+<h3 id="model-architectures">Model Architectures</h3>
+
+<p>The model architecture is mainly associated with the “Multilingual Issue”. Since different architectures are pre-trained on varying size dataset and targeted on different semi-unsupervised tasks, their capability of mining cross-lingual knowledge is different.</p>
+
+<p>The Basic BERT model performs not too bad on this multilingual task, which has a public LB score of around 0.916. As we mentioned in the second blog, the most successful multilingual model is probably the XLM-RoBERTa model, especially the large XLM-R model. The large XLM-R model has more than 500 million parameters, and it demonstrates to be superior to other language models in multilingual modeling. With XLM-R architecture, our baseline LB score goes up to 0.9365, a significant improvement compared to BERT.</p>
+
+<h3 id="hyperparameter-tuning">Hyperparameter Tuning</h3>
+
+<p>The hyperparameter tuning aims to the resolve the “Data Size Issue” and “Unbalance Issue”. However, we are not able to tune too many hyperparameters due to such a limited time for this final project. 
+Instead, I will elaborate the techniques I tried and the reasoning.</p>
+
+<ul>
+  <li>
+    <p>Adjust the maximum length for the input vector sequence. I tried lengths of 150, 192, 210, and 224. 224 maximum length gives the best LB score of 0.9378.</p>
+  </li>
+  <li>
+    <p>Change the data size of training set. Only a fraction of the training data corresponding to non-toxic comments is selected. It was found that sub-sampling the non-toxic comments help a lot in balancing the dataset. It 
+increases the LB score to 0.9401 with the best maximum length.</p>
+  </li>
+  <li>
+    <p>Tweak the loss function. The most typical loss function for a binary classification problem is the <code class="language-plaintext highlighter-rouge">binary_crossentropy</code> as implemented in <code class="language-plaintext highlighter-rouge">Tensorflow</code>. Yet, a great work by <a href="https://arxiv.org/pdf/1708.02002.pdf">Lin et.al</a> proves that a novel loss they term “Focal Loss” that adds a pre-factor to the standard cross entropy criterion can boost the model accuracy. The name “focal” comes from the fact that the model now pays less attention to the well classified samples while putting more focus on hard, misclassified examples. A weighting factor is also introduced to mitigate the class unbalance issue. The figure below shows why Focal loss focuses more on the misclassified data. Unfortunately, models with focal loss perform similarly compared to the standard binary cross entropy.</p>
+  </li>
+</ul>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/focal_loss.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Focal Loss trend with different hyperparameters. Source:
+    <a href="https://arxiv.org/pdf/1708.02002.pdf">focal loss</a></figcaption>
+</div>
+
+<ul>
+  <li>Other random efforts. We add an additional dense layer and a dropout layer right ahead of the final layer. Then the dropout rate and the number of nodes in the dense layer are tuned. Although the model does not improve a lot in terms of the validation accuracy and the LB score, we believe that it will be helpful because adding regularization into a model will increase the generalization capability on unseen data. Moreover, I also tried a learning rate scheduler. However, no significant improvement was observed.</li>
+</ul>
+
+<h3 id="data-augmentation">Data Augmentation</h3>
+
+<p>This strategy is of central importance as in the training data we only have English-written comments while in the validation and test set, we have comments written in other languages. Although the multilingual model can capture some of the shared knowledge between various languages, data augmentation is necessary to improve the model performance. As of now, two approaches are tested.</p>
+
+<ul>
+  <li>
+    <p>Translate the training set to other languages and keep the validation and test set unchanged. This approach gives me a best LB score of 0.9365.</p>
+  </li>
+  <li>
+    <p>Translate the validation and test set to English. This model performs a little better, with a LB score of 0.9378.</p>
+  </li>
+</ul>
+
+<h3 id="ensemble-magic">Ensemble Magic</h3>
+
+<p>I did weighted ensemble on four models. The LB score for individual models are 0.9427, 0.9416, 0.9401 and 0.9365, respectively. By carefully tuning the weights, I arrived at a LB score of 0.9453.</p>
+
+<p>Further combining my own best submission with public top-score submissions, I am able to achieve a Public LB score of 0.9476, which leads to a top 5% position out of more than 800 teams. The following snapshot for the Public ranking is taken on May 6th.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/final-blog/pub_lb.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Snapshot of the public leaderboard, taken on May 6th, 2020. </figcaption>
+</div>
+
+<h3 id="next-steps">Next steps</h3>
+
+<ul>
+  <li>
+    <p>Metric learning: post process the prediction to further improve the ranking on public leaderboard.</p>
+  </li>
+  <li>
+    <p>Transfer learning: using the trained model for other purposes such as predicting the state of a reddit post, which can be mainly categorized as upvote and downvote.</p>
+  </li>
+</ul>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>Jay Alammer. (2019, November 26). <em>A Visual Guide to Using BERT for the First Time</em>. Retrieved from <a href="https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb">https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb</a>. The vivid figures for illustration of key components in a language model are taken from this awesome blog.</p>
+  </li>
+  <li>
+    <p>Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2019. This is the original paper for the basic BERT model.</p>
+  </li>
+  <li>
+    <p>Tsung-Yi Lin et al. Focal Loss for Dense Object Detection. 2017. This paper introduces the idea of using <em>Focal Loss</em> to make the model focus more on those misclassified images.</p>
+  </li>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Kaggle competition blog]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Midway Blog</title><link href="http://www.cheng.zeng1.com/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Midway Blog" /><published>2020-04-26T00:00:00+00:00</published><updated>2020-04-26T00:00:00+00:00</updated><id>http://www.cheng.zeng1.com/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html"><![CDATA[<p>This blog is the second of the three blogs documenting my entry into <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. To move forward, the primary purpose of the next step is to develop the baseline model from scratch. The link is provided in the <a href="https://github.com/cengc13/2040FinalProject/blob/master/src/models/logistic_regression.ipynb">notebook for the model</a> or <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS">running it on colab</a>. The essential components of a language model are summarized, including the tokenizer, the model architecture, and the evaluation metrics. In addition, we will cover some state-of-the-art multilingual models, such as BERT, XLM and XLM-RoBERT.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="https://www.topbots.com/wp-content/uploads/2019/02/NLP_feature_image_1600px-1280x640.jpg" width="600px" />
+  <br />
+  <figcaption>Natural Language Processing. Image source:
+    <a href="https://venturebeat.com/2018/09/29/investing-in-ai-when-natural-language-processing-pays-off/">Investing in AI</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[Part 1: The Baseline Model](#part-1-baseline-model)**
+  * Dataset
+  * Tokenizer
+  * The Model
+* **[Part 2: Cross-lingual Modeling](#part-2-multilingual-models)**
+  * BERT and its Variants
+  * XLM
+  * XLM-RoBERTa
+
+</div> -->
+
+<h2 id="part-1-the-baseline-model-"><a href="#part-1-baseline-model" name="part-1-baseline-model">Part 1: The Baseline Model </a></h2>
+
+<p>Our goal is to take a comment text as input, and produces either 1(the comment is toxic) or 0 (the comment is non-toxic). It is basically a binary classification problem. The simplest model we can think of is the logistic regression model, for which we need to figure out how to digitalize comments so that we can use logistic regression to predict the probabilities of a comment being toxic. Next we will do a quick overview of the dataset, introduce the concepts of tokenizer, and go over the architecture of a baseline model.</p>
+
+<h3 id="dataset-jigsaw-multilingual-comments">Dataset: Jigsaw Multilingual Comments</h3>
+
+<p>The dataset we will use, as mentioned in the first blog, is from the Kaggle competition <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">Jigsaw Multilingual Toxic Analysis</a>, which contains the comment texts and its toxicity labels, indicating whether the comment text is disrespectful, rude or insulting.</p>
+
+<table class="features-table">
+  <tr>
+    <th class="mdc-text-light-green-600">
+    Comment
+    </th>
+    <th class="mdc-text-purple-600">
+    Toxic
+    </th>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      This is so cool. It's like, 'would you want your mother to read this??' Really great idea, well done!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      Thank you!! This would make my life a lot less anxiety-inducing. Keep it up, and don't let anyone get in your way!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      This is such an urgent design problem; kudos to you for taking it on. Very impressive!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      haha you guys are a bunch of losers.
+    </td>
+    <td class="mdc-bg-purple-50">
+      1
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      Is this something I'll be able to install on my site? When will you be releasing it?
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+</table>
+
+<p>We can load the dataset with <code class="language-plaintext highlighter-rouge">pandas</code>. Then we split the dataset to train and test sets in a stratified fashion as the dataset is highly unbalanced.
+The splitting ratio is 8:2.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">"</span><span class="s">./jigsaw-toxic-comment-train.csv</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">comment_text</span><span class="p">,</span> <span class="n">train</span><span class="p">.</span><span class="n">toxic</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="nf">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">y_test</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="tokenizer">Tokenizer</h3>
+
+<p>A tokenizer works as a pipeline. It processes some raw text as input and output encoding. It is usually structured into three steps. Here we illustrate the idea of tokenization by the example provided in the blog <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">“A Visual Guide to Using BERT for the First Time”</a>. For instance, if we would like to classify the sentence ““a visually stunning rumination on love”, the tokenizer will firstly split the sentences into words with some separator, say whitespace. In the next step, special tokens will be added for sentence classifications for some tokenizers.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-1.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 1 and 2 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 1 and 2</a></figcaption>
+</div>
+
+<p>The final step is to replace each token with its numeric id from the embedding table, which is a natural component of a pre-trained model. Then the sentence is ready to be sent for a language model to be processed.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-2-token-ids.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 3 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 3</a></figcaption>
+</div>
+
+<p>For the purpose of demonstration, in the baseline model, we will use a classic tokenization method <code class="language-plaintext highlighter-rouge">TF-IDF</code>, which is short for “term frequency-inverse document frequency”. Basically it counts the number of occurrence of a word in the documents, and then it is offset by the number of documents that contain the word. This tokenization approach is available in the package <code class="language-plaintext highlighter-rouge">sklearn</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">### Define the vectorizer
+</span><span class="kn">from</span> <span class="n">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="nc">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="c1">### Suppose X_train is a corpus of texts
+## Fit the vectorizer
+</span><span class="n">X_train_fitted</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_fitted</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In addition, <a href="https://huggingface.co/">HUGGING FACE</a> provides a open-source package, named <code class="language-plaintext highlighter-rouge">tokenizer</code>, where you can find many fast state-of-the-art tokenizers for research and production. For example, to implement a pre-trained DistilBERT tokenizer and model/transformer, you just need two-line codes as follows</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">transformers</span> <span class="k">as</span> <span class="n">ppb</span>
+<span class="c1"># For DistilBERT:
+</span><span class="n">tokenizer_class</span><span class="p">,</span> <span class="n">pretrained_weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">ppb</span><span class="p">.</span><span class="n">DistilBertTokenizer</span><span class="p">,</span> <span class="sh">'</span><span class="s">distilbert-base-uncased</span><span class="sh">'</span><span class="p">)</span>
+<span class="c1"># load pretrained tokenizer
+</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer_class</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="n">pretrained_weights</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After tokenization, we can build a model and train it with the tokenized comments.</p>
+
+<h3 id="the-model">The Model</h3>
+
+<p>We define the simplest binary classification model with logistic regression.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="c1"># C is a term to control the l2 regularization strength
+</span><span class="n">model_lr</span> <span class="o">=</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">6.0</span><span class="p">)</span>
+</code></pre></div></div>
+<p>If you want to optimize the hyperparameter <code class="language-plaintext highlighter-rouge">C</code>, you can do a simple grid search.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">C</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)}</span>
+<span class="n">grid_search</span> <span class="o">=</span> <span class="nc">GridSearchCV</span><span class="p">(</span><span class="nc">LogisticRegression</span><span class="p">(),</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">grid_search</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_fitted</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best parameters: </span><span class="sh">'</span><span class="p">,</span> <span class="n">grid_search</span><span class="p">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best scrores: </span><span class="sh">'</span><span class="p">,</span> <span class="n">grid_search</span><span class="p">.</span><span class="n">best_score_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We train and evaluate the model by the prediction accuracy. 
+<strong>Note</strong> the official metric for this competition is <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/overview/evaluation">ROC-AUC</a>, which is more reasonable for a highly unbalanced dataset.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## training
+</span><span class="n">model_lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_fitted</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="c1">## prediction on testing set
+</span><span class="n">model_lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">X_test_fitted</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note that Tfi-df tokenization is not capable of dealing with multiple languages. Instead we should refer to other tokenizers, for example a BERT tokenizer. The example using <code class="language-plaintext highlighter-rouge">bert-base-uncase</code> model and tokenizer can be found in this <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX">colab notebook</a>.</p>
+
+<h2 id="part-2-cross-lingual-models-"><a href="#part-2-multilingual-models" name="part-2-multilingual-models">Part 2: Cross-lingual Models </a></h2>
+
+<h3 id="bert">BERT</h3>
+
+<p><strong>BERT</strong>, which stands for <strong>B</strong>idirectional <strong>E</strong>ncoder <strong>R</strong>epresentations from <strong>T</strong>ransformers, have achieved great success in Natural Language Processing. In contrast with previous language models looking at a text sequence from left to right, the innovation of BERT lies in that it is designed to train bidirectional representation by jointly conditioning on both the left and right context. The following figure shows a high-level description of the BERT architecture. It is essentially a stack of Transformer encoders. The input is a ‘sentence’ which is tokenized and word-embedded with a 30,000 token vocabulary. The output is a sequence of vectors, for which each vector represents an input token with the same index.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT_MLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Schematic for the Masked Language Modeling in BERT. Source:
+  	<a href="https://towardsdatascience.com/bert-explained-state-of-the-art-language-model-for-nlp-f8b21a9b6270">MLM</a></figcaption>
+</div>
+
+<p>It is natural that a language model typically looks at part of the sentence and predict the next words. However, it is challenging to define prediction tasks when we look at the sentence bidirectionally.</p>
+
+<p>The authors of the <a href="https://arxiv.org/pdf/1810.04805.pdf">original paper</a> uses two pretraining techniques to overcome this issue. They are both unsupervised approaches, namely masked language modeling (MLM) and next sentence prediction (NSP).</p>
+
+<h4 id="masked-language-modeling">Masked Language Modeling</h4>
+
+<p>15% of the words in a sentence are masked with a [MASK] token. Then the model tries to predict the original tokens in the masked positions. In practice, BERT implemented a more statistically mask scheme. For more details, please refer to the <a href="https://arxiv.org/pdf/1810.04805.pdf">Appendix C</a></p>
+
+<h4 id="next-sentence-prediction-nsp">Next Sentence Prediction (NSP)</h4>
+
+<p>In BERT, the model can take two sentences as input, and learned to predict if the second sentence of the pair sentences is the subsequent or antecedent. During pretraining, for 50% of the pair sentences, the second sentence is the actual next sentence, whereas for the rest 50%, the second sentence is randomly chosen, which is supposed to be disconnected from the first sentence.</p>
+
+<p>The pretraining is conducted on documents from BooksCorpus and English Wikipedia. In this scenario, a document-level corpus is used to extract long sequences.</p>
+
+<h4 id="fine-tuning">Fine tuning</h4>
+
+<p>The fine tuning process refers to using the pretrained BERT to do a downstream task. The process is straightforward and task specific. The architecture is the same except the output layers. Although during fine-tuning, all parameters are fine-tuned, it turns out that most parameters will stay the same.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Overall pre-training and fine-tuning procedures for BERT. Source:<a href="https://arxiv.org/pdf/1810.04805.pdf">BERT</a> </figcaption>
+</div>
+
+<p>In order to get a in-depth understanding of this technique, we highly recommend reading the  <a href="https://arxiv.org/pdf/1810.04805.pdf">paper</a>, or the <a href="https://github.com/google-research/bert">open source code</a> by Google research.</p>
+
+<h3 id="xlm">XLM</h3>
+
+<p>Though BERT is trained on over 100 languages, it was not optimized for multilingual models since most of its vocabulary does not commute between languages, and as a result, the knowledge shared is limited. To overcome this issue, instead of using word or characters as input, XLM uses Byte-Pair Encoding (BPE) that splits the input into the most common sub-words across all languages (see <a href="https://en.wikipedia.org/wiki/Byte_pair_encoding">BPE wiki page</a> for more details about this data compression technique).</p>
+
+<p>Intrinsically XLM is a updated BERT techniques. It updates BERT architecture in two ways.</p>
+
+<ul>
+  <li>
+    <p>Each training sample consists of the same text in two languages. To predict a masked word in one language, the model can either attend to surrounding words in the same language or the other language. In this way, alignment between contexts of the two languages can be facilitated.</p>
+  </li>
+  <li>
+    <p>The model also uses language IDs and the order of the tokens in the format of positional embeddings to better understand the relationship of related tokens in various languages.</p>
+  </li>
+</ul>
+
+<p>This new approach is named as Translation Language Modeling (TLM). The model pretraining is carried out as the following schematic representation.</p>
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/midway-blog/XLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Cross-lingual language model pretraining. Source:<a href="https://arxiv.org/pdf/1901.07291.pdf">XLM</a></figcaption>
+</div>
+
+<p>The model is trained by using MLM, TLM or a combination of both.</p>
+
+<h3 id="xlm-roberta">XLM-RoBERTa</h3>
+
+<p>Similar to XLM, XLM-RoBERTa is also a transformer-based architecture, both relied on MLM and are capable of processing texts across 100 languages. However, the biggest update is that the new architecture is trained on way more data than the original one, i.e. 2.5 TB storage. And the ‘RoBERTa’ comes from that the training is the same as the monolingual RoBERTa model, for which the sole objective is the MLM, without NSP and TLM. COnsidering the diffuculties of using various tokenization tools for different languages, Sentence Piece model is trained at the first step and then it is applied to all languages. The XLM-RoBERTa model has demonstrated to be superior than the state-of-the-art multilingual models such as GermEval18.</p>
+
+<p><strong>Note</strong> that all the pretrained models mentioned above can be easily called by using Huggingface packages.</p>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>T. Kudo and J. Richardson. SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing. 2018. This is a paper discussing various tokenization techniques.</p>
+  </li>
+  <li>
+    <p>Alexis Conneau and Kartikay Khandelwal et.al. Unsupervised Cross-lingual Representation Learning at Scale. 2020.The XLM-RoBERTa model originates from this paper.</p>
+  </li>
+  <li>
+    <p>Guillaume Lample and Alexis Conneau. Cross-lingual Language Model Pretraining. 2019. This paper is the first work using the XLM architecture for language modeling.</p>
+  </li>
+  <li>
+    <p>Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2019. This is the original paper for BERT architecture.</p>
+  </li>
+  <li>
+    <p>Jay Alammer. (2019, November 26). <em>A Visual Guide to Using BERT for the First Time</em>. Retrieved from <a href="https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb">https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb</a>. The vivid figures for illustration of key components in a language model are taken from this awesome blog.</p>
+  </li>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Kaggle competition blog]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Start Blog</title><link href="http://www.cheng.zeng1.com/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Start Blog" /><published>2020-04-12T00:00:00+00:00</published><updated>2020-04-12T00:00:00+00:00</updated><id>http://www.cheng.zeng1.com/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html"><![CDATA[<p>This is the first of three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. It is a natural language processing (NLP) task. I chose this topic as the final project because NLP is a very hot topic nowadays and I am new to this area. I hope to take advantages of this opportunity to learn more about deep learning targeted towards the state-of-art application in NLP.</p>
+
+<p>In the first blog, I walk you through an overview of the competition, the exploratory data analysis, and  the basics of language models for this project.</p>
+
+<!-- <center><img src="https://i.imgur.com/4WNesOq.png" width="400px"></center> -->
+
+<div class="img-div" style="text-align:center">
+  <image src="https://i.imgur.com/4WNesOq.png" width="400px" />
+  <br />
+  <figcaption>Competition Logo. Source:
+    <a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge">Logo</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[Part 1: Introduction](#part-1-introduction-and-background)**
+  * Background & Motivation
+  * Description of The Competition
+  * Evaluation Metrics and Submission Requirements
+* **[Part 2: Data Exploration](#part-2-eda)**
+  * Dataset
+  * Preprocessing
+  * Exploratory data analysis
+* **[Part 3: Basics of Language Models](#part-3-basics-of-language-models)**
+  * What is a Language Model?
+  * Word Embeddings
+  * Attention
+
+</div> -->
+
+<h2 id="part-1-introduction-"><a href="#part-1-introduction-and-background" name="part-1-introduction-and-background">Part 1: Introduction </a></h2>
+
+<h3 id="background--motivation">Background &amp; Motivation</h3>
+<p>Thanks to the rapid development of deep learning techniques and computational hardwares, NLP has been gaining its momentum in the past two decades. As believed by machine learning experts, NLP is experiencing a boom in the short-term future, same as computer vision once did. The popularity of it brought a great amount of investment. Recently Kaggle released two NLP competitions (<a href="https://www.kaggle.com/c/tweet-sentiment-extraction">tweet sentiment extraction</a> and <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">comment toxicity analysis</a>). Of focus here is the second one because it is based off two previous Kaggle competitions regarding the same topic (<a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge">2018 toxicity</a> and <a href="https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification">2019 toxicity</a>). For the very first competion, contestants are challenged to buld multi-headed models to recognize toxicity and several subtypes of toxicity. <em>Toxicity is defined as anything rude, disrespectful or other wise likely to make someone leave a discussion</em>. The 2019 Challenges asks Kagglers to work across a diverse range of conversations. The main purpose of this final project is to understand the basics of deep learning techniques applied to NLP. So it would be more doable to work on a project in such a limited time for which there exist many established references/documents.</p>
+
+<h3 id="description-of-the-competition">Description of The Competition</h3>
+<p>Taking advantage of Kaggle’s TPU support, this competition aims to build multilingual models with English-only training data. The model will be tested on Wikipedia talk page comments in several different languages. It is supported by The Conversation AI team, which is funded by <a href="https://jigsaw.google.com/">Jiasaw</a> and Google.</p>
+
+<h3 id="evaluation-metrics-and-submission-requirements">Evaluation Metrics and Submission Requirements</h3>
+<p>Basically it is a classification problem. The model performance is evaluated by the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">area under the ROC curve</a> between the predictions and the observations.</p>
+
+<p>The submission file consists of two columns. The first column indicates the comment <code class="language-plaintext highlighter-rouge">id</code> and the second one is the probability for the <code class="language-plaintext highlighter-rouge">toxicity</code> variable. Following is a sample submission file.</p>
+
+<table class="features-table">
+  <tr>
+    <th class="mdc-text-light-green-600">
+    id
+    </th>
+    <th class="mdc-text-purple-600">
+    toxic
+    </th>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      0
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.3
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      1
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.7
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+     2
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.9
+    </td>
+  </tr>
+</table>
+
+<p>In addition to the well defined metrics evaluated on the given testing set. We might also want to further apply the language model to additional applications. For example,</p>
+
+<ul>
+  <li>
+    <p>As mentioned before, there is another NLP competition on Kaggle, which challenges contestants to analyze the tweet sentiment. Basically there are three types of sentiment, including <em>neural</em>, <em>negative</em> and <em>positive</em>.</p>
+  </li>
+  <li>
+    <p>Another possible application is to scrape comments from some social media, say “reddit”, and predict whether the comment will receive upvote, downvote or be removed.</p>
+  </li>
+</ul>
+
+<h2 id="part-2-data-exploration-"><a href="#part-2-eda" name="part-2-eda">Part 2: Data Exploration </a></h2>
+
+<h3 id="dataset">Dataset</h3>
+<p>Following is the list of the datasets we have for this project. The primary data is the <code class="language-plaintext highlighter-rouge">comment_text</code> column which contains the text of comment to be classified as toxic or non-toxic (0…1 in the <code class="language-plaintext highlighter-rouge">toxic</code> column). The trainingset’s comments are mostly written in English whereas the validation and testing sets’ comments are composed of multiple non-English languages. A detailed explanation of the dataset can be found on the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/data">competition web page</a></p>
+
+<!-- <div class="img-div" markdown="0" style="text-align:center">
+  <image src="/assets/img/kaggle-jigsaw/starter-blog/datasets.png"/>
+  <br />
+</div> -->
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/train_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the training set</figcaption>
+</div>
+
+<p><br /></p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="validation data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the validation set</figcaption>
+</div>
+
+<p>Below shows the five top rows of the training set, validation set and testing set. There are mainly four columns for all datasets, in which <code class="language-plaintext highlighter-rouge">id</code> is the identifier, <code class="language-plaintext highlighter-rouge">commen_text</code> is the text of comment, <code class="language-plaintext highlighter-rouge">lang</code> is the language of the comment, and <code class="language-plaintext highlighter-rouge">toxic</code> is whether or not the comment is toxic. In the training set, we can see 5 additional columns which represent the subtypes of toxic comment. Moreover, we do not have the <code class="language-plaintext highlighter-rouge">toxic</code> column in the testing set.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the testing set</figcaption>
+</div>
+
+<p>As mentioned before, most comments in the training set are in English while most comments in validation and testing set are in Non-English, including Spanish, French, Turkish and Portuguese etc. The number for all types of languages in validation and test set are summarized at below.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Language-specific data counts in the validation set</figcaption>
+</div>
+
+<p><br /></p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <br />
+  <figcaption>Language counts in the test set</figcaption>
+</div>
+
+<h3 id="preprocessing">Preprocessing</h3>
+<p>We can do a few data preprocessing steps before feeding the data into a language model.</p>
+
+<ul>
+  <li>
+    <p>Clean up the comment texts by dropping redundant information, such as usernames, emails, hyperlinks and line breakers.</p>
+  </li>
+  <li>
+    <p>Remove unnecessary columns in the trainingset such as the subtypes of toxicity because the target for submission is only the <code class="language-plaintext highlighter-rouge">toxic</code>.</p>
+  </li>
+  <li>
+    <p>Tokenize the words, which can be also considered as a step for building up a model.</p>
+  </li>
+</ul>
+
+<h3 id="exploratory-data-analysis-eda">Exploratory data analysis (EDA)</h3>
+
+<p><strong>Note that</strong> the analysis for “wordcloud” is  inspired by this kernel <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models">EDA and Modeling Kernel</a>.</p>
+
+<h4 id="comment-wordcloud">Comment Wordcloud</h4>
+<p>Firstly we take a look at the comments in the training set.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+</div>
+
+<p>The most common words include “Wikipedia”, “article”, “will” and “see”.</p>
+
+<p>Another plot in the following shows the wordcloud for common words in the toxic comments.</p>
+
+<blockquote class="block-warning">
+  <h5 id="warning">WARNING</h5>
+
+  <p>The following figure contains text that may be considered profane, vulgar, or offensive.</p>
+</blockquote>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/toxic_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+</div>
+
+<p>As expected, there exist more insulting or hateful words, such as “die” and “pig”.</p>
+
+<h4 id="histograms-of-number-of-words-and-sentences-in-all-comments">Histograms of number of words and sentences in all comments</h4>
+
+<p>The figure below shows the distribution for number of words in all comments. One can see that the distribution is right-skewed, and it is peaked at 13 words per comment.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_words.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Histogram of # words</figcaption>
+</div>
+
+<h4 id="histogram-of-number-of-sentences-in-all-comments">Histogram of number of sentences in all comments</h4>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_sentences.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Histogram of # sentences</figcaption>
+</div>
+
+<p>The distribution for number of sentences is also right skewed.</p>
+
+<h4 id="balance-of-training-set">Balance of training set</h4>
+
+<p>This bar plot indicates that the balance of the dataset is about 90%. The dataset is hence highly unbalanced.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/kaggle-jigsaw/starter-blog/balance.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Counts of toxic and non-toxic comments</figcaption>
+</div>
+
+<h2 id="part-3-basics-of-language-models-"><a href="#part-3-basics-of-language-models" name="part-3-basics-of-language-models">Part 3: Basics of Language Models </a></h2>
+
+<h3 id="what-is-a-language-model">What is a Language Model?</h3>
+<p>A language model is basically a machine learning model that looks at part of a sentence and is able to predict the next one, such as next word recommendation for cellphone keyboard typing.</p>
+
+<p>Statistically, a language model is a probability distribution over sequence of words. Most language models rely on the basic assumption that the probability of a word only depends on the previous <em>n</em> words, which is known as the <em>n</em>-gram model. Language models are useful in many scenarios such speech recognition, parsing and information retrieval. Please refer to the <a href="https://en.wikipedia.org/wiki/Language_model">Wiki  page</a> for more information.</p>
+
+<h3 id="word-embeddings">Word Embeddings</h3>
+<p>Word embedding is a type of word representation that allows words with similar meaning to have a similar representation. It is a groundbreaking progress for developing high-performance deep learning models for NLP. The intuitive approach to word representation is the <strong>one-hot</strong> encoding. To represent each word, we create a zero vector with length equal to the vocabulary. Then one is placed in the index that corresponds to the word. In that sense, we will create a sparse vector. An alternative approach is to encode each word with a unique number so that the resulting vector is short and dense. However, the way how each word is encoded is arbitrary, and we do not know the relationship between the words. Here comes the technique of <strong>word embeddings</strong>. In this scenario, we do not have to specify the encoding by hand. Instead of manually defining the embedding vector, the values of the vector are trained in the same way a model learns weights of a dense layer. A high-dimensional embedding can capture fine relationships between words.</p>
+
+<h3 id="attention">Attention</h3>
+
+<p>The key idea of Attention is to focus on the most relevant parts of the input sequence as needed. It provides a direct path to the inputs. So it also alleviates the vanishing gradient issue. This significantly improves the model performance when confronting with long sentence analysis.</p>
+
+<p>For a typical language model, it is composed of an encoder and a decoder.
+The encoder processes each item in the input sequence, and then compile the transformed information into a vector. After processing the entire input sequence, the encoder send the context to the decoder for the next step. Both the encoder and decoder are intrinsically recurrent nueral networks (RNN) which processes the input vector and previous hidden state, and produces the next-step hidden state and output at that time step.</p>
+
+<p>At a high level of abstraction, an attention model differs in two main ways. Firstly, instead of passing only the last hidden state at the encoder side, the attention model holds all the hidden states and passes all hidden state to the decoder. Secondly, in the decoder side it does one more step before calculating its output. The basic idea is that each hidden state produced at the encoder side is associated with a certain word in the input sequence, thus we can assign a score to each hidden state and use that to amplify the word with high score and drown out words with low scores. A illustrative and comprehensive tutorial of an attention model can be found in the blog <a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">visualizing a neural machine translation model</a>.</p>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>Tarun Paparaju. (2020, March). <em>Jigsaw Multilingual Toxicity : EDA + Models</em>. Retrieved from <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models">https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models</a>. The function for plotting the WordCloud is adapted from this kernel.</p>
+  </li>
+  <li>
+    <p>Jay Alammer. (2018, May 9). <em>Visualizing A Neural Machine Translation Model</em>. Retrieved from <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models">https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/</a>.  Some explanation for <strong>attention</strong> comes from this blog.</p>
+  </li>
+  <li>
+    <p>Barry Clark. (2016, March). <em>Build a Jekyll blog in minutes, without touching the command line</em>. Retrieved from <a href="https://github.com/barryclark/jekyll-now">https://github.com/barryclark/jekyll-now</a>.This site offers the github page template using <code class="language-plaintext highlighter-rouge">Jekyll</code>.</p>
+  </li>
+  <li>
+    <p>Jason Brownlee. (2017, October 11). <em>What Are Word Embeddings for Text?</em> Retrieved from <a href="https://machinelearningmastery.com/what-are-word-embeddings/">https://machinelearningmastery.com/what-are-word-embeddings/</a>. This site provides some examples to explain the idea of <strong>word embedding</strong>.</p>
+  </li>
+  <li>
+    <p>Mohammed Terry-Jack. (2019, April 21). <em>NLP: Everything about Embeddings</em>. Retrieved from <a href="https://medium.com/@b.terryjack/nlp-everything-about-word-embeddings-9ea21f51ccfe">https://medium.com/@b.terryjack/nlp-everything-about-word-embeddings-9ea21f51ccfe</a>. More explanation about the word embedding can be found in this Medium blog.</p>
+  </li>
+  <li>
+    <p>Anusha Lihala. (2019, March 29). <em>Attention and its Different Forms</em>. Retrieved from <a href="https://towardsdatascience.com/attention-and-its-different-forms-7fc3674d14dc">https://towardsdatascience.com/attention-and-its-different-forms-7fc3674d14dc</a>. The original attention and its variants are detailed and compared in this Medium blog.</p>
+  </li>
+  <li>
+    <p>Sean Robertson. (2017). <em>NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTION</em>. Retrieved from <a href="https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html">https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html</a>. Code implementation in the framework of <code class="language-plaintext highlighter-rouge">PyTorch</code> is discussed in this web page.</p>
+  </li>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Kaggle competition blog]]></summary></entry><entry><title type="html">a post with images</title><link href="http://www.cheng.zeng1.com/website/sample-posts/2015/05/15/images.html" rel="alternate" type="text/html" title="a post with images" /><published>2015-05-15T21:01:00+00:00</published><updated>2015-05-15T21:01:00+00:00</updated><id>http://www.cheng.zeng1.com/website/sample-posts/2015/05/15/images</id><content type="html" xml:base="http://www.cheng.zeng1.com/website/sample-posts/2015/05/15/images.html"><![CDATA[<p>This is an example post with image galleries.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/9.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/7.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    A simple, elegant caption looks good between image rows, after each row, or doesn't have to be there at all.
+</div>
+
+<p>Images can be made zoomable.
+Simply add <code class="language-plaintext highlighter-rouge">data-zoomable</code> to <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code> tags that you want to make zoomable.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/8.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/10.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+
+<p>The rest of the images in this post are all zoomable, arranged into different mini-galleries.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/11.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/12.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/website/assets/img/7.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>]]></content><author><name></name></author><category term="sample-posts" /><category term="formatting" /><category term="images" /><summary type="html"><![CDATA[this is what included images could look like]]></summary></entry></feed>
