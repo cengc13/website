@@ -1,17 +1,15 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
-subtitle: Postdoctoral Fellow, <a href='https://roux.northeastern.edu/'>Roux Institute</a>, Northeastern University
-
+subtitle: Computational Materials Scientist at <a href="https://www.northeastern.edu/">Northeastern University</a>.
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: true # crops the image to make it circular
+  image_circular: false # crops the image to make it circular
   address: >
-    <p>Engineering Lab 163</p>
-    <p>100 Fore Street</p>
-    <p>Portland, ME 04101</p>
+    <p>Postdoctoral Fellow</p>
+    <p>Email:c.zeng [at] northeastern [dot] edu</p>
 
 news: true  # includes a list of news items
 latest_posts: true  # includes a list of the newest posts
