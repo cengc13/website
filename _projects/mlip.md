@@ -1,10 +1,10 @@
 ---
 layout: page
-title: project 1
-description: a project with a background image
+title: Bridging the time scale for exascale computing
+description: Machine learning potentials for large-size nanoparticle catalysts
 img: assets/img/12.jpg
 importance: 1
-category: Placeholder
+category: Research
 ---
 
 Every project has a beautiful feature showcase page.
