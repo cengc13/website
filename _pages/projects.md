@@ -5,7 +5,7 @@ permalink: /projects/
 description: A collection of research and data science projects.
 nav: true
 nav_order: 3
-display_categories: [Research, Data science]
+display_categories: [Current research, Past research, Data science]
 horizontal: false
 ---
 
