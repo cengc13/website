@@ -1,13 +1,13 @@
 ---
 layout: page
-title: Exascale computing of chemical systems
+title: Enabling exascale computing of chemical systems
 description: Machine learning potentials for large-size nanoparticle catalysts
 img: assets/img/projects/exascale-computing/exascale-thumbnail.png
 importance: 1
 category: Past research
 ---
 
-This project is funded by DOE Basic Energy Science with the Award No.  [SC0019441](https://pamspublic.science.energy.gov/WebPAMSExternal/Interface/Common/ViewPublicAbstract.aspx?rv=ea42433a-4522-453d-8d7e-5379ff745b47&rtc=24&PRoleId=10). Cheng Zeng is also indebted to the financial support from Brown's presidential fellowship and open graduate education program.
+This project is funded by DOE Basic Energy Science with the Award No.  [SC0019441](https://pamspublic.science.energy.gov/WebPAMSExternal/Interface/Common/ViewPublicAbstract.aspx?rv=ea42433a-4522-453d-8d7e-5379ff745b47&rtc=24&PRoleId=10). Cheng Zeng is also indebted to the financial support from Brown's presidential fellowship and open graduate education program. Computational simulations were undertaken using resources at Brown's Center for Computation and Visualization (CCV).
 
 State-of-the-art nanoparticle catalysts can come up in sizes of more than 5000 atoms while modern standard DFT calculations used to provide physical insights into material properties are limited to around 500 atoms. To bridge this size gap, I first developed a nearsighted force-training (NFT) approach to systematically generate small-size informative training structures for target nanoparticles in a learning-on-the-fly manner.
 The key of a successful NFT is to align the nearsightedness of finite-ranged machine learning potentials with that of *ab initio* calculators. The original NFT work discusses the theoretical principles, methods and algorithms, and the approach was benchmarked on pure Pt nanoparticles using the atom-centered neural networks as machine learning models.
@@ -50,4 +50,4 @@ To complete the understanding of catalytic performance of nanoparticle catalysts
 </div>
 
 The NFT paper is [available](https://pubs.aip.org/aip/jcp/article/156/6/064104/2840702/A-nearsighted-force-training-approach-to) at J. Chem. Phys.
-The Co--Pt phase stability work is [out](https://arxiv.org/abs/2306.01846) at arXiv and has been submitted to ACS Catalysis and now under peer review. The work regarding Co--Pt catalytic activity and stability is to be submitted. The three works together form a trilogy of machine learning methods designed for nanoparticle alloy catalysts.
+The Co--Pt phase stability work is [out](https://arxiv.org/abs/2306.01846) at arXiv and has been submitted to ACS Catalysis and now under peer review. The work regarding Co--Pt catalytic activity and stability is to be submitted. The three works together form a trilogy of nearsighted force training targeting nanoparticle alloy catalysts.
