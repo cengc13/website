@@ -16,8 +16,8 @@
     <!-- Fallback to the original file -->
    <img
       src="{{ include.path | relative_url }}"
-      style="position:relative; top:20px; border:none;"
-      {% if include.class %}class="{{ include.class }}"{% endif %}  
+      {% if include.class %}class="{{ include.class }}"{% endif %}
+      {% if include.top %}style="position:relative; top: {{ include.top }}px; border:none;"{% endif %}
       {% if include.width %}width="{{ include.width }}"{% else %}width="auto"{% endif %}
       {% if include.height %}height="{{ include.height }}"{% else %}height="auto"{% endif %}
       {% if include.min-width %}min-width="{{ include.min-width }}"{% endif %}
