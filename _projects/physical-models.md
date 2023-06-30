@@ -17,10 +17,10 @@ Instead of stress/strain which is hard to define in atomistic systems, I used at
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/simple-eigenforce-model.png" title="Eigenforce model illustration" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/physical-models/simple-eigenforce-model.png" title="Eigenforce model illustration" class="img-fluid rounded z-depth-1"%}
     </div>
     <div class="col-sm-5 mt-3 mt-md-0" style="top:0px">
-        {% include figure.html path="assets/img/projects/physical-models/results-eigenforce-model.png" title="Eigenforce model results" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/physical-models/results-eigenforce-model.png" title="Eigenforce model results" class="img-fluid rounded z-depth-1" zoomable="true"%}
     </div>
 </div>
 <div class="caption">
@@ -32,10 +32,10 @@ I also discuss why simple constant-force model gives good predictions for strain
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/relaxation-coupling.png" title="Coupling of strain and adsorption" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/physical-models/relaxation-coupling.png" title="Coupling of strain and adsorption" class="img-fluid rounded z-depth-1"%}
     </div>
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/decoupling-spring-constants.png" title="Decoupling spring constants" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/physical-models/decoupling-spring-constants.png" title="Decoupling spring constants" class="img-fluid rounded z-depth-1"%}
     </div>
 </div>
 <div class="caption">
@@ -47,10 +47,10 @@ Inspired by the [pioneering work](https://www.sciencedirect.com/science/article/
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-5 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/elastic-li.png" title="Elastic lateral interation" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/physical-models/elastic-li.png" title="Elastic lateral interation" class="img-fluid rounded z-depth-1" zoomable="true"%}
     </div>
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/DFT_vs_model.png" title="DFT versus Model" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/physical-models/DFT_vs_model.png" title="DFT versus Model" class="img-fluid rounded z-depth-1" zoomable="true"%}
     </div>
 </div>
 <div class="caption">

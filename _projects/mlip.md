@@ -14,10 +14,10 @@ The key of a successful NFT is to align the nearsightedness of finite-ranged mac
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/exascale-computing/nft.png" title="NFT workflow" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/exascale-computing/nft.png" title="NFT workflow" class="img-fluid rounded z-depth-1" zoomable="true"%}
     </div>
     <div class="col-sm-4 mt-4 mt-md-0" style="top:30px">
-        {% include figure.html path="assets/img/projects/exascale-computing/nft_learning.png" title="NFT learning on Pt260" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/exascale-computing/nft_learning.png" title="NFT learning on Pt260" zoomable="true" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -28,7 +28,7 @@ I further extended the NFT approach to spin-polarized Co--Pt nanoparticles. The 
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/exascale-computing/packing_pattern.png" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/exascale-computing/packing_pattern.png" title="Shell by shell packing pattern" class="img-fluid rounded z-depth-1" zoomable="true"%}
     </div>
 </div>
 <div class="caption">
@@ -39,10 +39,10 @@ To complete the understanding of catalytic performance of nanoparticle catalysts
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/exascale-computing/atom-level-activity.png" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/exascale-computing/atom-level-activity.png" title="Atom level limiting potential" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/exascale-computing/atom-level-stability.png" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/exascale-computing/atom-level-stability.png" title="Atom level dissolution potential" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
