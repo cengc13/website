@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Roadmap for design of high-entropy alloys with machine learning
+title: "Materials design with machine learning: A case study of high-entropy alloys"
 description: Methods and algorithms for machine learning high-entropy alloys
 img: assets/img/projects/ml-hea-design/ml-hea-thumbnail.png
 importance: 1
