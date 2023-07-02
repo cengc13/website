@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Enabling exascale computing of chemical systems | Cheng  Zeng</title>
+    <title>Discovery of high-entropy alloys for corrosion protection | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
-    <meta name="description" content="Machine learning potentials for large-size nanoparticle catalysts">
+    <meta name="description" content="A machine learning framework to evaluate corrosion performance for given compositions of high-entropy alloys">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -36,7 +36,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/projects/mlip/">
+    <link rel="canonical" href="https://cengc13.github.io/website/projects/hea-corrosion/">
 
     <!-- Dark Mode -->
     
@@ -115,39 +115,29 @@
         <div class="post">
 
           <header class="post-header">
-            <h1 class="post-title">Enabling exascale computing of chemical systems</h1>
-            <p class="post-description">Machine learning potentials for large-size nanoparticle catalysts</p>
+            <h1 class="post-title">Discovery of high-entropy alloys for corrosion protection</h1>
+            <p class="post-description">A machine learning framework to evaluate corrosion performance for given compositions of high-entropy alloys</p>
           </header>
 
           <article>
-            <p>This project is funded by DOE Basic Energy Science with the Award No.  <a href="https://pamspublic.science.energy.gov/WebPAMSExternal/Interface/Common/ViewPublicAbstract.aspx?rv=ea42433a-4522-453d-8d7e-5379ff745b47&amp;rtc=24&amp;PRoleId=10" rel="external nofollow noopener" target="_blank">SC0019441</a>. Cheng Zeng is also indebted to the financial support from Brown’s presidential fellowship and open graduate education program. Computational simulations were undertaken using resources at Brown’s Center for Computation and Visualization (CCV).</p>
+            <p>Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.</p>
 
-<p>State-of-the-art nanoparticle catalysts can come up in sizes of more than 5000 atoms while modern standard DFT calculations used to provide physical insights into material properties are limited to around 500 atoms. To bridge this size gap, I first developed a nearsighted force-training (NFT) approach to systematically generate small-size informative training structures for target nanoparticles in a learning-on-the-fly manner.
-The key of a successful NFT is to align the nearsightedness of finite-ranged machine learning potentials with that of <em>ab initio</em> calculators. The original NFT work discusses the theoretical principles, methods and algorithms, and the approach was benchmarked on pure Pt nanoparticles using the atom-centered neural networks as machine learning models.</p>
+<p>I introduced a machine learning frameworking combining two pipelines to quantify important corrosion metrics using machine learning models.
+Three corrosion metrics are considered, including single-phase formability, FCC111 surface energy and Pilling-Bedworth ratios.
+The single-phase formability is predicted by a random forest classifier trained on experimental data whose inputs and outputs are simply chemical compositions and labels to indicate whether single phase or multiple phase structures are formed.
+The surface energy and Pilling-Bedworth ratios are predicted by machine learning potentials trained on systematically generated first-principles data.
+The machine learning potentials used in this work belong to the group of <a href="https://iopscience.iop.org/article/10.1088/2632-2153/abc9fe" rel="external nofollow noopener" target="_blank">momentum tensor potentials</a>, which uses moment tensor contraction to define atomic energies. Each moment consists of two components—one is radial basis functions (e.g. Chebyshev polynomials) and the other is tensor of a certain rank to describe angular local environments.
+The workflow of this framework is shown in the below figure.</p>
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
+    <div class="col-sm-12 mt-3 mt-md-0">
         <figure>
 
   <picture>
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/exascale-computing/nft.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="NFT workflow" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-    <div class="col-sm-4 mt-4 mt-md-0" style="top:30px">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/exascale-computing/nft_learning.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="NFT learning on Pt260" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/hea-corrosion/workflow.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Worflow of ML HEA corrosion" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
@@ -156,20 +146,20 @@ The key of a successful NFT is to align the nearsightedness of finite-ranged mac
     </div>
 </div>
 <div class="caption">
-    Workflow of structure initialization and nearsighted force training (Left). NFT learning on a Pt260 nanoparticle: Uncertainty and # chunks propagation with iteration steps (Right).
+    Workflow of the machine learning framework for discovery of corrosion-resistant high-entropy alloys.
 </div>
 
-<p>I further extended the NFT approach to spin-polarized Co–Pt nanoparticles. The trained neural network potentials (NNPs) are robust and transferable in describing energetics of Co–Pt nanoparticles in different sizes, compositions, shapes and atomic arrangements. I addressed some key phase stability questions surrounding Co–Pt nanoparticles, including morphology crossover, order–disorder phase transition and the putative most stable atomic arrangement. Moreover, highly scalable SPARC DFT calculations performed by our collaborators at Georgia Tech validated machine learning predicted stable structures and represented the largest size of Co–Pt nanoparticles ever calculated by a full <em>ab initio</em> code.</p>
+<p>This methodology was applied to AlCrFeCoNi high-entropy alloys. Compositions of Al and Cr were varied whereas the remaining Fe, Co and Ni have identical compositions. The results are given below. The identified low Al and around 18% Cr compositions for enhanced corrosion resistance agrees well with experiments.</p>
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-12 mt-3 mt-md-0">
         <figure>
 
   <picture>
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/exascale-computing/packing_pattern.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Shell by shell packing pattern" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/hea-corrosion/results.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data centric framework" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
@@ -178,47 +168,8 @@ The key of a successful NFT is to align the nearsightedness of finite-ranged mac
     </div>
 </div>
 <div class="caption">
-    Shell by shell atomic arrangement of a Co3102Pt3164 truncated octahedron optimized by Monte-Carlo simulations.
+    Single phase formability (a), Pilling-Bedworth ratios (b) and FCC111 surface energies (c) of AlCrFeCoNi as a function of Al and Cr compositions. In part (a), single phase (SP) and multiple phase training points are indicated by respective red squares and green circles. Decision boundary from <a href="https://www.sciencedirect.com/science/article/pii/S1359645419307050" rel="external nofollow noopener" target="_blank">Wu et al</a> is represented by a grey dashed line.
 </div>
-
-<p>To complete the understanding of catalytic performance of nanoparticle catalysts, I combined the NFT approach with a newly-developed eigenforce model, a geometric descriptor using generalized coordination number and microkinetic analysis based on DFT calculated free energy diagram for oxygen reduction reaction. This combined strategy allows for a quantitative description of relative catalytic activities across Co–Pt nanoparticles with different sizes and Co compositions. Besides, the stability of Co–Pt nanoparticles can be described using electrochemical dissolution potentials.</p>
-
-<div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/exascale-computing/atom-level-activity.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Atom level limiting potential" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/exascale-computing/atom-level-stability.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Atom level dissolution potential" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-</div>
-<div class="caption">
-    Atom-level limiting potential for oxygen reduction reaction (Left) and Atom-level dissolution potential (Right) of a full-scale 9 nm Co--Pt truncated octahedron of ~17000 atoms.
-</div>
-
-<p>The NFT paper is <a href="https://pubs.aip.org/aip/jcp/article/156/6/064104/2840702/A-nearsighted-force-training-approach-to" rel="external nofollow noopener" target="_blank">available</a> at J. Chem. Phys.
-The Co–Pt phase stability work is <a href="https://arxiv.org/abs/2306.01846" rel="external nofollow noopener" target="_blank">out</a> at arXiv and has been submitted to ACS Catalysis and now under peer review. The work regarding Co–Pt catalytic activity and stability is to be submitted. The three works together form a trilogy of nearsighted force training targeting nanoparticle alloy catalysts.</p>
 
           </article>
 
