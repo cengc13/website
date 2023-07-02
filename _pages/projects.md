@@ -2,7 +2,7 @@
 layout: page
 title: Projects
 permalink: /projects/
-description: A collection of research and data science projects. Note that some images can be zoomed in.
+description: A collection of research and data science projects.
 nav: true
 nav_order: 3
 display_categories: [Current research, Past research, Data science]
