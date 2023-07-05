@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Materials design with machine learning: A case study of high-entropy alloys"
-description: Methods and algorithms for machine learning high-entropy alloys
+description: Methods and algorithms for machine learning assisted materials design
 img: assets/img/projects/ml-hea-design/ml-hea-thumbnail.png
 importance: 1
 category: Current research
