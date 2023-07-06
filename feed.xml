@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-06T02:17:54+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-06T02:18:36+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
 </subtitle><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Final Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Final Blog" /><published>2020-05-08T00:00:00+00:00</published><updated>2020-05-08T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html"><![CDATA[<p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
 
 <p>This blog summarizes relevant techniques employed to improving the model performance, which is evaluated by the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/leaderboard">public leaderboard score</a> on Kaggle. I will start with the basic BERT multilingual model, after which I will illustrate how we can improve the model by tackling the three main challenges for this competition.</p>
@@ -464,7 +464,7 @@ increases the LB score to 0.9401 with the best maximum length.</p>
   <li>
     <p>Tsung-Yi Lin et al. Focal Loss for Dense Object Detection. 2017. This paper introduces the idea of using <em>Focal Loss</em> to make the model focus more on those misclassified images.</p>
   </li>
-</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Kaggle competition blog]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Midway Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Midway Blog" /><published>2020-04-26T00:00:00+00:00</published><updated>2020-04-26T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html"><![CDATA[<p>This blog is the second of the three blogs documenting my entry into <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. To move forward, the primary purpose of the next step is to develop the baseline model from scratch. The link is provided in the <a href="https://github.com/cengc13/2040FinalProject/blob/master/src/models/logistic_regression.ipynb">notebook for the model</a> or <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS">running it on colab</a>. The essential components of a language model are summarized, including the tokenizer, the model architecture, and the evaluation metrics. In addition, we will cover some state-of-the-art multilingual models, such as BERT, XLM and XLM-RoBERT.</p>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Use TPUs to identify toxicity comments across multiple languages]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Midway Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Midway Blog" /><published>2020-04-26T00:00:00+00:00</published><updated>2020-04-26T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html"><![CDATA[<p>This blog is the second of the three blogs documenting my entry into <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. To move forward, the primary purpose of the next step is to develop the baseline model from scratch. The link is provided in the <a href="https://github.com/cengc13/2040FinalProject/blob/master/src/models/logistic_regression.ipynb">notebook for the model</a> or <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS">running it on colab</a>. The essential components of a language model are summarized, including the tokenizer, the model architecture, and the evaluation metrics. In addition, we will cover some state-of-the-art multilingual models, such as BERT, XLM and XLM-RoBERT.</p>
 
 <div class="img-div" style="text-align:center">
   <image src="https://www.topbots.com/wp-content/uploads/2019/02/NLP_feature_image_1600px-1280x640.jpg" width="600px" />
@@ -754,7 +754,7 @@ The splitting ratio is 8:2.</p>
   <li>
     <p>Jay Alammer. (2019, November 26). <em>A Visual Guide to Using BERT for the First Time</em>. Retrieved from <a href="https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb">BERT notebook</a>. The vivid figures for illustration of key components in a language model are taken from this awesome blog.</p>
   </li>
-</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Kaggle competition blog]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Start Blog" /><published>2020-04-12T00:00:00+00:00</published><updated>2020-04-12T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html"><![CDATA[<p>This is the first of three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. It is a natural language processing (NLP) task. I chose this topic as the final project because NLP is a very hot topic nowadays and I am new to this area. I hope to take advantages of this opportunity to learn more about deep learning targeted towards the state-of-art application in NLP.</p>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Use TPUs to identify toxicity comments across multiple languages]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification-Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification-Start Blog" /><published>2020-04-12T00:00:00+00:00</published><updated>2020-04-12T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html"><![CDATA[<p>This is the first of three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. It is a natural language processing (NLP) task. I chose this topic as the final project because NLP is a very hot topic nowadays and I am new to this area. I hope to take advantages of this opportunity to learn more about deep learning targeted towards the state-of-art application in NLP.</p>
 
 <p>In the first blog, I walk you through an overview of the competition, the exploratory data analysis, and  the basics of language models for this project.</p>
 
@@ -1116,4 +1116,273 @@ The encoder processes each item in the input sequence, and then compile the tran
   <li>
     <p>Sean Robertson. (2017). <em>NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTION</em>. Retrieved from <a href="https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html">https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html</a>. Code implementation in the framework of <code class="language-plaintext highlighter-rouge">PyTorch</code> is discussed in this web page.</p>
   </li>
-</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Kaggle competition blog]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Use TPUs to identify toxicity comments across multiple languages]]></summary></entry><entry><title type="html">Bengali.AI Handwritten Grapheme Classification-Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali.html" rel="alternate" type="text/html" title="Bengali.AI Handwritten Grapheme Classification-Start Blog" /><published>2020-02-18T00:00:00+00:00</published><updated>2020-02-18T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali.html"><![CDATA[<p><strong>Team: Zzz…</strong></p>
+
+<p><strong>Members: Cheng Zeng, Zhi Wang, Peter Huang</strong></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In this <a href="https://www.kaggle.com/c/bengaliai-cv19">Kaggle competition</a>, we aim to develop a convolutional neural network (CNN) model to classify the three constituent components of Bengali handwritten characters, including grapheme root, vowel diacritics, and consonant diacritics. Identifying characters by optical recognition is challenging since each Bengali has 11 vowels and 38 consonants in its alphabet, and there are 10 potential diacritics. As a result, a large number of graphemes (the smallest units in a written language) exist, and this quickly adds up to more than 10,000 different grapheme variations. This work by Team <strong>Zzz..</strong> lives on <a href="https://github.com/cengc13/Bengali_Kaggle">github</a>.</p>
+
+<h2 id="overview-of-the-data-sets">Overview of the data sets</h2>
+
+<h3 id="parquet-files">Parquet Files</h3>
+
+<p>The data sets are saved in the format of parquet files, which contain image IDs and the corresponding flattened 137 x 236 grayscale images. Each feature corresponds to a pixel of the image. The pixel values are between 0 and 255.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/parquet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="parquet header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Example parquet data for image pixels</figcaption>
+</div>
+
+<h3 id="training-set">Training set</h3>
+
+<p>The training set contains image IDs from the parquet files and the 3 components of the corresponding graphemes, and there are 200,840 images in the training set. Note that the input is the handwritten image (the last column), while the output should be the classes for the corresponding three constituent components.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/training.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Example training data</figcaption>
+</div>
+
+<h3 id="test-set">Test Set</h3>
+
+<p>The testing images consist of images whose constituent components are listed in independent rows.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/test.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Example test data</figcaption>
+</div>
+
+<h3 id="class-map">Class Map</h3>
+
+<p>The class-map contains grapheme component types and labels, and it maps the class labels to the actual Bengali grapheme components.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/class-map.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="class map header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Example class-map data</figcaption>
+</div>
+
+<h2 id="submission-format">Submission Format</h2>
+<p>The sample submission file has two columns—one column is the row ID from the test set which consists of the test index number and the component in a grapheme and the prediction.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/example-submission.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Example submission header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Example submission data</figcaption>
+</div>
+
+<h2 id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
+
+<h3 id="pixel-distribution">Pixel distribution</h3>
+
+<p>The original pixel distribution is shown below, and it will be later used to compare with the pixel distributions after image crop and resize.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/pixel-dist.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Pixel distribution of training images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Pixel distributions of training images</figcaption>
+</div>
+
+<h3 id="class-frequency-analysis">Class frequency analysis</h3>
+
+<h4 id="top-20-grapheme-roots">Top 20 grapheme roots</h4>
+
+<p>Top 20 grapheme roots and their percentages in the training set are shown in the below figure. Those grapheme roots are approximately evenly distributed.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/grapheme-root.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Grapheme roots" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Frequency of top 20 grapheme roots</figcaption>
+</div>
+
+<h4 id="vowel-diacritics">Vowel diacritics</h4>
+
+<p>The counts of vowel diacritics are shown in the figure below. The distribution is not balanced, and they concentrate on Class 0, 1, 7, and 2.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/vowel-diacritic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Vowel diacritic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Frequency of vowel diacritic</figcaption>
+</div>
+
+<h4 id="consonant-diacritics">Consonant diacritics</h4>
+
+<p>For consonant diacritics, the distribution is not balanced either, with more than 60% being Class 0.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/consonant-diacritic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="consonant diacritic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Frequency of consonant diacritic</figcaption>
+</div>
+
+<h3 id="inspecting-training-images">Inspecting training images</h3>
+
+<h4 id="some-randomly-sampled-images">Some randomly sampled images</h4>
+<p>Below is 25 example handwritten grapheme randomly chosen fro the training images.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/samples.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Sample training images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Randomly sampled example images</figcaption>
+</div>
+
+<h4 id="writing-variety">Writing variety</h4>
+
+<p>In the below it shows images of the same grapheme. Note that the handwriting of the same grapheme varies a lot.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/writing-variety.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Writing variety" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Sixteen images of the same grapheme. Grapheme root, vowel diacritic and consonant diacritic are indexed 72, 1, 1, respectively.</figcaption>
+</div>
+
+<h2 id="data-preprocessing">Data preprocessing</h2>
+
+<p>The images are standardized by cropping and resizing using methods implemented in the <a href="https://github.com/opencv/opencv">OpenCV</a> package.
+The method finds the contour of the figure and resize the image based on the size of the contour. In the following, we show the eight images after preprocessing and corresponding pixel distributions. The figures after processing look normal, and the pixel distribution with proprocessing is close to the one without preprocessing, implying the reliability of the method used.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/preprocessing.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Preprocessed images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Example handwritten grapheme after preprocessing</figcaption>
+</div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/start-blog/pixel-dist-with-preprocessing.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Pixel distribution after preprocessing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Pixel distribution after preprocessing</figcaption>
+</div>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry></feed>
