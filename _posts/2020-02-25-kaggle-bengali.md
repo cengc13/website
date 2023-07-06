@@ -39,7 +39,7 @@ print(f'Training labels consonants: {Y_train_consonant.shape}')
   <figcaption>A summary of processed training data</figcaption>
 </div>
 
-## The model:Densenet121
+## Densenet121 model
 
 Densenet contains a feature layer (convolutional layer) capturing low-level features from images, several dense blocks, and transition layers between adjacent dense blocks.
 
