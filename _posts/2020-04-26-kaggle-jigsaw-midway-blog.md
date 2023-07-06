@@ -2,7 +2,7 @@
 layout: post
 title: Jigsaw Multilingual Toxic Comment Classification-Midway Blog
 date: 2020-04-26
-description: Kaggle competition blog
+description: Use TPUs to identify toxicity comments across multiple languages
 tags: nlp data-science
 categories: kaggle
 giscus_comments: false
