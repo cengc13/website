@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Jigsaw Multilingual Toxic Comment Classification $$-$$ Start Blog
+title: Jigsaw Multilingual Toxic Comment Classification - Start Blog
 date: 2020-04-12
 description: Use TPUs to identify toxicity comments across multiple languages
 tags: nlp data-science

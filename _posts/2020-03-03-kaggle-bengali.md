@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bengali.AI Handwritten Grapheme Classification $$-$$ Final Blog
+title: Bengali.AI Handwritten Grapheme Classification - Final Blog
 date: 2020-03-03
 description: Classify the components of handwritten Bengali
 tags: computer-vision data-science multiclass-classification
@@ -87,4 +87,4 @@ Till now, the best model we have is the `Densenet121` with input image size of 1
 As we noted when the competition was closed, the number of unique handwritten graphemes (four thousand) is way less than the number of all graphemes (more than ten thousand). It indicates that some graphemes may not be observed in the training set. This probably explains the power of aggressive augmentation in this competition. In light of this analysis, we can use the generative adversarial network (GAN) to make unseen images to further improve the model performance.
 
 
-**Update:** We won a silver medal in this competition, ranked 90$$^{\rm{th}}$$ place among 2059 teams:fireworks:.
+**Update:** We won a silver medal in this competition, ranked 90$$^{\rm{th}}$$ place among 2059 teams :fireworks:.

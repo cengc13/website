@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bengali.AI Handwritten Grapheme Classification $$-$$ Start Blog
+title: Bengali.AI Handwritten Grapheme Classification - Start Blog
 date: 2020-02-18
 description: Classify the components of handwritten Bengali
 tags: computer-vision data-science multiclass-classification

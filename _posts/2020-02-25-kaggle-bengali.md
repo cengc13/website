@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bengali.AI Handwritten Grapheme Classification $$-$$ Midway Blog
+title: Bengali.AI Handwritten Grapheme Classification - Midway Blog
 date: 2020-02-25
 description: Classify the components of handwritten Bengali
 tags: computer-vision data-science multiclass-classification
