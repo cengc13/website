@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bengali.AI Handwritten Grapheme Classification&#150Start Blog
+title: Bengali.AI Handwritten Grapheme Classification $$-$$ Start Blog
 date: 2020-02-18
 description: Classify the components of handwritten Bengali
 tags: computer-vision data-science multiclass-classification
@@ -148,6 +148,14 @@ The method finds the contour of the figure and resize the image based on the siz
   <figcaption>Pixel distribution after preprocessing</figcaption>
 </div>
 
+## Annotated references
 
+- The `get_n`, `get_dummies`, `image_from_char`, `plot_acc` and `plot_loss` functions are originated from the kernel by [Kaushal Shah](https://www.kaggle.com/kaushal2896/bengali-graphemes-starter-eda-multi-output-cnn). The ` MultiOutputDataGenerator` class for multiple output is also from this kernel.
 
+- The image `resize` method is based on the kernel by [Ashadullah Shawon](https://www.kaggle.com/shawon10/bangla-graphemes-image-processing-deep-cnn).
 
+- The code for inference and result submission is heavily adapted from the kernel by [Robin Smits](https://www.kaggle.com/rsmits/keras-efficientnet-b3-training-inference).
+
+- The `crop_resize`, `plot_count`, `display_image_from_data` and `display_writting_variety` functions are from [Gabriel Preda](https://www.kaggle.com/gpreda/bengali-ai-handwritten-grapheme-getting-started)
+
+- We are also thankful to many useful discussions on Kaggle, for example [Things does not work](https://www.kaggle.com/c/bengaliai-cv19/discussion/130311) and [Things that might work](https://www.kaggle.com/c/bengaliai-cv19/discussion/132118#754943).
