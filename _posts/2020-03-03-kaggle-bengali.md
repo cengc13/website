@@ -54,18 +54,18 @@ We tried to use more aggressive augmentation methods such as `cutout` to mitigat
 
 ### Increasing resolution of resized images
 
-This can increase the public LB score by as much as 1%, from around 0.95 to 0.96. The top figure indicates resized images with size 64$$\times$$64, and the bottom plot shows the resized images with size 128x$$\times$$128. With a larger input image size, it makes sense that the accuracy is increased since more information is kept. The figure below shows the comparision of four example handwritten grapheme images using 64$$\times$$64 and 128x$$\times$$128 resizing.
+This can increase the public LB score by as much as 0.01, from around 0.95 to 0.96. The top figure indicates resized images with size 64$$\times$$64, and the bottom plot shows the resized images with size 128x$$\times$$128. With a larger input image size, it makes sense that the accuracy is increased since more information is kept. The figure below shows the comparision of four example handwritten grapheme images using 64$$\times$$64 and 128x$$\times$$128 resizing.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/final-blog/64x64.png" title="64x64 resizing" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html path="assets/img/kaggle-bengali/final-blog/64by64.png" title="64x64 resizing" class="img-fluid rounded z-depth-1"%}
     </div>
     <div class="col-sm-6 mt-3 mt-md-0" style="top:0px">
-        {% include figure.html path="assets/img/projects/final-blog/128x128.png" title="128x128 resizing" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html path="assets/img/kaggle-bengali/final-blog/128by128.png" title="128x128 resizing" class="img-fluid rounded z-depth-1"%}
     </div>
 </div>
 <div class="caption">
-    Example images of 64$$\times$$64 resizing (Left) and 128x$$\times$$128 resizing (Right)
+    Example images of 64x64 resizing (Left) and 128x128 resizing (Right)
 </div>
 
 ### Ensembling
