@@ -1,4 +1,5 @@
 ---
+# layout: distill
 layout: post
 title: Bengali.AI Handwritten Grapheme Classification - Final Blog
 date: 2020-03-03
@@ -9,6 +10,17 @@ giscus_comments: false
 related_posts: false
 toc:
   sidebar: left
+  # - name: Model evaluation
+  # - name: Inference and Submission
+  # - name: Approaches for model improvement
+  #   subsections:
+  #       - name: Different augmentation methods
+  #       - name: Increasing resolution of resized images
+  #       - name: Ensembling
+  #       - name: Hyperparameter tuning
+  # - name: The best model
+  # - name: Future directions
+
 ---
 <!-- En-Dash         &ndash;    &#150;
 Em-Dash         &mdash;    &#151;
@@ -54,7 +66,7 @@ We tried to use more aggressive augmentation methods such as `cutout` to mitigat
 
 ### Increasing resolution of resized images
 
-This can increase the public LB score by as much as 0.01, from around 0.95 to 0.96. The top figure indicates resized images with size 64$$\times$$64, and the bottom plot shows the resized images with size 128x$$\times$$128. With a larger input image size, it makes sense that the accuracy is increased since more information is kept. The figure below shows the comparision of four example handwritten grapheme images using 64$$\times$$64 and 128x$$\times$$128 resizing.
+This can increase the public LB score by as much as 0.01, from around 0.95 to 0.96. The top figure indicates resized images with size 64$$\times$$64, and the bottom plot shows the resized images with size 128$$\times$$128. With a larger input image size, it makes sense that the accuracy is increased since more information is kept. The figure below shows the comparision of four example handwritten grapheme images using 64$$\times$$64 and 128$$\times$$128 resizing.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-6 mt-3 mt-md-0">
