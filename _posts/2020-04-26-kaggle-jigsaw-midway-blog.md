@@ -43,7 +43,7 @@ This blog is the second of the three blogs documenting my entry into [toxic comm
 </div> -->
 
 
-## <a href="#part-1-baseline-model" name="part-1-baseline-model">Part 1: The Baseline Model </a>
+## <a href="#part-1-baseline-model" name="part-1-baseline-model">The Baseline Model </a>
 
 Our goal is to take a comment text as input, and produces either 1(the comment is toxic) or 0 (the comment is non-toxic). It is basically a binary classification problem. The simplest model we can think of is the logistic regression model, for which we need to figure out how to digitalize comments so that we can use logistic regression to predict the probabilities of a comment being toxic. Next we will do a quick overview of the dataset, introduce the concepts of tokenizer, and go over the architecture of a baseline model.
 
@@ -197,7 +197,7 @@ model_lr.score(X_test_fitted, y_test)
 
 Note that Tfi-df tokenization is not capable of dealing with multiple languages. Instead we should refer to other tokenizers, for example a BERT tokenizer. The example using `bert-base-uncase` model and tokenizer can be found in this [colab notebook](https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX).
 
-## <a href="#part-2-multilingual-models" name="part-2-multilingual-models">Part 2: Cross-lingual Models </a>
+## <a href="#part-2-multilingual-models" name="part-2-multilingual-models">Cross-lingual Models </a>
 
 ### BERT
 

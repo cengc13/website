@@ -6,7 +6,7 @@ description: Use TPUs to identify toxicity comments across multiple languages
 tags: nlp data-science
 categories: kaggle
 giscus_comments: false
-related_posts: true
+related_posts: false
 toc:
   sidebar: left
 ---
@@ -50,7 +50,7 @@ In the first blog, I walk you through an overview of the competition, the explor
 </div> -->
 
 
-## <a href="#part-1-introduction-and-background" name="part-1-introduction-and-background">Part 1: Introduction </a>
+## <a href="#part-1-introduction-and-background" name="part-1-introduction-and-background">Introduction </a>
 
 ### Background & Motivation
 Thanks to the rapid development of deep learning techniques and computational hardwares, NLP has been gaining its momentum in the past two decades. As believed by machine learning experts, NLP is experiencing a boom in the short-term future, same as computer vision once did. The popularity of it brought a great amount of investment. Recently Kaggle released two NLP competitions ([tweet sentiment extraction](https://www.kaggle.com/c/tweet-sentiment-extraction) and [comment toxicity analysis](https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification)). Of focus here is the second one because it is based off two previous Kaggle competitions regarding the same topic ([2018 toxicity](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge) and [2019 toxicity](https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification)). For the very first competion, contestants are challenged to buld multi-headed models to recognize toxicity and several subtypes of toxicity. *Toxicity is defined as anything rude, disrespectful or other wise likely to make someone leave a discussion*. The 2019 Challenges asks Kagglers to work across a diverse range of conversations. The main purpose of this final project is to understand the basics of deep learning techniques applied to NLP. So it would be more doable to work on a project in such a limited time for which there exist many established references/documents. 
@@ -105,7 +105,7 @@ In addition to the well defined metrics evaluated on the given testing set. We m
 
 * Another possible application is to scrape comments from some social media, say "reddit", and predict whether the comment will receive upvote, downvote or be removed.
 
-## <a href="#part-2-eda" name="part-2-eda">Part 2: Data Exploration </a>
+## <a href="#part-2-eda" name="part-2-eda">Data Exploration </a>
 
 ### Dataset
 Following is the list of the datasets we have for this project. The primary data is the `comment_text` column which contains the text of comment to be classified as toxic or non-toxic (0...1 in the `toxic` column). The trainingset's comments are mostly written in English whereas the validation and testing sets' comments are composed of multiple non-English languages. A detailed explanation of the dataset can be found on the [competition web page](https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/data)
@@ -211,7 +211,7 @@ This bar plot indicates that the balance of the dataset is about 90%. The datase
   <figcaption>Counts of toxic and non-toxic comments</figcaption>
 </div>
 
-## <a href="#part-3-basics-of-language-models" name="part-3-basics-of-language-models">Part 3: Basics of Language Models </a>
+## <a href="#part-3-basics-of-language-models" name="part-3-basics-of-language-models">Basics of Language Models </a>
 
 ### What is a Language Model?
 A language model is basically a machine learning model that looks at part of a sentence and is able to predict the next one, such as next word recommendation for cellphone keyboard typing. 
