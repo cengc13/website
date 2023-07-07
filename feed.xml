@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-06T20:28:33+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-07T00:10:11+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
 </subtitle><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification - Final Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification - Final Blog" /><published>2020-05-08T00:00:00+00:00</published><updated>2020-05-08T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html"><![CDATA[<p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
 
 <p>This blog summarizes relevant techniques employed to improving the model performance, which is evaluated by the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/leaderboard">public leaderboard score</a> on Kaggle. I will start with the basic BERT multilingual model, after which I will illustrate how we can improve the model by tackling the three main challenges for this competition.</p>
@@ -1182,7 +1182,7 @@ In the first step, we define some parameters, including the original image size 
 
 <h3 id="increasing-resolution-of-resized-images">Increasing resolution of resized images</h3>
 
-<p>This can increase the public LB score by as much as 1%, from around 0.95 to 0.96. The top figure indicates resized images with size 64\(\times\)64, and the bottom plot shows the resized images with size 128x\(\times\)128. With a larger input image size, it makes sense that the accuracy is increased since more information is kept. The figure below shows the comparision of four example handwritten grapheme images using 64\(\times\)64 and 128x\(\times\)128 resizing.</p>
+<p>This can increase the public LB score by as much as 0.01, from around 0.95 to 0.96. The top figure indicates resized images with size 64\(\times\)64, and the bottom plot shows the resized images with size 128x\(\times\)128. With a larger input image size, it makes sense that the accuracy is increased since more information is kept. The figure below shows the comparision of four example handwritten grapheme images using 64\(\times\)64 and 128x\(\times\)128 resizing.</p>
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-6 mt-3 mt-md-0">
@@ -1192,7 +1192,7 @@ In the first step, we define some parameters, including the original image size 
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/final-blog/64x64.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="64x64 resizing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-bengali/final-blog/64by64.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="64x64 resizing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -1206,7 +1206,7 @@ In the first step, we define some parameters, including the original image size 
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/final-blog/128x128.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="128x128 resizing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-bengali/final-blog/128by128.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="128x128 resizing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
@@ -1215,7 +1215,7 @@ In the first step, we define some parameters, including the original image size 
     </div>
 </div>
 <div class="caption">
-    Example images of 64$$\times$$64 resizing (Left) and 128x$$\times$$128 resizing (Right)
+    Example images of 64x64 resizing (Left) and 128x128 resizing (Right)
 </div>
 
 <h3 id="ensembling">Ensembling</h3>
@@ -1737,273 +1737,4 @@ The method finds the contour of the figure and resize the image based on the siz
   <li>
     <p>We are also thankful to many useful discussions on Kaggle, for example <a href="https://www.kaggle.com/c/bengaliai-cv19/discussion/130311">Things does not work</a> and <a href="https://www.kaggle.com/c/bengaliai-cv19/discussion/132118#754943">Things that might work</a>.</p>
   </li>
-</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry><entry><title type="html">Bengali.AI Handwritten Grapheme Classification-Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali.html" rel="alternate" type="text/html" title="Bengali.AI Handwritten Grapheme Classification-Start Blog" /><published>2020-02-18T00:00:00+00:00</published><updated>2020-02-18T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali.html"><![CDATA[<p><strong>Team: Zzz…</strong></p>
-
-<p><strong>Members: Cheng Zeng, Zhi Wang, Peter Huang</strong></p>
-
-<h2 id="introduction">Introduction</h2>
-
-<p>In this <a href="https://www.kaggle.com/c/bengaliai-cv19">Kaggle competition</a>, we aim to develop a convolutional neural network (CNN) model to classify the three constituent components of Bengali handwritten characters, including grapheme root, vowel diacritics, and consonant diacritics. Identifying characters by optical recognition is challenging since each Bengali has 11 vowels and 38 consonants in its alphabet, and there are 10 potential diacritics. As a result, a large number of graphemes (the smallest units in a written language) exist, and this quickly adds up to more than 10,000 different grapheme variations. This work by Team <strong>Zzz..</strong> lives on <a href="https://github.com/cengc13/Bengali_Kaggle">github</a>.</p>
-
-<h2 id="overview-of-the-data-sets">Overview of the data sets</h2>
-
-<h3 id="parquet-files">Parquet Files</h3>
-
-<p>The data sets are saved in the format of parquet files, which contain image IDs and the corresponding flattened 137 x 236 grayscale images. Each feature corresponds to a pixel of the image. The pixel values are between 0 and 255.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/parquet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="parquet header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example parquet data for image pixels</figcaption>
-</div>
-
-<h3 id="training-set">Training set</h3>
-
-<p>The training set contains image IDs from the parquet files and the 3 components of the corresponding graphemes, and there are 200,840 images in the training set. Note that the input is the handwritten image (the last column), while the output should be the classes for the corresponding three constituent components.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/training.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example training data</figcaption>
-</div>
-
-<h3 id="test-set">Test Set</h3>
-
-<p>The testing images consist of images whose constituent components are listed in independent rows.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/test.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example test data</figcaption>
-</div>
-
-<h3 id="class-map">Class Map</h3>
-
-<p>The class-map contains grapheme component types and labels, and it maps the class labels to the actual Bengali grapheme components.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/class-map.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="class map header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example class-map data</figcaption>
-</div>
-
-<h2 id="submission-format">Submission Format</h2>
-<p>The sample submission file has two columns—one column is the row ID from the test set which consists of the test index number and the component in a grapheme and the prediction.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/example-submission.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Example submission header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example submission data</figcaption>
-</div>
-
-<h2 id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
-
-<h3 id="pixel-distribution">Pixel distribution</h3>
-
-<p>The original pixel distribution is shown below, and it will be later used to compare with the pixel distributions after image crop and resize.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/pixel-dist.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Pixel distribution of training images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Pixel distributions of training images</figcaption>
-</div>
-
-<h3 id="class-frequency-analysis">Class frequency analysis</h3>
-
-<h4 id="top-20-grapheme-roots">Top 20 grapheme roots</h4>
-
-<p>Top 20 grapheme roots and their percentages in the training set are shown in the below figure. Those grapheme roots are approximately evenly distributed.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/grapheme-root.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Grapheme roots" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Frequency of top 20 grapheme roots</figcaption>
-</div>
-
-<h4 id="vowel-diacritics">Vowel diacritics</h4>
-
-<p>The counts of vowel diacritics are shown in the figure below. The distribution is not balanced, and they concentrate on Class 0, 1, 7, and 2.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/vowel-diacritic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Vowel diacritic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Frequency of vowel diacritic</figcaption>
-</div>
-
-<h4 id="consonant-diacritics">Consonant diacritics</h4>
-
-<p>For consonant diacritics, the distribution is not balanced either, with more than 60% being Class 0.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/consonant-diacritic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="consonant diacritic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Frequency of consonant diacritic</figcaption>
-</div>
-
-<h3 id="inspecting-training-images">Inspecting training images</h3>
-
-<h4 id="some-randomly-sampled-images">Some randomly sampled images</h4>
-<p>Below is 25 example handwritten grapheme randomly chosen fro the training images.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/samples.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Sample training images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Randomly sampled example images</figcaption>
-</div>
-
-<h4 id="writing-variety">Writing variety</h4>
-
-<p>In the below it shows images of the same grapheme. Note that the handwriting of the same grapheme varies a lot.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/writing-variety.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Writing variety" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Sixteen images of the same grapheme. Grapheme root, vowel diacritic and consonant diacritic are indexed 72, 1, 1, respectively.</figcaption>
-</div>
-
-<h2 id="data-preprocessing">Data preprocessing</h2>
-
-<p>The images are standardized by cropping and resizing using methods implemented in the <a href="https://github.com/opencv/opencv">OpenCV</a> package.
-The method finds the contour of the figure and resize the image based on the size of the contour. In the following, we show the eight images after preprocessing and corresponding pixel distributions. The figures after processing look normal, and the pixel distribution with proprocessing is close to the one without preprocessing, implying the reliability of the method used.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/preprocessing.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Preprocessed images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example handwritten grapheme after preprocessing</figcaption>
-</div>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/pixel-dist-with-preprocessing.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Pixel distribution after preprocessing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Pixel distribution after preprocessing</figcaption>
-</div>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry></feed>
