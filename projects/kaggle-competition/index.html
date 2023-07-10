@@ -10,10 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>2022 12 02_strain Trends | Cheng  Zeng</title>
+    <title>Machine learning competitions on Kaggle | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
-    <meta name="description" content="Cheng Zeng's personal website
-">
+    <meta name="description" content="A list of past kaggle competitions">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -37,7 +36,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/news/2022-12-02_strain-trends/">
+    <link rel="canonical" href="https://cengc13.github.io/website/projects/kaggle-competition/">
 
     <!-- Dark Mode -->
     
@@ -112,27 +111,111 @@
     <!-- Content -->
     <div class="container mt-5">
       
-        <!-- _layouts/post.html -->
+        <!-- page.html -->
+        <div class="post">
 
-<div class="post">
+          <header class="post-header">
+            <h1 class="post-title">Machine learning competitions on Kaggle</h1>
+            <p class="post-description">A list of past kaggle competitions</p>
+          </header>
 
-  <header class="post-header">
-    <h1 class="post-title">2022 12 02_strain Trends</h1>
-    <p class="post-meta">December 2, 2022</p>
-    <p class="post-tags">
-      <a href="/website/blog/2022"> <i class="fas fa-calendar fa-sm"></i> 2022 </a>
+          <article>
+            <h3 id="about-kaggle"><strong>About Kaggle</strong></h3>
 
-    </p>
-  </header>
+<blockquote>
+  <p>Kaggle is a data science competition platform and online community of
+data scientists and machine learning practitioners under Google LLC.</p>
+</blockquote>
 
-  <article class="post-content">
+<p>This place hosts website links for blogs documenting my learning journey for past Kaggle machine learning competitions.</p>
+
+<hr>
+
+<h3 id="competitions"><strong>Competitions</strong></h3>
+
+<h4 id="bengaliai-handwritten-grapheme-classification">Bengali.AI Handwritten Grapheme Classification</h4>
+<p>Computer vision for multi-class classification</p>
+
+<div class="row justify-content-sm-center">
+        <figure>
+
+  <picture>
     
-    <div id="markdown-content">
-      <p>Our work on general strain trends in catalysis is <a href="https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.2c07246" rel="external nofollow noopener" target="_blank">published</a> on J. Phys. Chem. C.</p>
 
-    </div>
-  </article>
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/kaggle-competitions/kaggle-bengali-desc.png" class="img-fluid rounded z-depth-1" width="320" height="400" title="Bengali.AI description" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
 </div>
+
+<blockquote>
+  <h5 id="competition-description"><strong>Competition description</strong></h5>
+  <p>CChallenge and dataset summary paper available at <a href="https://arxiv.org/abs/2010.00170" rel="external nofollow noopener" target="_blank">arXiv</a>.</p>
+
+  <p>Bengali is the 5th most spoken language in the world with hundreds of million of speakers. It’s the official language of Bangladesh and the second most spoken language in India. Considering its reach, there’s significant business and educational interest in developing AI that can optically recognize images of the language handwritten. This challenge hopes to improve on approaches to Bengali recognition.</p>
+
+  <p>Optical character recognition is particularly challenging for Bengali. While Bengali has 49 letters (to be more specific 11 vowels and 38 consonants) in its alphabet, there are also 18 potential diacritics, or accents. This means that there are many more graphemes, or the smallest units in a written language. The added complexity results in ~13,000 different grapheme variations (compared to English’s 250 graphemic units).</p>
+
+  <p>For this competition, you’re given the image of a handwritten Bengali grapheme and are challenged to separately classify three constituent elements in the image: grapheme root, vowel diacritics, and consonant diacritics.</p>
+</blockquote>
+
+<h5 id="competition-blogs">Competition blogs</h5>
+
+<ul>
+  <li><a href="https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali.html">Initial blog</a></li>
+  <li><a href="https://cengc13.github.io/website/kaggle/2020/02/25/kaggle-bengali.html">Midway blog</a></li>
+  <li><a href="https://cengc13.github.io/website/kaggle/2020/03/03/kaggle-bengali.html">Final blog</a></li>
+</ul>
+
+<p><strong>I completed this competitions as the team leader for Zzz… and we won a silver medal through this effort, ranking 90\(^{\rm{th}}\) out of 2059 teams.</strong></p>
+
+<hr>
+
+<h4 id="jigsaw-multilingual-toxic-comment-classification">Jigsaw Multilingual Toxic Comment Classification</h4>
+<p>Natural language processing for zero- and few-shot learning in multilingual language classification.</p>
+
+<div class="row justify-content-sm-center">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/kaggle-competitions/kaggle-jigsaw.png" class="img-fluid rounded z-depth-1" width="320" height="320" title="Bengali.AI description" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+</div>
+
+<blockquote>
+  <h5 id="competition-description-1"><strong>Competition description</strong></h5>
+
+  <p>Toxicity of an online comment is defined as anything rude, disrespectful or otherwise likely to make someone leave a discussion. If these toxic contributions can be identified, we could have a safer, more collaborative internet.
+In this competition, we’re taking advantage of Kaggle’s new TPU support and challenging you to build multilingual models with English-only training data.</p>
+
+  <p>Over the past year, toxicity models have seen impressive multilingual capabilities from the latest model innovations, including few- and zero-shot learning. We’re excited to learn whether these results “translate” (pun intended!) to toxicity classification. Your training data will be the English data and your test data will be Wikipedia talk page comments in several different languages.</p>
+
+  <p><em>Disclaimer</em>: The dataset for this competition contains text that may be considered profane, vulgar, or offensive.</p>
+</blockquote>
+
+<h5 id="competition-blogs-1">Competition blogs</h5>
+
+<ul>
+  <li><a href="https://cengc13.github.io/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html">Initial blog</a></li>
+  <li><a href="https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html">Midway blog</a></li>
+  <li><a href="https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html">Final blog</a></li>
+</ul>
+
+<p><strong>I completed this competitions with a solo gold medal, ranking 5\(^{\rm{th}}\) out of 1621 teams.</strong></p>
+
+          </article>
+
+        </div>
 
       
     </div>
