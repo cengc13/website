@@ -50,4 +50,4 @@ To complete the understanding of catalytic performance of nanoparticle catalysts
 </div>
 
 The NFT paper is [available](https://pubs.aip.org/aip/jcp/article/156/6/064104/2840702/A-nearsighted-force-training-approach-to) at J. Chem. Phys.
-The Co--Pt phase stability work is [out](https://arxiv.org/abs/2306.01846) at arXiv and has been submitted to ACS Catalysis and now under peer review. The work regarding Co--Pt catalytic activity and stability is to be submitted. The three works together form a trilogy of nearsighted force training targeting nanoparticle alloy catalysts.
+The Co--Pt phase stability work is [out](https://arxiv.org/abs/2306.01846) at arXiv and has been submitted to Journal of Physical Chemistry for peer review. The work regarding Co--Pt catalytic activity and stability is to be submitted. The three works together form a trilogy of nearsighted force training targeting nanoparticle alloy catalysts.
