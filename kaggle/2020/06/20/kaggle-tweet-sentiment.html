@@ -10,10 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>data-science | Cheng  Zeng</title>
+    <title>Tweet Sentiment Extraction - Start Blog | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
-    <meta name="description" content="Cheng Zeng's personal website
-">
+    <meta name="description" content="Extract support phrases for sentiment labels">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -33,11 +32,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
 
     
+    <!-- Sidebar Table of Contents -->
+    <link href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css" rel="stylesheet">
+    
 
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/blog/tag/data-science/">
+    <link rel="canonical" href="https://cengc13.github.io/website/kaggle/2020/06/20/kaggle-tweet-sentiment.html">
 
     <!-- Dark Mode -->
     
@@ -76,8 +78,8 @@
               </li>
               
               <!-- Blog -->
-              <li class="nav-item active">
-                <a class="nav-link" href="/website/blog/">Blog<span class="sr-only">(current)</span></a>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/blog/">Blog</a>
               </li>
 
               <!-- Other pages -->
@@ -112,72 +114,63 @@
     <!-- Content -->
     <div class="container mt-5">
       
-        <div class="post">
+        
+        <div class="row">
+          <!-- sidebar, which will move to the top on a small screen -->
+          <div class="col-sm-3">
+            <nav id="toc-sidebar" class="sticky-top"></nav>
+          </div>
+          <!-- main content area -->
+          <div class="col-sm-9">
+            <!-- _layouts/post.html -->
+
+<div class="post">
 
   <header class="post-header">
-    <h1 class="post-title"> <i class="fas fa-hashtag fa-sm"></i> data-science </h1>
-    <p class="post-description"> an archive of posts with this tag </p>
+    <h1 class="post-title">Tweet Sentiment Extraction - Start Blog</h1>
+    <p class="post-meta">June 20, 2020</p>
+    <p class="post-tags">
+      <a href="/website/blog/2020"> <i class="fas fa-calendar fa-sm"></i> 2020 </a>
+        ·  
+        <a href="/website/blog/tag/nlp">
+          <i class="fas fa-hashtag fa-sm"></i> nlp</a>  
+          <a href="/website/blog/tag/data-science">
+          <i class="fas fa-hashtag fa-sm"></i> data-science</a>  
+          
+        ·  
+        <a href="/website/blog/category/kaggle">
+          <i class="fas fa-tag fa-sm"></i> kaggle</a>  
+          
+
+    </p>
   </header>
 
-  <article>
-    <div class="table-responsive">
-      <table class="table table-sm table-borderless">
-        
-        <tr>
-          <th scope="row">Jun 20, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/06/20/kaggle-tweet-sentiment.html">Tweet Sentiment Extraction - Start Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">May 8, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html">Jigsaw Multilingual Toxic Comment Classification - Final Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Apr 26, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html">Jigsaw Multilingual Toxic Comment Classification - Midway Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Apr 12, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html">Jigsaw Multilingual Toxic Comment Classification - Start Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Mar 3, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/03/03/kaggle-bengali-final.html">Bengali.AI Handwritten Grapheme Classification - Final Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Feb 25, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/02/25/kaggle-bengali-midway.html">Bengali.AI Handwritten Grapheme Classification - Midway Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Feb 18, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/02/18/kaggle-bengali-start.html">Bengali.AI Handwritten Grapheme Classification - Start Blog</a>
-          </td>
-        </tr>
-      
-      </table>
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p>This blog describes the background and motivation, walks you through the dataset, evaluation metrics and submission requirements.</p>
+
+<blockquote>
+  <p>With all of the tweets circulating every second it is hard to tell whether the sentiment behind a specific tweet will impact a company, or a person’s, brand for being viral (positive), or devastate profit because it strikes a negative tone. Capturing sentiment in language is important in these times where decisions and reactions are created and updated in seconds. But, which words actually lead to the sentiment description? In this competition you will need to pick out the part of the tweet (word or phrase) that reflects the sentiment.</p>
+</blockquote>
+
+<p>This kaggle competition aims to construct a language model that can not only identify the sentiment of a tweet but also understand why it is so.
+In other words, competitors are expected to figure out what word or phrase best supports the labeled sentiment.</p>
+
+<h2 id="data-set">Data set</h2>
+
+<h2 id="evaluation-metrics">Evaluation metrics</h2>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+
     </div>
   </article>
-
 </div>
 
+          </div>
+        </div>
+        
       
     </div>
 
@@ -204,6 +197,9 @@ Last updated: July 20, 2023.
   <!-- Medium Zoom JS -->
   <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script defer src="/website/assets/js/zoom.js"></script>
+  <!-- Sidebar Table of Contents -->
+  <script defer src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
 
   <!-- Bootstrap Table -->
   <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
