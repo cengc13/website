@@ -235,7 +235,7 @@ At a high level of abstraction, an attention model differs in two main ways. Fir
 
 - Tarun Paparaju. (2020, March). *Jigsaw Multilingual Toxicity : EDA + Models*. Retrieved from [https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models](https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models). The function for plotting the WordCloud is adapted from this kernel.  
 
-- Jay Alammer. (2018, May 9). *Visualizing A Neural Machine Translation Model*. Retrieved from [https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/](https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models).  Some explanation for **attention** comes from this blog.
+- Jay Alammer. (2018, May 9). *Visualizing A Neural Machine Translation Model*. Retrieved from [https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/).  Some explanation for **attention** comes from this blog.
 
 - Barry Clark. (2016, March). *Build a Jekyll blog in minutes, without touching the command line*. Retrieved from [https://github.com/barryclark/jekyll-now](https://github.com/barryclark/jekyll-now).This site offers the github page template using `Jekyll`.
 
