@@ -1,18 +1,185 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-21T20:23:09+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
-</subtitle><entry><title type="html">Tweet Sentiment Extraction - Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/20/kaggle-tweet-sentiment.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Start Blog" /><published>2020-06-20T00:00:00+00:00</published><updated>2020-06-20T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/20/kaggle-tweet-sentiment</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/20/kaggle-tweet-sentiment.html"><![CDATA[<p>This blog describes the background and motivation, walks you through the dataset, evaluation metrics and submission requirements.</p>
-
-<blockquote>
-  <p>With all of the tweets circulating every second it is hard to tell whether the sentiment behind a specific tweet will impact a company, or a person’s, brand for being viral (positive), or devastate profit because it strikes a negative tone. Capturing sentiment in language is important in these times where decisions and reactions are created and updated in seconds. But, which words actually lead to the sentiment description? In this competition you will need to pick out the part of the tweet (word or phrase) that reflects the sentiment.</p>
-</blockquote>
-
-<p>This kaggle competition aims to construct a language model that can not only identify the sentiment of a tweet but also understand why it is so.
-In other words, competitors are expected to figure out what word or phrase best supports the labeled sentiment.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-21T20:36:30+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
+</subtitle><entry><title type="html">Tweet Sentiment Extraction - Midway Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Midway Blog" /><published>2020-06-09T00:00:00+00:00</published><updated>2020-06-09T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html"><![CDATA[<p>This blog describes the background and motivation, dataset, evaluation metrics and exploratory data analysis (EDA).</p>
 
 <h2 id="data-set">Data set</h2>
 
+<h3 id="files">Files</h3>
+
+<ul>
+  <li>
+    <p><strong>train.csv</strong> - the training set</p>
+  </li>
+  <li>
+    <p><strong>test.csv</strong> - the test set</p>
+  </li>
+  <li>
+    <p><strong>sample_submission.csv</strong> - a sample submission file in the correct format</p>
+  </li>
+</ul>
+
+<h3 id="data-format">Data format</h3>
+
+<p>Each row contains the <code class="language-plaintext highlighter-rouge">text</code> of a tweet and a <code class="language-plaintext highlighter-rouge">sentiment</code> label. In the training set you are provided with a word or phrase drawn from the tween <code class="language-plaintext highlighter-rouge">selected_text</code> that encapsulates the provided sentiment.</p>
+
+<h3 id="columns">Columns</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">textID</code> - unique ID for each piece of text</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">text</code>  the text of the tweet</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">sentiment</code> - the general sentiment of the tweet</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">selected_text</code> - [train only] the text that supports the tweet’s sentiment</p>
+  </li>
+</ul>
+
+<h3 id="submission-format">Submission format</h3>
+
+<p>We are attempting to predict the word or phrase from the tweet that exemplifies the provided sentiment. The word or phrase should include all characters within that span (i.e. including commas, spaces, etc.). The format is as follows:</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;id&gt;, "&lt;word or phrase that supports the sentiment&gt;"</code></p>
+
+<p>For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span><span class="p">,</span> <span class="sh">"</span><span class="s">Very good</span><span class="sh">"</span>
+<span class="mi">5</span><span class="p">,</span> <span class="sh">"</span><span class="s">I am neutral about this</span><span class="sh">"</span>
+<span class="mi">3</span><span class="p">,</span> <span class="sh">"</span><span class="s">Awful</span><span class="sh">"</span>
+<span class="mi">8</span><span class="p">,</span> <span class="sh">"</span><span class="s">If you say so!</span><span class="sh">"</span>
+</code></pre></div></div>
+
 <h2 id="evaluation-metrics">Evaluation metrics</h2>
 
-<h2 id="annotated-citations">Annotated Citations</h2>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Extract support phrases for sentiment labels]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Start Blog" /><published>2020-06-01T00:00:00+00:00</published><updated>2020-06-01T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html"><![CDATA[<p>This kaggle competition aims to construct a language model that can not only identify the sentiment of a tweet but also understand why it is so.
+<p>The metric in this competition is the <a href="https://en.wikipedia.org/wiki/Jaccard_index">word-level Jaccard score</a>. A good description of Jaccard similarity for strings is <a href="https://towardsdatascience.com/overview-of-text-similarity-metrics-3397c4601f50">here</a>. The formula is expressed as:</p>
+
+<p>\begin{equation}
+score = \frac{1}{n} \sum_{i=1}^{n} jaccard(gt_i, dt_i)
+\end{equation}</p>
+
+<p>where:</p>
+
+\[\begin{align*}
+n &amp;= \textrm{number of documents} \\
+jaccard &amp;= \textrm{the function provided above} \\
+gt_i &amp;= \textrm{the ith ground truth} \\
+dt_i &amp;= \textrm{the ith prediction} \\
+\end{align*}\]
+
+<p>A python implementation of the jaccard score is as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">str1</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">str2</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="mf">0.5</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="nf">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">float</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nf">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="eda">EDA</h2>
+
+<h3 id="data-balance">Data balance</h3>
+
+<p>The balance of the training set can be obtained with</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="n">plotly</span> <span class="kn">import</span> <span class="n">graph_objs</span> <span class="k">as</span> <span class="n">go</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">/kaggle/input/tweet-sentiment-extraction/train.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="p">.</span><span class="nc">Figure</span><span class="p">(</span><span class="n">go</span><span class="p">.</span><span class="nc">Funnelarea</span><span class="p">(</span>
+    <span class="n">text</span> <span class="o">=</span><span class="n">train</span><span class="p">.</span><span class="n">sentiment</span><span class="p">,</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">position</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">top center</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">text</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Funnel-Chart of Sentiment Distribution</span><span class="sh">"</span><span class="p">}</span>
+    <span class="p">))</span>
+<span class="n">fig</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/tweet-data-balance.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data balance" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Sentiment-specific ratios of training data</figcaption>
+</div>
+
+<h3 id="world-cloud">World Cloud</h3>
+
+<p>We use world clouds to show the most common words in the tweets based on their corresponding sentiment. The code is shown below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="n">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span><span class="p">,</span> <span class="n">STOPWORDS</span><span class="p">,</span> <span class="n">ImageColorGenerator</span>
+<span class="c1">### mask for the lay-out of word cloud
+</span><span class="n">d</span> <span class="o">=</span> <span class="sh">'</span><span class="s">/kaggle/input/masks-for-wordclouds/</span><span class="sh">'</span>
+<span class="n">pos_mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">d</span><span class="o">+</span> <span class="sh">'</span><span class="s">twitter_mask.png</span><span class="sh">'</span><span class="p">))</span>
+<span class="nf">plot_wordcloud</span><span class="p">(</span><span class="n">Neutral_sent</span><span class="p">.</span><span class="n">text</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="n">pos_mask</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">white</span><span class="sh">'</span><span class="p">,</span><span class="n">max_font_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="sh">"</span><span class="s">WordCloud of Neutral Tweets</span><span class="sh">"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">plot_wordcloud</code> function can be found in the kaggle kernel by aashita <a href="https://www.kaggle.com/code/aashita/word-clouds-of-various-shapes/notebook">here</a>.</p>
+
+<p>World cloud of neural tweets:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-neural-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of neural tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Word cloud of neural tweets</figcaption>
+</div>
+
+<p>World cloud of positive tweets:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-positive-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of positive tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Word cloud of positive tweets</figcaption>
+</div>
+
+<p>World cloud of negative tweets:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-negative-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of negative tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Word cloud of negative tweets</figcaption>
+</div>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Extract support phrases for sentiment labels]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Start Blog" /><published>2020-06-01T00:00:00+00:00</published><updated>2020-06-01T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html"><![CDATA[<p>This kaggle competition aims to construct a language model that can not only identify the sentiment of a tweet but also understand why it is so.
 In other words, competitors are expected to figure out what word or phrase best supports the labeled sentiment.</p>
 
 <blockquote>
@@ -1299,7 +1466,7 @@ The encoder processes each item in the input sequence, and then compile the tran
     <p>Tarun Paparaju. (2020, March). <em>Jigsaw Multilingual Toxicity : EDA + Models</em>. Retrieved from <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models">https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models</a>. The function for plotting the WordCloud is adapted from this kernel.</p>
   </li>
   <li>
-    <p>Jay Alammer. (2018, May 9). <em>Visualizing A Neural Machine Translation Model</em>. Retrieved from <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models">https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/</a>.  Some explanation for <strong>attention</strong> comes from this blog.</p>
+    <p>Jay Alammer. (2018, May 9). <em>Visualizing A Neural Machine Translation Model</em>. Retrieved from <a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/</a>.  Some explanation for <strong>attention</strong> comes from this blog.</p>
   </li>
   <li>
     <p>Barry Clark. (2016, March). <em>Build a Jekyll blog in minutes, without touching the command line</em>. Retrieved from <a href="https://github.com/barryclark/jekyll-now">https://github.com/barryclark/jekyll-now</a>.This site offers the github page template using <code class="language-plaintext highlighter-rouge">Jekyll</code>.</p>
