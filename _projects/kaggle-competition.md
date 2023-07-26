@@ -41,7 +41,7 @@ Computer vision for multi-class classification
 - [Midway blog](https://cengc13.github.io/website/kaggle/2020/02/25/kaggle-bengali.html)
 - [Final blog](https://cengc13.github.io/website/kaggle/2020/03/03/kaggle-bengali.html)
 
-**I completed this competitions as the team leader for Zzz... and we won a silver medal through this effort, ranking 90$$^{\rm{th}}$$ out of 2059 teams.**
+**I completed this competitions as the leader of Team "Zzz..." and we won a silver medal through this effort, ranking 90$$^{\rm{th}}$$ out of 2059 teams.**
 
 ---
 
