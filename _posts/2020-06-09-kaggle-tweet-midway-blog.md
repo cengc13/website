@@ -11,133 +11,82 @@ toc:
   sidebar: left
 ---
 
-This blog describes the background and motivation, dataset, evaluation metrics and exploratory data analysis (EDA).
+This blog is the second entry documenting my effort in the **"Tweet Sentiment Extraction"** kaggle competition. In this blog, we will discuss the language model to tackle this specific challenge.
 
-## Data set
 
-### Files
+## The RoBERTa model
 
-- **train.csv** - the training set
+We will use the TensorFlow to construct the RoBERTa model. The model was constructed following the [kaggle kernel](https://www.kaggle.com/code/cdeotte/tensorflow-roberta-0-705) written by Chris Deotte. Next, we show how to tokenize the text and create question answer head.
 
-- **test.csv** - the test set
+### Tokenizer
 
-- **sample_submission.csv** - a sample submission file in the correct format
-
-### Data format
-
-Each row contains the `text` of a tweet and a `sentiment` label. In the training set you are provided with a word or phrase drawn from the tween `selected_text` that encapsulates the provided sentiment.
-
-### Columns
-
-- `textID` - unique ID for each piece of text
-
-- `text`  the text of the tweet
-
-- `sentiment` - the general sentiment of the tweet
-
-- `selected_text` - [train only] the text that supports the tweet's sentiment
-
-### Submission format
-
-We are attempting to predict the word or phrase from the tweet that exemplifies the provided sentiment. The word or phrase should include all characters within that span (i.e. including commas, spaces, etc.). The format is as follows:
-
-`<id>, "<word or phrase that supports the sentiment>"`
-
-For example:
+We used pretrained RoBERTa Byte level Byte-pair Encoding tokenizer to convert the data into tokens. The tokenizer can be loaded by:
 
 ```python
-2, "Very good"
-5, "I am neutral about this"
-3, "Awful"
-8, "If you say so!"
+import tokenizers
+PATH = [Path to your tokenizer files]
+tokenizer = tokenizers.ByteLevelBPETokenizer(
+    vocab_file=PATH+'vocab-roberta-base.json',
+    merges_file=PATH+'merges-roberta-base.txt',
+    lowercase=True,
+    add_prefix_space=True
+)
 ```
 
-## Evaluation metrics
+The key to find the selected text is construct a mapping between characters in the original text and the tokens transformed from the text.
+After tokenization, the inputs look like the below:
 
-The metric in this competition is the [word-level Jaccard score](https://en.wikipedia.org/wiki/Jaccard_index). A good description of Jaccard similarity for strings is [here](https://towardsdatascience.com/overview-of-text-similarity-metrics-3397c4601f50). The formula is expressed as:
-
-\begin{equation}
-score = \frac{1}{n} \sum_{i=1}^{n} jaccard(gt_i, dt_i)
-\end{equation}
-
-where:
-
-$$
-\begin{align*}
-n &= \textrm{number of documents} \\
-jaccard &= \textrm{the function provided above} \\
-gt_i &= \textrm{the ith ground truth} \\
-dt_i &= \textrm{the ith prediction} \\
-\end{align*}
-$$
-
-A python implementation of the jaccard score is as follows:
-
-```python
-def jaccard(str1, str2):
-    a = set(str1.lower().split())
-    b = set(str2.lower().split())
-    if (len(a)==0) & (len(b)==0): return 0.5
-    c = a.intersection(b)
-    return float(len(c)) / (len(a) + len(b) - len(c))
-```
-
-## EDA
-
-### Data balance
-
-The balance of the training set can be obtained with
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-from plotly import graph_objs as go
-train = pd.read_csv('/kaggle/input/tweet-sentiment-extraction/train.csv')
-fig = go.Figure(go.Funnelarea(
-    text =train.sentiment,
-    values = train.text,
-    title = {"position": "top center", "text": "Funnel-Chart of Sentiment Distribution"}
-    ))
-fig.show()
-```
 <div class="img-div" markdown="0" style="text-align:center">
-  {% include figure.html path="/assets/img/kaggle-tweet/start-blog/tweet-data-balance.png" title="Data balance" class="img-fluid rounded z-depth-1" %}
-  <figcaption>Sentiment-specific ratios of training data</figcaption>
+  {% include figure.html path="/assets/img/kaggle-tweet/midway-blog/bpe-tokenization.jpeg" title="RoBERTa tokenization" class="img-fluid rounded z-depth-1" %}
+  <figcaption>Original text and its Byte-level BPE tokenization.</figcaption>
 </div>
 
-### World Cloud
+Note that the same tokenization should be applied to the test data.
 
-We use world clouds to show the most common words in the tweets based on their corresponding sentiment. The code is shown below:
+
+### Build RoBERTa model
+
+A pretrained RoBERTa base model was used and a custom question answer head was added. First tokens were sent to a BERT model to obtain the embedding of the token sequence. The embedding went through a 1D convolution layer and activation layer to find the one-hot encodings of the start token indices. Likewise, the end index of the tokens can be found. An `Adam` optimizer with a learning rate of 3e-5 and a `categorical_crossentropy` were used to compile the model. The schematic diagram is shown at below:
+
+
+<div class="img-div" markdown="0" style="text-align:center">
+  {% include figure.html path="/assets/img/kaggle-tweet/midway-blog/roberta-model.jpeg" title="RoBERTa model with question answer head" class="img-fluid rounded z-depth-1" %}
+  <figcaption>RoBERTa model with a custom question answer head to find the start and end token indices of the selected text.</figcaption>
+</div>
+
+### Training
+
+The training was carried out with 5 folds stratified based on sentiment. A `batch` size of 32 and 3 `epochs` were used for training the model.
+In order to obtain the `Jaccard` score, we need to decode the identified token sequence into the text. This was achieved by:
 
 ```python
-from PIL import Image
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-### mask for the lay-out of word cloud
-d = '/kaggle/input/masks-for-wordclouds/'
-pos_mask = np.array(Image.open(d+ 'twitter_mask.png'))
-plot_wordcloud(Neutral_sent.text,mask=pos_mask,color='white',max_font_size=100,title_size=30,title="WordCloud of Neutral Tweets")
-
+import numpy as np
+  all = []
+  for k in idxV:
+      a = np.argmax(oof_start[k,])
+      b = np.argmax(oof_end[k,])
+      if a>b:
+          st = train.loc[k,'text']
+      else:
+          text1 = " "+" ".join(train.loc[k,'text'].split())
+          enc = tokenizer.encode(text1)
+          st = tokenizer.decode(enc.ids[a-1:b])
+      all.append(jaccard(st,train.loc[k,'selected_text']))
+  jac.append(np.mean(all))
 ```
 
-The `plot_wordcloud` function can be found in the kaggle kernel by aashita [here](https://www.kaggle.com/code/aashita/word-clouds-of-various-shapes/notebook).
+## Kaggle submission
 
-World cloud of neural tweets:
+The same decoding process should be applied to the text data. Next, we created a csv file for submission following the competition requirements. A few samples from the file looks like the below table.
 
-<div class="img-div" markdown="0" style="text-align:center">
-  {% include figure.html path="/assets/img/kaggle-tweet/start-blog/wordcloud-neural-tweet.png" title="Word cloud of neural tweets" class="img-fluid rounded z-depth-1" %}
-  <figcaption>Word cloud of neural tweets</figcaption>
-</div>
-
-World cloud of positive tweets:
-
-<div class="img-div" markdown="0" style="text-align:center">
-  {% include figure.html path="/assets/img/kaggle-tweet/start-blog/wordcloud-positive-tweet.png" title="Word cloud of positive tweets" class="img-fluid rounded z-depth-1" %}
-  <figcaption>Word cloud of positive tweets</figcaption>
-</div>
-
-World cloud of negative tweets:
+```python
+test['selected_text'] = all
+test[['textID','selected_text']].to_csv('submission.csv',index=False)
+pd.set_option('max_colwidth', 60)
+test.sample(25)
+```
 
 <div class="img-div" markdown="0" style="text-align:center">
-  {% include figure.html path="/assets/img/kaggle-tweet/start-blog/wordcloud-negative-tweet.png" title="Word cloud of negative tweets" class="img-fluid rounded z-depth-1" %}
-  <figcaption>Word cloud of negative tweets</figcaption>
+  {% include figure.html path="/assets/img/kaggle-tweet/midway-blog/submission-file.png" title="Table file for submission" class="img-fluid rounded z-depth-1" %}
+  <figcaption>Table for final submission: A number of example items.</figcaption>
 </div>

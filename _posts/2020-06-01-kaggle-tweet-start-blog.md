@@ -89,6 +89,8 @@ def jaccard(str1, str2):
 
 ## EDA
 
+The EDA figures were retrieved from the [kaggle kernel](https://www.kaggle.com/code/tanulsingh077/twitter-sentiment-extaction-analysis-eda-and-model) by MR_KNOWNNOTHING.
+
 ### Data balance
 
 The balance of the training set can be obtained with
