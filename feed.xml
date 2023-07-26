@@ -1,101 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-26T11:33:47+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
-</subtitle><entry><title type="html">Tweet Sentiment Extraction - Midway Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Midway Blog" /><published>2020-06-09T00:00:00+00:00</published><updated>2020-06-09T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html"><![CDATA[<p>This blog describes the background and motivation, dataset, evaluation metrics and exploratory data analysis (EDA).</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-26T17:53:14+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
+</subtitle><entry><title type="html">Tweet Sentiment Extraction - Final Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Final Blog" /><published>2020-06-23T00:00:00+00:00</published><updated>2020-06-23T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html"><![CDATA[<p>This is final blog for this NLP competition. We will discuss some caveats
+to move up through the leaderboard. We used the RoBERTa model in the midway blog for the infences. In this blog, we will discuss sentiment-specific predictions, noise of the data and post-processing tricks to improve the prediction scores.</p>
 
-<h2 id="data-set">Data set</h2>
+<h2 id="sentiment-specific-jaccard-score">Sentiment-specific Jaccard score</h2>
 
-<h3 id="files">Files</h3>
-
-<ul>
-  <li>
-    <p><strong>train.csv</strong> - the training set</p>
-  </li>
-  <li>
-    <p><strong>test.csv</strong> - the test set</p>
-  </li>
-  <li>
-    <p><strong>sample_submission.csv</strong> - a sample submission file in the correct format</p>
-  </li>
-</ul>
-
-<h3 id="data-format">Data format</h3>
-
-<p>Each row contains the <code class="language-plaintext highlighter-rouge">text</code> of a tweet and a <code class="language-plaintext highlighter-rouge">sentiment</code> label. In the training set you are provided with a word or phrase drawn from the tween <code class="language-plaintext highlighter-rouge">selected_text</code> that encapsulates the provided sentiment.</p>
-
-<h3 id="columns">Columns</h3>
+<p>If we breakdown the average jaccard scores based on the sentiment, the average Jaccard values of the three sentiments are:</p>
 
 <ul>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">textID</code> - unique ID for each piece of text</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">text</code>  the text of the tweet</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">sentiment</code> - the general sentiment of the tweet</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">selected_text</code> - [train only] the text that supports the tweet’s sentiment</p>
-  </li>
+  <li>Positive: 0.581</li>
+  <li>Negative: 0.590</li>
+  <li>Neutral: 0.976</li>
 </ul>
 
-<h3 id="submission-format">Submission format</h3>
+<p>Many tweets with positive and negative sentiment have a jaccard score of zero. Let us figure out the issues.</p>
 
-<p>We are attempting to predict the word or phrase from the tweet that exemplifies the provided sentiment. The word or phrase should include all characters within that span (i.e. including commas, spaces, etc.). The format is as follows:</p>
+<h2 id="the-noise-in-labels--the-magic">The Noise in labels &amp; The Magic</h2>
+<p>At a first glimpse, those results look pretty weird as the selected texts look like random noise which are not a subset of the full text. For instance, <a href="https://www.kaggle.com/code/debanga/what-the-no-ise">cases</a> found by DEBANGA RAJ NEOG:</p>
 
-<p><code class="language-plaintext highlighter-rouge">&lt;id&gt;, "&lt;word or phrase that supports the sentiment&gt;"</code></p>
+<ol>
+  <li>
+    <p>Missing a <code class="language-plaintext highlighter-rouge">!</code>  <span style="color:orange">Damn! It <code class="language-plaintext highlighter-rouge">hurts!!!</code></span></p>
+  </li>
+  <li>
+    <p>Missing a <code class="language-plaintext highlighter-rouge">.</code>  <span style="color:orange">It is <code class="language-plaintext highlighter-rouge">stupid...</code></span></p>
+  </li>
+  <li>
+    <p>Missing <code class="language-plaintext highlighter-rouge">d</code> in <code class="language-plaintext highlighter-rouge">good</code>?  <span style="color:orange">LOL. It’s not <code class="language-plaintext highlighter-rouge">goo</code></span></p>
+  </li>
+  <li>
+    <p>Missing <code class="language-plaintext highlighter-rouge">ng</code> in <code class="language-plaintext highlighter-rouge">amazing</code>?  <span style="color:orange">Dude. It’s not <code class="language-plaintext highlighter-rouge">amazi</code> at all!</span></p>
+  </li>
+</ol>
 
-<p>For example:</p>
+<p>It was found that the noise originated from the consecutive spaces in the data. This insight can be leveraged to match the <em>noisy</em> selected text using the predicted probabilities of start and end indices at the token level and an alignment post-processing, which is called <em>the Magic</em> for this competition. This technique was implemented by the 1st place solution <a href="https://www.kaggle.com/c/tweet-sentiment-extraction/discussion/159254">here</a>, and found to be super helpful, which can increase the CV score by around 0.2. The implementation idea of <em>the Magic</em> is sketched at below.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span><span class="p">,</span> <span class="sh">"</span><span class="s">Very good</span><span class="sh">"</span>
-<span class="mi">5</span><span class="p">,</span> <span class="sh">"</span><span class="s">I am neutral about this</span><span class="sh">"</span>
-<span class="mi">3</span><span class="p">,</span> <span class="sh">"</span><span class="s">Awful</span><span class="sh">"</span>
-<span class="mi">8</span><span class="p">,</span> <span class="sh">"</span><span class="s">If you say so!</span><span class="sh">"</span>
-</code></pre></div></div>
-
-<h2 id="evaluation-metrics">Evaluation metrics</h2>
-
-<p>The metric in this competition is the <a href="https://en.wikipedia.org/wiki/Jaccard_index">word-level Jaccard score</a>. A good description of Jaccard similarity for strings is <a href="https://towardsdatascience.com/overview-of-text-similarity-metrics-3397c4601f50">here</a>. The formula is expressed as:</p>
-
-<p>\begin{equation}
-score = \frac{1}{n} \sum_{i=1}^{n} jaccard(gt_i, dt_i)
-\end{equation}</p>
-
-<p>where:</p>
-
-\[\begin{align*}
-n &amp;= \textrm{number of documents} \\
-jaccard &amp;= \textrm{the function provided above} \\
-gt_i &amp;= \textrm{the ith ground truth} \\
-dt_i &amp;= \textrm{the ith prediction} \\
-\end{align*}\]
-
-<p>A python implementation of the jaccard score is as follows:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">str1</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">str2</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
-    <span class="nf">if </span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="mf">0.5</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="nf">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nf">float</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nf">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-</code></pre></div></div>
-
-<h2 id="eda">EDA</h2>
-
-<h3 id="data-balance">Data balance</h3>
-
-<p>The balance of the training set can be obtained with</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="n">plotly</span> <span class="kn">import</span> <span class="n">graph_objs</span> <span class="k">as</span> <span class="n">go</span>
-<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">/kaggle/input/tweet-sentiment-extraction/train.csv</span><span class="sh">'</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="p">.</span><span class="nc">Figure</span><span class="p">(</span><span class="n">go</span><span class="p">.</span><span class="nc">Funnelarea</span><span class="p">(</span>
-    <span class="n">text</span> <span class="o">=</span><span class="n">train</span><span class="p">.</span><span class="n">sentiment</span><span class="p">,</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">position</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">top center</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">text</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Funnel-Chart of Sentiment Distribution</span><span class="sh">"</span><span class="p">}</span>
-    <span class="p">))</span>
-<span class="n">fig</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
-</code></pre></div></div>
 <div class="img-div" style="text-align:center">
   <figure>
 
@@ -103,31 +41,71 @@ dt_i &amp;= \textrm{the ith prediction} \\
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-tweet/start-blog/tweet-data-balance.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data balance" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-tweet/final-blog/the-magic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="The Magic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
 </figure>
 
-  <figcaption>Sentiment-specific ratios of training data</figcaption>
+  <figcaption>The pattern of noisy labels and how to leverage it.</figcaption>
 </div>
 
-<h3 id="world-cloud">World Cloud</h3>
+<h2 id="post-processing-tricks">Post-processing tricks</h2>
 
-<p>We use world clouds to show the most common words in the tweets based on their corresponding sentiment. The code is shown below:</p>
+<p>I campe up with a postprocessing method below which consistently helps to improve the CV score by about 0.001–0.002. This post-processing comprises of two tricks. The first one is to have a back-up indices with the second highest probabilities for both start and end indices of tokens, which will be used when the start indice is larger than the end indice. The code for the first trick is below.
+The second trick deals with the special characters using the <code class="language-plaintext highlighter-rouge">regex</code> package, as shown in the function <code class="language-plaintext highlighter-rouge">post_process</code>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="n">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span><span class="p">,</span> <span class="n">STOPWORDS</span><span class="p">,</span> <span class="n">ImageColorGenerator</span>
-<span class="c1">### mask for the lay-out of word cloud
-</span><span class="n">d</span> <span class="o">=</span> <span class="sh">'</span><span class="s">/kaggle/input/masks-for-wordclouds/</span><span class="sh">'</span>
-<span class="n">pos_mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">d</span><span class="o">+</span> <span class="sh">'</span><span class="s">twitter_mask.png</span><span class="sh">'</span><span class="p">))</span>
-<span class="nf">plot_wordcloud</span><span class="p">(</span><span class="n">Neutral_sent</span><span class="p">.</span><span class="n">text</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="n">pos_mask</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">white</span><span class="sh">'</span><span class="p">,</span><span class="n">max_font_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="sh">"</span><span class="s">WordCloud of Neutral Tweets</span><span class="sh">"</span><span class="p">)</span>
-
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">a_bak</span><span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argsort</span><span class="p">(</span><span class="n">preds_start_avg</span><span class="p">[</span><span class="n">k</span><span class="p">,])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span><span class="p">,</span> <span class="n">b_bak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argsort</span><span class="p">(</span><span class="n">preds_end_avg</span><span class="p">[</span><span class="n">k</span><span class="p">,])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">a_bak</span> <span class="o">&lt;=</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a_bak</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">a_bak</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b_bak</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">a_bak</span> <span class="o">&lt;=</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a_bak</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b_bak</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">count_abn_2</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">full_text</span>
 </code></pre></div></div>
 
-<p>The <code class="language-plaintext highlighter-rouge">plot_wordcloud</code> function can be found in the kaggle kernel by aashita <a href="https://www.kaggle.com/code/aashita/word-clouds-of-various-shapes/notebook">here</a>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+<span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="nf">startswith</span><span class="p">(</span><span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="sh">"</span><span class="s">([\.]+)</span><span class="sh">"</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">split</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">!!!!</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">!</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">???</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">?</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="nf">endswith</span><span class="p">(</span><span class="sh">'</span><span class="s">...</span><span class="sh">'</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">..</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">...</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></div>
 
-<p>World cloud of neural tweets:</p>
+<p>Moreover, I submitted results with the highest local CV score rather than the one with the highest public leaderboard score. Luckily I survived the huge shakeup in the end. I ended up with <strong>a solo silver medal for this competition, ranking 90th place out of 2225 teams in total.</strong></p>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Extract support phrases for sentiment labels]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Midway Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Midway Blog" /><published>2020-06-09T00:00:00+00:00</published><updated>2020-06-09T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html"><![CDATA[<p>This blog is the second entry documenting my effort in the <strong>“Tweet Sentiment Extraction”</strong> kaggle competition. In this blog, we will discuss the language model to tackle this specific challenge.</p>
+
+<h2 id="the-roberta-model">The RoBERTa model</h2>
+
+<p>We will use the TensorFlow to construct the RoBERTa model. The model was constructed following the <a href="https://www.kaggle.com/code/cdeotte/tensorflow-roberta-0-705">kaggle kernel</a> written by Chris Deotte. Next, we show how to tokenize the text and create question answer head.</p>
+
+<h3 id="tokenizer">Tokenizer</h3>
+
+<p>We used pretrained RoBERTa Byte level Byte-pair Encoding tokenizer to convert the data into tokens. The tokenizer can be loaded by:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">tokenizers</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span> <span class="n">to</span> <span class="n">your</span> <span class="n">tokenizer</span> <span class="n">files</span><span class="p">]</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizers</span><span class="p">.</span><span class="nc">ByteLevelBPETokenizer</span><span class="p">(</span>
+    <span class="n">vocab_file</span><span class="o">=</span><span class="n">PATH</span><span class="o">+</span><span class="sh">'</span><span class="s">vocab-roberta-base.json</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">merges_file</span><span class="o">=</span><span class="n">PATH</span><span class="o">+</span><span class="sh">'</span><span class="s">merges-roberta-base.txt</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">lowercase</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">add_prefix_space</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The key to find the selected text is construct a mapping between characters in the original text and the tokens transformed from the text.
+After tokenization, the inputs look like the below:</p>
 
 <div class="img-div" style="text-align:center">
   <figure>
@@ -136,16 +114,20 @@ dt_i &amp;= \textrm{the ith prediction} \\
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-neural-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of neural tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-tweet/midway-blog/bpe-tokenization.jpeg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="RoBERTa tokenization" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
 </figure>
 
-  <figcaption>Word cloud of neural tweets</figcaption>
+  <figcaption>Original text and its Byte-level BPE tokenization.</figcaption>
 </div>
 
-<p>World cloud of positive tweets:</p>
+<p>Note that the same tokenization should be applied to the test data.</p>
+
+<h3 id="build-roberta-model">Build RoBERTa model</h3>
+
+<p>A pretrained RoBERTa base model was used and a custom question answer head was added. First tokens were sent to a BERT model to obtain the embedding of the token sequence. The embedding went through a 1D convolution layer and activation layer to find the one-hot encodings of the start token indices. Likewise, the end index of the tokens can be found. An <code class="language-plaintext highlighter-rouge">Adam</code> optimizer with a learning rate of 3e-5 and a <code class="language-plaintext highlighter-rouge">categorical_crossentropy</code> were used to compile the model. The schematic diagram is shown at below:</p>
 
 <div class="img-div" style="text-align:center">
   <figure>
@@ -154,16 +136,44 @@ dt_i &amp;= \textrm{the ith prediction} \\
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-positive-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of positive tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-tweet/midway-blog/roberta-model.jpeg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="RoBERTa model with question answer head" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
 </figure>
 
-  <figcaption>Word cloud of positive tweets</figcaption>
+  <figcaption>RoBERTa model with a custom question answer head to find the start and end token indices of the selected text.</figcaption>
 </div>
 
-<p>World cloud of negative tweets:</p>
+<h3 id="training">Training</h3>
+
+<p>The training was carried out with 5 folds stratified based on sentiment. A <code class="language-plaintext highlighter-rouge">batch</code> size of 32 and 3 <code class="language-plaintext highlighter-rouge">epochs</code> were used for training the model.
+In order to obtain the <code class="language-plaintext highlighter-rouge">Jaccard</code> score, we need to decode the identified token sequence into the text. This was achieved by:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+  <span class="nb">all</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">idxV</span><span class="p">:</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">oof_start</span><span class="p">[</span><span class="n">k</span><span class="p">,])</span>
+      <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">oof_end</span><span class="p">[</span><span class="n">k</span><span class="p">,])</span>
+      <span class="k">if</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">:</span>
+          <span class="n">st</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">text</span><span class="sh">'</span><span class="p">]</span>
+      <span class="k">else</span><span class="p">:</span>
+          <span class="n">text1</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="o">+</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">text</span><span class="sh">'</span><span class="p">].</span><span class="nf">split</span><span class="p">())</span>
+          <span class="n">enc</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">text1</span><span class="p">)</span>
+          <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">b</span><span class="p">])</span>
+      <span class="nb">all</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">jaccard</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]))</span>
+  <span class="n">jac</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="nb">all</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="kaggle-submission">Kaggle submission</h2>
+
+<p>The same decoding process should be applied to the text data. Next, we created a csv file for submission following the competition requirements. A few samples from the file looks like the below table.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">[</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">all</span>
+<span class="n">test</span><span class="p">[[</span><span class="sh">'</span><span class="s">textID</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]].</span><span class="nf">to_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">submission.csv</span><span class="sh">'</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="nf">set_option</span><span class="p">(</span><span class="sh">'</span><span class="s">max_colwidth</span><span class="sh">'</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">test</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</code></pre></div></div>
 
 <div class="img-div" style="text-align:center">
   <figure>
@@ -172,13 +182,13 @@ dt_i &amp;= \textrm{the ith prediction} \\
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-negative-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of negative tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+   <img src="/website/assets/img/kaggle-tweet/midway-blog/submission-file.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Table file for submission" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
 
   </picture>
 
 </figure>
 
-  <figcaption>Word cloud of negative tweets</figcaption>
+  <figcaption>Table for final submission: A number of example items.</figcaption>
 </div>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Extract support phrases for sentiment labels]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Start Blog" /><published>2020-06-01T00:00:00+00:00</published><updated>2020-06-01T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html"><![CDATA[<p>This kaggle competition aims to construct a language model that can not only identify the sentiment of a tweet but also understand why it is so.
 In other words, competitors are expected to figure out what word or phrase best supports the labeled sentiment.</p>
 
@@ -267,6 +277,8 @@ dt_i &amp;= \textrm{the ith prediction} \\
 </code></pre></div></div>
 
 <h2 id="eda">EDA</h2>
+
+<p>The EDA figures were retrieved from the <a href="https://www.kaggle.com/code/tanulsingh077/twitter-sentiment-extaction-analysis-eda-and-model">kaggle kernel</a> by MR_KNOWNNOTHING.</p>
 
 <h3 id="data-balance">Data balance</h3>
 

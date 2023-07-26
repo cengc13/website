@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tweet Sentiment Extraction - Midway Blog | Cheng  Zeng</title>
+    <title>Tweet Sentiment Extraction - Final Blog | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
     <meta name="description" content="Extract support phrases for sentiment labels">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
@@ -39,7 +39,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html">
+    <link rel="canonical" href="https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html">
 
     <!-- Dark Mode -->
     
@@ -127,8 +127,8 @@
 <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Tweet Sentiment Extraction - Midway Blog</h1>
-    <p class="post-meta">June 9, 2020</p>
+    <h1 class="post-title">Tweet Sentiment Extraction - Final Blog</h1>
+    <p class="post-meta">June 23, 2020</p>
     <p class="post-tags">
       <a href="/website/blog/2020"> <i class="fas fa-calendar fa-sm"></i> 2020 </a>
         ·  
@@ -148,50 +148,40 @@
   <article class="post-content">
     
     <div id="markdown-content">
-      <p>This blog is the second entry documenting my effort in the <strong>“Tweet Sentiment Extraction”</strong> kaggle competition. In this blog, we will discuss the language model to tackle this specific challenge.</p>
+      <p>This is final blog for this NLP competition. We will discuss some caveats
+to move up through the leaderboard. We used the RoBERTa model in the midway blog for the infences. In this blog, we will discuss sentiment-specific predictions, noise of the data and post-processing tricks to improve the prediction scores.</p>
 
-<h2 id="the-roberta-model">The RoBERTa model</h2>
+<h2 id="sentiment-specific-jaccard-score">Sentiment-specific Jaccard score</h2>
 
-<p>We will use the TensorFlow to construct the RoBERTa model. The model was constructed following the <a href="https://www.kaggle.com/code/cdeotte/tensorflow-roberta-0-705" rel="external nofollow noopener" target="_blank">kaggle kernel</a> written by Chris Deotte. Next, we show how to tokenize the text and create question answer head.</p>
+<p>If we breakdown the average jaccard scores based on the sentiment, the average Jaccard values of the three sentiments are:</p>
 
-<h3 id="tokenizer">Tokenizer</h3>
+<ul>
+  <li>Positive: 0.581</li>
+  <li>Negative: 0.590</li>
+  <li>Neutral: 0.976</li>
+</ul>
 
-<p>We used pretrained RoBERTa Byte level Byte-pair Encoding tokenizer to convert the data into tokens. The tokenizer can be loaded by:</p>
+<p>Many tweets with positive and negative sentiment have a jaccard score of zero. Let us figure out the issues.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">tokenizers</span>
-<span class="n">PATH</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span> <span class="n">to</span> <span class="n">your</span> <span class="n">tokenizer</span> <span class="n">files</span><span class="p">]</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizers</span><span class="p">.</span><span class="nc">ByteLevelBPETokenizer</span><span class="p">(</span>
-    <span class="n">vocab_file</span><span class="o">=</span><span class="n">PATH</span><span class="o">+</span><span class="sh">'</span><span class="s">vocab-roberta-base.json</span><span class="sh">'</span><span class="p">,</span>
-    <span class="n">merges_file</span><span class="o">=</span><span class="n">PATH</span><span class="o">+</span><span class="sh">'</span><span class="s">merges-roberta-base.txt</span><span class="sh">'</span><span class="p">,</span>
-    <span class="n">lowercase</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-    <span class="n">add_prefix_space</span><span class="o">=</span><span class="bp">True</span>
-<span class="p">)</span>
-</code></pre></div></div>
+<h2 id="the-noise-in-labels--the-magic">The Noise in labels &amp; The Magic</h2>
+<p>At a first glimpse, those results look pretty weird as the selected texts look like random noise which are not a subset of the full text. For instance, <a href="https://www.kaggle.com/code/debanga/what-the-no-ise" rel="external nofollow noopener" target="_blank">cases</a> found by DEBANGA RAJ NEOG:</p>
 
-<p>The key to find the selected text is construct a mapping between characters in the original text and the tokens transformed from the text.
-After tokenization, the inputs look like the below:</p>
+<ol>
+  <li>
+    <p>Missing a <code class="language-plaintext highlighter-rouge">!</code>  <span style="color:orange">Damn! It <code class="language-plaintext highlighter-rouge">hurts!!!</code></span></p>
+  </li>
+  <li>
+    <p>Missing a <code class="language-plaintext highlighter-rouge">.</code>  <span style="color:orange">It is <code class="language-plaintext highlighter-rouge">stupid...</code></span></p>
+  </li>
+  <li>
+    <p>Missing <code class="language-plaintext highlighter-rouge">d</code> in <code class="language-plaintext highlighter-rouge">good</code>?  <span style="color:orange">LOL. It’s not <code class="language-plaintext highlighter-rouge">goo</code></span></p>
+  </li>
+  <li>
+    <p>Missing <code class="language-plaintext highlighter-rouge">ng</code> in <code class="language-plaintext highlighter-rouge">amazing</code>?  <span style="color:orange">Dude. It’s not <code class="language-plaintext highlighter-rouge">amazi</code> at all!</span></p>
+  </li>
+</ol>
 
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-tweet/midway-blog/bpe-tokenization.jpeg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="RoBERTa tokenization" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-  <figcaption>Original text and its Byte-level BPE tokenization.</figcaption>
-</div>
-
-<p>Note that the same tokenization should be applied to the test data.</p>
-
-<h3 id="build-roberta-model">Build RoBERTa model</h3>
-
-<p>A pretrained RoBERTa base model was used and a custom question answer head was added. First tokens were sent to a BERT model to obtain the embedding of the token sequence. The embedding went through a 1D convolution layer and activation layer to find the one-hot encodings of the start token indices. Likewise, the end index of the tokens can be found. An <code class="language-plaintext highlighter-rouge">Adam</code> optimizer with a learning rate of 3e-5 and a <code class="language-plaintext highlighter-rouge">categorical_crossentropy</code> were used to compile the model. The schematic diagram is shown at below:</p>
+<p>It was found that the noise originated from the consecutive spaces in the data. This insight can be leveraged to match the <em>noisy</em> selected text using the predicted probabilities of start and end indices at the token level and an alignment post-processing, which is called <em>the Magic</em> for this competition. This technique was implemented by the 1st place solution <a href="https://www.kaggle.com/c/tweet-sentiment-extraction/discussion/159254" rel="external nofollow noopener" target="_blank">here</a>, and found to be super helpful, which can increase the CV score by around 0.2. The implementation idea of <em>the Magic</em> is sketched at below.</p>
 
 <div class="img-div" style="text-align:center">
   <figure>
@@ -200,60 +190,50 @@ After tokenization, the inputs look like the below:</p>
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-tweet/midway-blog/roberta-model.jpeg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="RoBERTa model with question answer head" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/kaggle-tweet/final-blog/the-magic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="The Magic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
 </figure>
 
-  <figcaption>RoBERTa model with a custom question answer head to find the start and end token indices of the selected text.</figcaption>
+  <figcaption>The pattern of noisy labels and how to leverage it.</figcaption>
 </div>
 
-<h3 id="training">Training</h3>
+<h2 id="post-processing-tricks">Post-processing tricks</h2>
 
-<p>The training was carried out with 5 folds stratified based on sentiment. A <code class="language-plaintext highlighter-rouge">batch</code> size of 32 and 3 <code class="language-plaintext highlighter-rouge">epochs</code> were used for training the model.
-In order to obtain the <code class="language-plaintext highlighter-rouge">Jaccard</code> score, we need to decode the identified token sequence into the text. This was achieved by:</p>
+<p>I campe up with a postprocessing method below which consistently helps to improve the CV score by about 0.001–0.002. This post-processing comprises of two tricks. The first one is to have a back-up indices with the second highest probabilities for both start and end indices of tokens, which will be used when the start indice is larger than the end indice. The code for the first trick is below.
+The second trick deals with the special characters using the <code class="language-plaintext highlighter-rouge">regex</code> package, as shown in the function <code class="language-plaintext highlighter-rouge">post_process</code>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
-  <span class="nb">all</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">idxV</span><span class="p">:</span>
-      <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">oof_start</span><span class="p">[</span><span class="n">k</span><span class="p">,])</span>
-      <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">oof_end</span><span class="p">[</span><span class="n">k</span><span class="p">,])</span>
-      <span class="k">if</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">:</span>
-          <span class="n">st</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">text</span><span class="sh">'</span><span class="p">]</span>
-      <span class="k">else</span><span class="p">:</span>
-          <span class="n">text1</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="o">+</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">text</span><span class="sh">'</span><span class="p">].</span><span class="nf">split</span><span class="p">())</span>
-          <span class="n">enc</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">text1</span><span class="p">)</span>
-          <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">b</span><span class="p">])</span>
-      <span class="nb">all</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">jaccard</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]))</span>
-  <span class="n">jac</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="nb">all</span><span class="p">))</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">a_bak</span><span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argsort</span><span class="p">(</span><span class="n">preds_start_avg</span><span class="p">[</span><span class="n">k</span><span class="p">,])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span><span class="p">,</span> <span class="n">b_bak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argsort</span><span class="p">(</span><span class="n">preds_end_avg</span><span class="p">[</span><span class="n">k</span><span class="p">,])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">a_bak</span> <span class="o">&lt;=</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a_bak</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">a_bak</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b_bak</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">a_bak</span> <span class="o">&lt;=</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a_bak</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b_bak</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">count_abn_2</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">full_text</span>
 </code></pre></div></div>
 
-<h2 id="kaggle-submission">Kaggle submission</h2>
-
-<p>The same decoding process should be applied to the text data. Next, we created a csv file for submission following the competition requirements. A few samples from the file looks like the below table.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">[</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">all</span>
-<span class="n">test</span><span class="p">[[</span><span class="sh">'</span><span class="s">textID</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]].</span><span class="nf">to_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">submission.csv</span><span class="sh">'</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="n">pd</span><span class="p">.</span><span class="nf">set_option</span><span class="p">(</span><span class="sh">'</span><span class="s">max_colwidth</span><span class="sh">'</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-<span class="n">test</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+<span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="nf">startswith</span><span class="p">(</span><span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="sh">"</span><span class="s">([\.]+)</span><span class="sh">"</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">split</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">!!!!</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">!</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">???</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">?</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="nf">endswith</span><span class="p">(</span><span class="sh">'</span><span class="s">...</span><span class="sh">'</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">..</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">...</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span>
 </code></pre></div></div>
 
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-tweet/midway-blog/submission-file.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Table file for submission" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-  <figcaption>Table for final submission: A number of example items.</figcaption>
-</div>
+<p>Moreover, I submitted results with the highest local CV score rather than the one with the highest public leaderboard score. Luckily I survived the huge shakeup in the end. I ended up with <strong>a solo silver medal for this competition, ranking 90th place out of 2225 teams in total.</strong></p>
 
     </div>
   </article>
