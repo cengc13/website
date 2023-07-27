@@ -26,7 +26,7 @@ Computer vision for multi-class classification
 </div>
 
 > ##### **Competition description**
->CChallenge and dataset summary paper available at <a href="https://arxiv.org/abs/2010.00170">arXiv</a>.
+>Challenge and dataset summary paper available at <a href="https://arxiv.org/abs/2010.00170">arXiv</a>.
 >
 >Bengali is the 5th most spoken language in the world with hundreds of million of speakers. It’s the official language of Bangladesh and the second most spoken language in India. Considering its reach, there’s significant business and educational interest in developing AI that can optically recognize images of the language handwritten. This challenge hopes to improve on approaches to Bengali recognition.
 >
@@ -49,7 +49,7 @@ Computer vision for multi-class classification
 Natural language processing for zero- and few-shot learning in multilingual language classification.
 
 <div class="row justify-content-sm-center">
-        {% include figure.html path="assets/img/projects/kaggle-competitions/kaggle-jigsaw.png" title="Bengali.AI description" width=320 height=320 class="img-fluid rounded z-depth-1"%}
+        {% include figure.html path="assets/img/projects/kaggle-competitions/kaggle-jigsaw.png" title="Jigsaw logo" width=320 height=320 class="img-fluid rounded z-depth-1"%}
 </div>
 
 
@@ -71,3 +71,31 @@ Natural language processing for zero- and few-shot learning in multilingual lang
 - [Final blog](https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html)
 
 **I completed this competitions with a solo gold medal, ranking 5$$^{\rm{th}}$$ out of 1621 teams.**
+
+---
+
+#### Tweet Sentiment Extraction
+Natural language processing to find the text segment that supports the tweet sentiment.
+
+<div class="row justify-content-sm-center">
+        {% include figure.html path="assets/img/projects/kaggle-competitions/tweet.gif" title="Tweet sentiment extraction" width=320 height=320 class="img-fluid rounded z-depth-1"%}
+</div>
+
+
+
+> ##### **Competition description**
+>
+>"My ridiculous dog is amazing." [sentiment: positive]
+>
+>With all of the tweets circulating every second it is hard to tell whether the sentiment behind a specific tweet will impact a company, or a person's, brand for being viral (positive), or devastate profit because it strikes a negative tone. Capturing sentiment in language is important in these times where decisions and reactions are created and updated in seconds. But, which words actually lead to the sentiment description? In this competition you will need to pick out the part of the tweet (word or phrase) that reflects the sentiment.
+>
+>In this competition we've extracted support phrases from Figure Eight's Data for Everyone platform. The dataset is titled Sentiment Analysis: Emotion in Text tweets with existing sentiment labels, used here under creative commons attribution 4.0. international license. Your objective in this competition is to construct a model that can do the same - look at the labeled sentiment for a given tweet and figure out what word or phrase best supports it.
+
+
+##### Competition blogs
+
+- [Initial blog](https://cengc13.github.io/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html)
+- [Midway blog](https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html)
+- [Final blog](https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html)
+
+**I completed this competitions with a solo silver medal, ranking 90$$^{\rm{th}}$$ out of 2225 teams.**
