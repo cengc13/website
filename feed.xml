@@ -1,5 +1,386 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-27T02:32:54+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
-</subtitle><entry><title type="html">Tweet Sentiment Extraction - Final Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Final Blog" /><published>2020-06-23T00:00:00+00:00</published><updated>2020-06-23T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html"><![CDATA[<p>This is final blog for this NLP competition. We will discuss some caveats
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://cengc13.github.io/website/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cengc13.github.io/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-29T02:22:29+00:00</updated><id>https://cengc13.github.io/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
+</subtitle><entry><title type="html">M5 Forecasting Accuracy - Final Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html" rel="alternate" type="text/html" title="M5 Forecasting Accuracy - Final Blog" /><published>2020-07-05T00:00:00+00:00</published><updated>2020-07-05T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html"><![CDATA[<p>This is the final blog documenting my learning experience for the M5 accuracy kaggle competition. In the previous blogs, we walked through the general information about this competition and elaborated many methods for featurization. Here, we will discuss the models, a magic trick to improve the model performance and import findings summarized by the competition host.</p>
+
+<h2 id="lightgbm-model">LightGBM model</h2>
+
+<p>We carried feature engineering to obtain additional features in addition to the features already found in the original dataset. We introduced 9 additional features, including two lags features with 7 and 28 days of shigt, 7 and 28 days of rolling mean with respect to lags features, three date features including ‘week’, ‘quarter’ and <code class="language-plaintext highlighter-rouge">mday</code>.</p>
+
+<p>Next we define the categorical feauters and columns that will not be used for training. We have</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cat_feats</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">item_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">dept_id</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">store_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cat_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">state_id</span><span class="sh">'</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sh">"</span><span class="s">event_name_1</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">event_name_2</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">event_type_1</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">event_type_2</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">useless_cols</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">id</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">date</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">sales</span><span class="sh">"</span><span class="p">,</span><span class="sh">"</span><span class="s">d</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wm_yr_wk</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">weekday</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">train_cols</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="nf">isin</span><span class="p">(</span><span class="n">useless_cols</span><span class="p">)]</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">train_cols</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">"</span><span class="s">sales</span><span class="sh">"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Followed by feature specification, we define the dataset for lightdbm models. Next, the lightgbm hyperparameters are shown below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="sh">"</span><span class="s">objective</span><span class="sh">"</span> <span class="p">:</span> <span class="sh">"</span><span class="s">poisson</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">metric</span><span class="sh">"</span> <span class="p">:</span><span class="sh">"</span><span class="s">rmse</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">force_row_wise</span><span class="sh">"</span> <span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">learning_rate</span><span class="sh">"</span> <span class="p">:</span> <span class="mf">0.075</span><span class="p">,</span>
+<span class="c1">#         "sub_feature" : 0.8,
+</span>        <span class="sh">"</span><span class="s">sub_row</span><span class="sh">"</span> <span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">bagging_freq</span><span class="sh">"</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">lambda_l2</span><span class="sh">"</span> <span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+<span class="c1">#         "nthread" : 4
+</span>        <span class="sh">"</span><span class="s">metric</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="sh">"</span><span class="s">rmse</span><span class="sh">"</span><span class="p">],</span>
+        <span class="sh">'</span><span class="s">verbosity</span><span class="sh">'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">num_iterations</span><span class="sh">'</span> <span class="p">:</span> <span class="mi">2500</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Training is as simple as</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_lgb</span> <span class="o">=</span> <span class="n">lgb</span><span class="p">.</span><span class="nf">train</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">valid_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">fake_valid_data</span><span class="p">],</span> <span class="n">verbose_eval</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After which, the model can be saved directly:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_lgb</span><span class="p">.</span><span class="nf">save_model</span><span class="p">(</span><span class="sh">"</span><span class="s">model.lgb</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In terms of the inference, we predict the next day sales recursively by <strong>predicting on past predictions</strong>.</p>
+
+<h2 id="a-magic-trick">A magic trick</h2>
+
+<p>It was found by many participants that multiplying the prediction by certain scaling coefficients can somehow improve the model performance on the public leaderboard. The multipliers should depend on the hierarchical levels. In addition, a rolling factor for future predictions may also be helpful. By inspecting the public leaderboard performance, it was found a rolling factor larger than 1 is most effective. However, for the private leaderboard performance, it turns out that a less than 1 rolling factor works best.</p>
+
+<h2 id="key-findings-by-the-host">Key findings by the host</h2>
+
+<p>The key findings of the host is <a href="https://www.sciencedirect.com/science/article/pii/S0169207021001874?via%3Dihub">published</a> on International Journal of Forecasting. We list those findings as follows:</p>
+
+<ul>
+  <li>
+    <p><strong>Superior performance of machine learning methods</strong>. Unlike the first three M-series competitions demonstrate the merit of simplicity of models. This competition fully proved the power of machine learning methods, suggesting that top ranked teams all used ML models and achieve superior solutions compared to the benchmark methods.</p>
+  </li>
+  <li>
+    <p><strong>Value of combining</strong>. The model performance can be improved by combining the results from different models, even relatively simple ones.</p>
+  </li>
+  <li>
+    <p><strong>Value of “cross-learning”</strong>. Cross-learning implies using a single model to capture patterns of different time series trends, which may appear opposite to the value of combining. However, we can still employ multiple models, that look at different parts of the total data. Actually all top 50-performing methods somehow used “cross-learning” to exploit all of the information in the data set.</p>
+  </li>
+  <li>
+    <p><strong>Notable differences between the winning methods and benchmarks used for sales forecasting</strong>. Although the winning teams demonstrated overall advantages of ML methods, the actual differences at low-level aggregation were much smaller. Also, one should note that the benchmark methods, say exponential smoothing, overperform the vast majority teams (about 92.5%). It suggests that standard conventional simple methods may still be useful in assisting decision making to support the operations of retail companies.</p>
+  </li>
+  <li>
+    <p><strong>Beneficial effects of external adjustments</strong>. As mentioned in the previous section, using multipliers at different levels can help to improve forecasting accuracy. Some of those adjustments are not completely based on meaningful rationale but instead on the analytical alignment of predictions on the lowest aggregation level with the those at the highest levels.</p>
+  </li>
+  <li>
+    <p><strong>Value added by effective CV strategies</strong>. For complex forecasting tasks like this competition, adopting effective CV strategies is critical to capture post-sample accuracy in an objective manner, to avoid overfitting and to mitigate uncertainty. Yet, various CV methods can be applied. Some important factors to be considered include the time period for validation, the size of the validation windows, how those windows will be updated, and criteria to rationalize the CV scores.</p>
+  </li>
+  <li>
+    <p><strong>Importance of exogenous/explanatory variables</strong>. Methods solely rely on the historical data patterns may sometimes fail to account for the effects of holidays, special days, promotions, prices and weather. It was observed that price-related features were significantly important for improving forecasting accuracy. Besides, importance of exogenous variables was substantiated by comparisons between the benchmarks in this competition.</p>
+  </li>
+</ul>
+
+<p>For this competition, I ended up with 645 place out of 5558 teams.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="time-series-forecasting" /><category term="data-science" /><summary type="html"><![CDATA[Estimate the unit sales of Walmart retail goods]]></summary></entry><entry><title type="html">M5 Forecasting Accuracy - Midway Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html" rel="alternate" type="text/html" title="M5 Forecasting Accuracy - Midway Blog" /><published>2020-06-28T00:00:00+00:00</published><updated>2020-06-28T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html"><![CDATA[<p>One of the most common techniques for time series forecasting is feature engineering. Effective feature engineering can boost the performance of your models. In this blog, we will discuss a few feature engineering strategies useful for this challenge.</p>
+
+<h2 id="feature-engineering-fe">Feature Engineering (FE)</h2>
+
+<p>Since we have a large number of data, we can use the simplest data types for each column to reduce the memory usage. For example, the following function <code class="language-plaintext highlighter-rouge">reduce_mem_uage</code> reduces the memory for <code class="language-plaintext highlighter-rouge">df</code>, which is a <code class="language-plaintext highlighter-rouge">pandas</code> dataframe.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Memory Reducer
+# :df pandas dataframe to reduce size             # type: pd.DataFrame()
+# :verbose                                        # type: bool
+</span><span class="k">def</span> <span class="nf">reduce_mem_usage</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">int16</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">int32</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">int64</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">float16</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">float32</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">float64</span><span class="sh">'</span><span class="p">]</span>
+    <span class="n">start_mem</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">memory_usage</span><span class="p">().</span><span class="nf">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">col_type</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">dtypes</span>
+        <span class="k">if</span> <span class="n">col_type</span> <span class="ow">in</span> <span class="n">numerics</span><span class="p">:</span>
+            <span class="n">c_min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">min</span><span class="p">()</span>
+            <span class="n">c_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">max</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nf">str</span><span class="p">(</span><span class="n">col_type</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">int</span><span class="sh">'</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                       <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">end_mem</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">memory_usage</span><span class="p">().</span><span class="nf">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Mem. usage decreased to {:5.2f} Mb ({:.1f}% reduction)</span><span class="sh">'</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">end_mem</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">start_mem</span> <span class="o">-</span> <span class="n">end_mem</span><span class="p">)</span> <span class="o">/</span> <span class="n">start_mem</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div></div>
+<p>Other simple methods to see memory consumption are:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">os</span><span class="p">,</span> <span class="n">psutil</span>
+<span class="k">def</span> <span class="nf">get_memory_usage</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="n">psutil</span><span class="p">.</span><span class="nc">Process</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="nf">getpid</span><span class="p">()).</span><span class="nf">memory_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mf">2.</span><span class="o">**</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sizeof_fmt</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="sh">'</span><span class="s">B</span><span class="sh">'</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">''</span><span class="p">,</span><span class="sh">'</span><span class="s">Ki</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Mi</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Gi</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Ti</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Pi</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Ei</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Zi</span><span class="sh">'</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nf">abs</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sh">"</span><span class="s">%3.1f%s%s</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">num</span> <span class="o">/=</span> <span class="mf">1024.0</span>
+    <span class="k">return</span> <span class="sh">"</span><span class="s">%.1f%s%s</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="sh">'</span><span class="s">Yi</span><span class="sh">'</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Another way to save memory is to condense a sparse matrix using <code class="language-plaintext highlighter-rouge">scipy.sparse.csr_matrix</code> method. For example, if you have a sparse dataframe <code class="language-plaintext highlighter-rouge">df</code>, you can save memory by</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">scipy</span> <span class="kn">import</span> <span class="n">sparse</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">.</span><span class="nf">csr_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Many of the feature engineering ideas are conceived by <a href="https://www.kaggle.com/kyakovlev">Konstantin Yakovlev</a>.</p>
+
+<h3 id="simple-fe">Simple FE</h3>
+
+<p>We first discuss simple methods based on statistics of existing variables.
+Specific methods include</p>
+
+<ul>
+  <li>Basic aggregations such as taking the <code class="language-plaintext highlighter-rouge">max</code>, <code class="language-plaintext highlighter-rouge">min</code>, <code class="language-plaintext highlighter-rouge">std</code> and <code class="language-plaintext highlighter-rouge">mean</code></li>
+  <li>Min/max scaling</li>
+  <li>Unique items to identify items that may depend on inflation</li>
+  <li>Rolling aggregations using months or years as windows.</li>
+  <li>“Momentum” of prices. Prices that are shifted by week, month or year.</li>
+</ul>
+
+<p>In addition, we can merge event features and snap features, and we can also use some features from date. Combining all those features we arrive at a initial dataset after simple feature engineering, column names and data types of which are shown as below.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/midway-blog/simple-fe.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data summary after simple feature engineering" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>A summary of data info with simple feature engineering.</figcaption>
+</div>
+
+<h3 id="lags-features">Lags features</h3>
+
+<p>We can also create lags features by shifting the values by dates. Note that we need to sort the data by date before using shifts. Also note that we need to aggregate the data values on <code class="language-plaintext highlighter-rouge">id</code> (item) level. You can apply rolling max/min/mean with different time windows to get more lags features.</p>
+
+<h3 id="custom-features">Custom features</h3>
+
+<p>Other methods to customize and select features use simple and fast models (e.g. <code class="language-plaintext highlighter-rouge">LightGBM</code>) along with feature selection methods based on permutation tests, dimensional reduction techniques such as principal component analysis (PCA), and mean/std target encoding.</p>
+
+<p>Suppose <code class="language-plaintext highlighter-rouge">grid_df</code> is the dataframe after the initial featurization. An iterative mean/std featurization implementation is given below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">icols</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Encoding</span><span class="sh">'</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+    <span class="n">temp_df</span> <span class="o">=</span> <span class="n">grid_df</span><span class="p">[</span><span class="n">grid_df</span><span class="p">[</span><span class="sh">'</span><span class="s">d</span><span class="sh">'</span><span class="p">]</span><span class="o">&lt;=</span><span class="p">(</span><span class="mi">1913</span><span class="o">-</span><span class="mi">28</span><span class="p">)]</span> <span class="c1"># to be sure we don't have leakage in our validation set
+</span>
+    <span class="n">temp_df</span> <span class="o">=</span> <span class="n">temp_df</span><span class="p">.</span><span class="nf">groupby</span><span class="p">([</span><span class="n">col</span><span class="p">,</span><span class="sh">'</span><span class="s">store_id</span><span class="sh">'</span><span class="p">]).</span><span class="nf">agg</span><span class="p">({</span><span class="n">TARGET</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">std</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">mean</span><span class="sh">'</span><span class="p">]})</span>
+    <span class="n">joiner</span> <span class="o">=</span> <span class="sh">'</span><span class="s">_</span><span class="sh">'</span><span class="o">+</span><span class="n">col</span><span class="o">+</span><span class="sh">'</span><span class="s">_encoding_</span><span class="sh">'</span>
+    <span class="n">temp_df</span><span class="p">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">joiner</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">col</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">temp_df</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="n">values</span><span class="p">]</span>
+    <span class="n">temp_df</span> <span class="o">=</span> <span class="n">temp_df</span><span class="p">.</span><span class="nf">reset_index</span><span class="p">()</span>
+    <span class="n">grid_df</span> <span class="o">=</span> <span class="n">grid_df</span><span class="p">.</span><span class="nf">merge</span><span class="p">(</span><span class="n">temp_df</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">,</span><span class="sh">'</span><span class="s">store_id</span><span class="sh">'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="sh">'</span><span class="s">left</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">temp_df</span>
+</code></pre></div></div>
+
+<p>When all the features are generated and selected, the new dataframe is saved to hard disk for training models in the next step. In the next blog, we will discuss the model architecture and tricks to improve the model performance.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="time-series-forecasting" /><category term="data-science" /><summary type="html"><![CDATA[Estimate the unit sales of Walmart retail goods]]></summary></entry><entry><title type="html">M5 Forecasting Accuracy - Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog.html" rel="alternate" type="text/html" title="M5 Forecasting Accuracy - Start Blog" /><published>2020-06-25T00:00:00+00:00</published><updated>2020-06-25T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog.html"><![CDATA[<p>This kaggle competition asks participants to estimate, as precisely as possible, the point forecasts of the unit sales of various products sold in the USA by Walmart.</p>
+
+<blockquote>
+  <p>How much camping gear will one store sell each month in a year? To the uninitiated, calculating sales at this level may seem as difficult as predicting the weather. Both types of forecasting rely on science and historical data. While a wrong weather forecast may result in you carrying around an umbrella on a sunny day, inaccurate business forecasts could result in actual or opportunity losses. In this competition, in addition to traditional forecasting methods you’re also challenged to use machine learning to improve forecast accuracy.</p>
+</blockquote>
+
+<p>This competition is the fifth iteration of its kind in which hierarchical sales data from Walmart will be used to forecast the sales for the next 28 consecutive days. This blog gives an overview of the competition. The data set and competition metric will be discussed.</p>
+
+<h2 id="data-set">Data set</h2>
+
+<h3 id="files">Files</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">calendar.csv</code> - Contains information about the dates on which the products are sold.</li>
+  <li><code class="language-plaintext highlighter-rouge">sales_train_validation.csv</code> - Contains the historical daily unit sales data per product and store [d_1 - d_1913]</li>
+  <li><code class="language-plaintext highlighter-rouge">sample_submission.csv</code> - The correct format for submissions.</li>
+  <li><code class="language-plaintext highlighter-rouge">sell_prices.csv</code> - Contains information about the price of the products sold per store and date.</li>
+</ul>
+
+<h3 id="data-format">Data format</h3>
+
+<p>The historic data has the format shown below. Each row represents the sale history of an item across 1913 days. The id tells us the item type, state and store. No explicit item information is provided. The historical data range from 2011-01-29 to 2016-06-19.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/data-format.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data format" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Data format of training and validation datasets.</figcaption>
+</div>
+
+<h3 id="submission-format">Submission format</h3>
+
+<p>It requires us to extract patterns in the previous 1913 days and predict the point sales in the next 56 days. The first 28 days represent validation rows which participants are required to predict in state I and the ground truth will be offered. The prediction for the last 28 days will be used as the test data for final competition standings.</p>
+
+<p>The submission example file looks like</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/submission-format.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Submission format" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>A few example data entries for the final submission.</figcaption>
+</div>
+
+<h2 id="evaluation-metrics">Evaluation metrics</h2>
+
+<p>For each series of the same item, a <em>Root Mean Squared Scaled Error</em> (RMSSE) is calculated. It reads as:</p>
+
+\[\begin{align*}
+RMSSE = \sqrt{\frac{1}{h} \frac{\sum_{t=n+1}^{n+h} (Y_t - \widehat{Y_t})}{\frac{1}{n-1} \sum_{t=2}^{n} (Y_t - Y_{t-1})}}
+\end{align*}\]
+
+<p>The choice of the measure is justified in the competitors guide, saying that rather than using absolut errors optimized for median, squared errors are more suitable for the mean. Also, the measure is scale independent and it can be used to compare series with different scales. The metric is symmetric because it equally penalize positive and negative errors, as well as small and large forecasts.</p>
+
+<p>With the RMSSE for all time series, the final error is ranked using the <em>Weighted RMSSE</em> (WRMSSE), as described below:</p>
+
+\[\begin{align*}
+WRMSSE = \sum_{t=1}^{N} w_i \times RMSSE_i
+\end{align*}\]
+
+<p>A pytorch implementation of the WRMSSE designed for this competition is detailed in the <a href="https://www.kaggle.com/code/chrisrichardmiles/weights-and-scales-for-the-past-2-years/notebook">notebook</a> by Chris Miles.</p>
+
+<h2 id="exploratory-data-analysis-eda">Exploratory data analysis (EDA)</h2>
+
+<p>A Trick: When you plot with <code class="language-plaintext highlighter-rouge">matplotlib</code>, you can define colors to use using <code class="language-plaintext highlighter-rouge">color_cycle = cycle(plt.rcParams['axes.prop_cycle'].by_key()['color'])</code>.</p>
+
+<p>The EDA figures were generated with methods heavily adapted from the <a href="https://www.kaggle.com/code/robikscube/m5-forecasting-starter-data-exploration">notebook</a> copied from Rob Mulla.</p>
+
+<h3 id="a-view-into-a-single-item-time-series">A view into a single item time series</h3>
+
+<p>For example, the item ‘FOODS_3_090_CA_3_validation’ seems to be sold a lot historically. Note that there are days when it appears the item is not available and not sold due to special events, corresponding to the flat lines in the below plot. Also we can see in a certain period, spikes may come up.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/one-item.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="One item example" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>The time series data of an example item.</figcaption>
+</div>
+
+<h3 id="counts-of-item-by-types">Counts of item by types</h3>
+
+<p>Number of items by Category shows that FOODS account for the majority of the items, followed by HOUSEHOLDS and then HOBBIES items.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/counts-by-category.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Counts of items by category" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Counts of items by category.</figcaption>
+</div>
+
+<h3 id="rollout-of-sold-items">Rollout of sold items</h3>
+
+<h4 id="sales-by-store">Sales by store</h4>
+
+<p>In total there are 10 unique stores, we would like to find the sales patterns for each store. Results shown below indicate that some stores (e.g. CA_3 and CA_1) show more steady patterns than other stores (e.g. WI_1 and WI_2). The abrupt changes may be attributed to the shortage in supply chains or the rise of new competitors.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/sales-by-store.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Store-wise sales history" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Rolling 90 day average total sales by store id.</figcaption>
+</div>
+
+<h4 id="sales-heatmap-calendar">Sales heatmap calendar</h4>
+
+<p>Using the method by <a href="https://github.com/rougier">Nicolas P. Rougier</a>, we plot out the heatmap calendar for sales of each type of items. Some observations from the heatmap are:</p>
+
+<ul>
+  <li>Food tends to have lower number of purchases at the end of each month</li>
+  <li>Household and Hobby items sell much less in January.</li>
+  <li>Weekends are more popular shopping days regardless of the item types.</li>
+</ul>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/sales-heatmap-calendar.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Heatmap of sales" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Heatmap calendar of sales by item category.</figcaption>
+</div>
+
+<h3 id="sale-prices">Sale prices</h3>
+
+<p>Sale prices over time for each store indicate a gradual increase of prices.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/saleprice-history.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Sale price over time" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Store-wise sale prices over time.</figcaption>
+</div>
+
+<p>In summary, the sale prices at different hierarchical levels may display different patterns. It looks like aggregated levels tend to show more clear patterns than granular levels. Also, special patterns such as flat lines and spikes exist across different items, implying the importance of understanding exogenous/explanatory variables.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="time-series-forecasting" /><category term="data-science" /><summary type="html"><![CDATA[Estimate the unit sales of Walmart retail goods]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Final Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Final Blog" /><published>2020-06-23T00:00:00+00:00</published><updated>2020-06-23T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html"><![CDATA[<p>This is final blog for this NLP competition. We will discuss some caveats
 to move up through the leaderboard. We used the RoBERTa model in the midway blog for the infences. In this blog, we will discuss sentiment-specific predictions, noise of the data and post-processing tricks to improve the prediction scores.</p>
 
 <h2 id="sentiment-specific-jaccard-score">Sentiment-specific Jaccard score</h2>
@@ -1613,507 +1994,4 @@ In the first step, we define some parameters, including the original image size 
 
 <p>As we noted when the competition was closed, the number of unique handwritten graphemes (four thousand) is way less than the number of all graphemes (more than ten thousand). It indicates that some graphemes may not be observed in the training set. This probably explains the power of aggressive augmentation in this competition. In light of this analysis, we can use the generative adversarial network (GAN) to make unseen images to further improve the model performance.</p>
 
-<p><strong>Update:</strong> We won a silver medal in this competition, ranked 90\(^{\rm{th}}\) place among 2059 teams :fireworks:.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry><entry><title type="html">Bengali.AI Handwritten Grapheme Classification - Midway Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/02/25/kaggle-bengali-midway.html" rel="alternate" type="text/html" title="Bengali.AI Handwritten Grapheme Classification - Midway Blog" /><published>2020-02-25T00:00:00+00:00</published><updated>2020-02-25T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/02/25/kaggle-bengali-midway</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/02/25/kaggle-bengali-midway.html"><![CDATA[<!-- En-Dash         &ndash;    &#150;
-Em-Dash         &mdash;    &#151;
-Minus Symbol    &minus;    &#8722; -->
-
-<p><strong>Team: Zzz…</strong></p>
-
-<p><strong>Members: Cheng Zeng, Zhi Wang, Peter Huang</strong></p>
-
-<p><strong>Comparing different CNN architectures</strong></p>
-
-<p>We compared the performance using the basic CNN model, <code class="language-plaintext highlighter-rouge">Densenet121</code> and <code class="language-plaintext highlighter-rouge">Densenet169</code>, <code class="language-plaintext highlighter-rouge">Resnet</code> and <code class="language-plaintext highlighter-rouge">Efficientnet</code>. <code class="language-plaintext highlighter-rouge">Basic CNN model</code> and <code class="language-plaintext highlighter-rouge">Densenet</code> can give reasonable training accuracy while for <code class="language-plaintext highlighter-rouge">Resnet</code> and <code class="language-plaintext highlighter-rouge">Efficient</code>, it is not easy to find a local minimum (training is not stable). We finally choose <code class="language-plaintext highlighter-rouge">Densenet121</code> since its training converges steadily and it gives good accuracy. Note that although <code class="language-plaintext highlighter-rouge">Densenet169</code> is denser and has more parameters, we found significant overfitting with this model.</p>
-
-<h2 id="overview-of-processed-dataset">Overview of processed dataset</h2>
-<p>Before we go into details of the CNN model used in this competition, we look at some basic info of the preprocessed dataset. Each image is now of 64\(\times\)64\(\times\)1 size, and the entire dataset has been split to training and validation datasets.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IMG_SIZE</span><span class="o">=</span><span class="mi">64</span>
-<span class="n">N_CHANNELS</span><span class="o">=</span><span class="mi">1</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Training images: </span><span class="si">{</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Training labels root: </span><span class="si">{</span><span class="n">Y_train_root</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Training labels vowel: </span><span class="si">{</span><span class="n">Y_train_vowel</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Training labels consonants: </span><span class="si">{</span><span class="n">Y_train_consonant</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/midway-blog/dataset-summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Summary of processed training images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>A summary of processed training data</figcaption>
-</div>
-
-<h2 id="densenet121-model">Densenet121 model</h2>
-
-<p>Densenet contains a feature layer (convolutional layer) capturing low-level features from images, several dense blocks, and transition layers between adjacent dense blocks.</p>
-
-<h3 id="dense-block">Dense block</h3>
-
-<p>To reduce the computation, a 1\(\times\)1 convolutional layer (bottleneck layer) is added, which makes the second convolutional layer always has a fixed input depth. It is also easy to see the size (width and height) of the feature maps keeps the same through the dense layer, which makes it easy to stack any number of dense layers together to build a dense block. For example, densenet121 has four dense blocks, which have 6, 12, 24, 16 dense layers.</p>
-
-<h3 id="transition-layer">Transition layer</h3>
-
-<p>As a tradition, the size of the output of every layer in CNN decreases in order to abstract higher-level features. In densenet, the transition layers take this responsibility while the dense blocks keep the size and depth. Every transition layer contains a 1\(\times\)1 convolutional layer and a 2\(\times\)2 average pooling layer with a stride of 2 to reduce the size to the half. Be aware that transition layers also receive all the output from all the layers of its last dense block. So the 1\(\times\)1 convolutional layer reduces the depth to a fixed number, while the average pooling reduces the size.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/midway-blog/densenet-topology.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Densenet layer-by-layer structure" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Densenet121 layer topology</figcaption>
-</div>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/midway-blog/densenet-structural-table.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Densenet structure look-up table" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Densenet structural reference table</figcaption>
-</div>
-
-<h2 id="model-construction">Model construction</h2>
-
-<p>The model is constructed using the <code class="language-plaintext highlighter-rouge">Densenet121</code> template implemented in <code class="language-plaintext highlighter-rouge">TensorFlow</code>. The model was built with deep learning API <a href="https://keras.io/about/">Keras</a>. The code to construct the model is shown below.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">build_densenet</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
-    <span class="n">densenet</span> <span class="o">=</span> <span class="nc">DenseNet121</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="sh">'</span><span class="s">imagenet</span><span class="sh">'</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-
-    <span class="nb">input</span> <span class="o">=</span> <span class="nc">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">Conv2D</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">)(</span><span class="nb">input</span><span class="p">)</span>
-
-    <span class="n">x</span> <span class="o">=</span> <span class="nf">densenet</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">GlobalAveragePooling2D</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">BatchNormalization</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dropout</span><span class="p">(</span><span class="n">rate</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">BatchNormalization</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dropout</span><span class="p">(</span><span class="n">rate</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">BatchNormalization</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dropout</span><span class="p">(</span><span class="n">rate</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-
-    <span class="c1"># multi output
-</span>    <span class="n">grapheme_root</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">168</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">'</span><span class="s">root</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">vowel_diacritic</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">'</span><span class="s">vowel</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">consonant_diacritic</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">'</span><span class="s">consonant</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-
-    <span class="c1"># model
-</span>    <span class="n">model</span> <span class="o">=</span> <span class="nc">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="p">[</span><span class="n">grapheme_root</span><span class="p">,</span> <span class="n">vowel_diacritic</span><span class="p">,</span> <span class="n">consonant_diacritic</span><span class="p">])</span>
-
-    <span class="k">return</span> <span class="n">model</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="nf">build_densenet</span><span class="p">(</span><span class="n">SIZE</span><span class="o">=</span><span class="n">IMG_SIZE</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>Here we use a dropout rate of 0.3.
-Dropout is a regularization method, where a proportion of nodes in the layer are randomly ignored (setting their weights to zero) for each training sample. This drops randomly a proportion of the network and forces the network to learn features in a distributed way. This technique also improves generalization and reduces the overfitting.</p>
-
-<p>Batch normalization is a technique for training very deep neural networks that standardizes the inputs to a layer for each mini-batch. This has the effect of stabilizing the learning process and dramatically reducing the number of training epochs required to train deep networks.</p>
-
-<p><code class="language-plaintext highlighter-rouge">relu</code> is short for rectified linear unit, which is an activation function defined as \(max(0,x)\). The rectifier activation function is used to introduce non-linearity into the neural networks.</p>
-
-<p>A summary of the model can be seen if you run <code class="language-plaintext highlighter-rouge">model.summary()</code>; it should look like something below.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/midway-blog/model-summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Summary of densenet model" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Summary of the Densenet121 model built using Keras</figcaption>
-</div>
-
-<h2 id="optimizer-and-learning-schedule">Optimizer and Learning schedule</h2>
-
-<p>We define the loss function to measure how poorly our model performs on images with known labels. It is the error rate between the observed labels and the predicted ones. We use a specific form for categorical classifications of multiple classes termed <code class="language-plaintext highlighter-rouge">categorical_crossentropy</code>.</p>
-
-<p><code class="language-plaintext highlighter-rouge">Adam</code> optimizer realizes the benefits of both <code class="language-plaintext highlighter-rouge">AdaGrad</code> and <code class="language-plaintext highlighter-rouge">RMSProp</code>. Instead of adapting the parameter learning rates based on the average first moment (the mean) as in <code class="language-plaintext highlighter-rouge">RMSProp</code>, <code class="language-plaintext highlighter-rouge">Adam</code> also makes use of the average of the second moments of the gradients (the uncentered variance). Specifically, the algorithm calculates an exponential moving average of the gradient and the squared gradient, and the parameters <code class="language-plaintext highlighter-rouge">beta1</code> and <code class="language-plaintext highlighter-rouge">beta2</code> control the decay rates of these moving averages.</p>
-
-<p>The metric function <code class="language-plaintext highlighter-rouge">accuracy</code> is used is to evaluate the performance of our model. This metric function is similar to the loss function, except that the results from the metric evaluation are not used when training the model (only for evaluation).</p>
-
-<p>Code for the setting the optimizer and fixed learning rate is shown below.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">weights</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">root</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="sh">'</span><span class="s">vowel</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="sh">'</span><span class="s">consonant</span><span class="sh">'</span><span class="p">:</span><span class="mf">0.3</span><span class="p">}</span>
-<span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="nc">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.00016</span><span class="p">),</span> <span class="n">loss</span><span class="o">=</span><span class="sh">'</span><span class="s">categorical_crossentropy</span><span class="sh">'</span><span class="p">,</span>
-              <span class="n">loss_weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">accuracy</span><span class="sh">'</span><span class="p">])</span>
-</code></pre></div></div>
-<p>In order to make the optimizer converge faster and closest to the global minimum of the loss function, I used an annealing method of the learning rate (LR).
-The LR is the step by which the optimizer walks through the ‘loss landscape’. The higher LR, the bigger are the steps and the quicker is the convergence. However, the sampling is very poor with a high LR and the optimizer could probably fall into a local minimum.
-It’s better to have a decreasing learning rate during the training to reach efficiently the global minimum of the loss function.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Learning rate will be half after 3 epochs if accuracy is not increased
-</span><span class="n">lr_scheduler</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">root</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">vowel</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">consonant</span><span class="sh">'</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
- <span class="n">lr_scheduler</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nc">ReduceLROnPlateau</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s">_accuracy</span><span class="sh">'</span><span class="p">,</span>
-                     <span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                     <span class="n">min_lr</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">))</span>
-<span class="c1"># Callback : Save best model
-</span><span class="n">cp</span> <span class="o">=</span> <span class="nc">ModelCheckpoint</span><span class="p">(</span><span class="sh">'</span><span class="s">saved_models/densenet121_128x128_1-rr.h5</span><span class="sh">'</span><span class="p">,</span>
-<span class="n">monitor</span> <span class="o">=</span> <span class="sh">'</span><span class="s">val_root_accuracy</span><span class="sh">'</span><span class="p">,</span><span class="n">save_best_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
-<span class="n">save_weights_only</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span><span class="n">mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">auto</span><span class="sh">'</span><span class="p">,</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-</code></pre></div></div>
-<p><strong><code class="language-plaintext highlighter-rouge">ModelCheckPoint</code></strong> is used to save the whole model or just the weights if our model improves by the criteria of improvement defined.</p>
-
-<h2 id="data-augmentation">Data augmentation</h2>
-
-<p>In order to avoid the overfitting problem, we need to expand artificially our handwritten digit dataset. We can make your existing dataset even larger. The idea is to alter the training data with small transformations to reproduce the variations occurring when someone is writing a digit.</p>
-
-<p>By applying just a couple of these transformations to our training data, we can easily double or triple the number of training examples and create a very robust model.</p>
-
-<p>For the data augmentation strategies, I chose to:</p>
-
-<ul>
-  <li>Randomly rotate some training images by 8 degrees</li>
-  <li>Randomly Zoom by 15% some training images</li>
-  <li>Randomly shift images horizontally by 15% of the width</li>
-  <li>Randomly shift images vertically by 15% of the height</li>
-</ul>
-
-<p>The improvement is critical:</p>
-
-<ul>
-  <li>Without data augmentation, I obtained an accuracy of 81.85%, 95.02%, and 94.95% for respective grapheme roots, vowel diacritics and consonant diacritics.</li>
-  <li>With data augmentation, I achieved an accuracy of 90.07%, 96.71%, and 97.11%.</li>
-</ul>
-
-<p>Code for image augmentation is shown below.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Data augmentation for creating more training data
-</span><span class="n">datagen</span> <span class="o">=</span> <span class="nc">MultiOutputDataGenerator</span><span class="p">(</span>
-    <span class="n">featurewise_center</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="c1"># set input mean to 0 over the dataset
-</span>    <span class="n">samplewise_center</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="c1"># set each sample mean to 0
-</span>    <span class="n">featurewise_std_normalization</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="c1"># divide inputs by std of the dataset
-</span>    <span class="n">samplewise_std_normalization</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="c1"># divide each input by its std
-</span>    <span class="n">zca_whitening</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="c1"># apply ZCA whitening
-</span>    <span class="n">rotation_range</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>  <span class="c1"># randomly rotate images in the range (degrees, 0 to 180)
-</span>    <span class="n">zoom_range</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span> <span class="c1"># Randomly zoom image
-</span>    <span class="n">width_shift_range</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>  <span class="c1"># randomly shift images horizontally (fraction of total width)
-</span>    <span class="n">height_shift_range</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>  <span class="c1"># randomly shift images vertically (fraction of total height)
-</span>    <span class="n">horizontal_flip</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="c1"># randomly flip images
-</span>    <span class="n">vertical_flip</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>  <span class="c1"># randomly flip images
-</span></code></pre></div></div>
-
-<p>In the final blog, we will talk about the evaluation steps and methods to improve the model. Check the leaderboard results as well.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry><entry><title type="html">Bengali.AI Handwritten Grapheme Classification - Start Blog</title><link href="https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali-start.html" rel="alternate" type="text/html" title="Bengali.AI Handwritten Grapheme Classification - Start Blog" /><published>2020-02-18T00:00:00+00:00</published><updated>2020-02-18T00:00:00+00:00</updated><id>https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali-start</id><content type="html" xml:base="https://cengc13.github.io/website/kaggle/2020/02/18/kaggle-bengali-start.html"><![CDATA[<p><strong>Team: Zzz…</strong></p>
-
-<p><strong>Members: Cheng Zeng, Zhi Wang, Peter Huang</strong></p>
-
-<h2 id="introduction">Introduction</h2>
-
-<p>In this <a href="https://www.kaggle.com/c/bengaliai-cv19">Kaggle competition</a>, we aim to develop a convolutional neural network (CNN) model to classify the three constituent components of Bengali handwritten characters, including grapheme root, vowel diacritics, and consonant diacritics. Identifying characters by optical recognition is challenging since each Bengali has 11 vowels and 38 consonants in its alphabet, and there are 10 potential diacritics. As a result, a large number of graphemes (the smallest units in a written language) exist, and this quickly adds up to more than 10,000 different grapheme variations. This work by Team <strong>Zzz..</strong> lives on <a href="https://github.com/cengc13/Bengali_Kaggle">github</a>.</p>
-
-<h2 id="overview-of-the-data-sets">Overview of the data sets</h2>
-
-<h3 id="parquet-files">Parquet Files</h3>
-
-<p>The data sets are saved in the format of parquet files, which contain image IDs and the corresponding flattened 137 x 236 grayscale images. Each feature corresponds to a pixel of the image. The pixel values are between 0 and 255.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/parquet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="parquet header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example parquet data for image pixels</figcaption>
-</div>
-
-<h3 id="training-set">Training set</h3>
-
-<p>The training set contains image IDs from the parquet files and the 3 components of the corresponding graphemes, and there are 200,840 images in the training set. Note that the input is the handwritten image (the last column), while the output should be the classes for the corresponding three constituent components.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/training.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example training data</figcaption>
-</div>
-
-<h3 id="test-set">Test Set</h3>
-
-<p>The testing images consist of images whose constituent components are listed in independent rows.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/test.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example test data</figcaption>
-</div>
-
-<h3 id="class-map">Class Map</h3>
-
-<p>The class-map contains grapheme component types and labels, and it maps the class labels to the actual Bengali grapheme components.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/class-map.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="class map header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example class-map data</figcaption>
-</div>
-
-<h2 id="submission-format">Submission Format</h2>
-<p>The sample submission file has two columns—one column is the row ID from the test set which consists of the test index number and the component in a grapheme and the prediction.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/example-submission.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Example submission header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example submission data</figcaption>
-</div>
-
-<h2 id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
-
-<h3 id="pixel-distribution">Pixel distribution</h3>
-
-<p>The original pixel distribution is shown below, and it will be later used to compare with the pixel distributions after image crop and resize.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/pixel-dist.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Pixel distribution of training images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Pixel distributions of training images</figcaption>
-</div>
-
-<h3 id="class-frequency-analysis">Class frequency analysis</h3>
-
-<h4 id="top-20-grapheme-roots">Top 20 grapheme roots</h4>
-
-<p>Top 20 grapheme roots and their percentages in the training set are shown in the below figure. Those grapheme roots are approximately evenly distributed.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/grapheme-root.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Grapheme roots" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Frequency of top 20 grapheme roots</figcaption>
-</div>
-
-<h4 id="vowel-diacritics">Vowel diacritics</h4>
-
-<p>The counts of vowel diacritics are shown in the figure below. The distribution is not balanced, and they concentrate on Class 0, 1, 7, and 2.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/vowel-diacritic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Vowel diacritic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Frequency of vowel diacritic</figcaption>
-</div>
-
-<h4 id="consonant-diacritics">Consonant diacritics</h4>
-
-<p>For consonant diacritics, the distribution is not balanced either, with more than 60% being Class 0.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/consonant-diacritic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="consonant diacritic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Frequency of consonant diacritic</figcaption>
-</div>
-
-<h3 id="inspecting-training-images">Inspecting training images</h3>
-
-<h4 id="some-randomly-sampled-images">Some randomly sampled images</h4>
-<p>Below is 25 example handwritten grapheme randomly chosen fro the training images.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/samples.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Sample training images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Randomly sampled example images</figcaption>
-</div>
-
-<h4 id="writing-variety">Writing variety</h4>
-
-<p>In the below it shows images of the same grapheme. Note that the handwriting of the same grapheme varies a lot.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/writing-variety.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Writing variety" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Sixteen images of the same grapheme. Grapheme root, vowel diacritic and consonant diacritic are indexed 72, 1, 1, respectively.</figcaption>
-</div>
-
-<h2 id="data-preprocessing">Data preprocessing</h2>
-
-<p>The images are standardized by cropping and resizing using methods implemented in the <a href="https://github.com/opencv/opencv">OpenCV</a> package.
-The method finds the contour of the figure and resize the image based on the size of the contour. In the following, we show the eight images after preprocessing and corresponding pixel distributions. The figures after processing look normal, and the pixel distribution with proprocessing is close to the one without preprocessing, implying the reliability of the method used.</p>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/preprocessing.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Preprocessed images" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Example handwritten grapheme after preprocessing</figcaption>
-</div>
-
-<div class="img-div" style="text-align:center">
-  <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/kaggle-bengali/start-blog/pixel-dist-with-preprocessing.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Pixel distribution after preprocessing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
-
-  </picture>
-
-</figure>
-
-  <figcaption>Pixel distribution after preprocessing</figcaption>
-</div>
-
-<h2 id="annotated-references">Annotated references</h2>
-
-<ul>
-  <li>
-    <p>The <code class="language-plaintext highlighter-rouge">get_n</code>, <code class="language-plaintext highlighter-rouge">get_dummies</code>, <code class="language-plaintext highlighter-rouge">image_from_char</code>, <code class="language-plaintext highlighter-rouge">plot_acc</code> and <code class="language-plaintext highlighter-rouge">plot_loss</code> functions are originated from the kernel by <a href="https://www.kaggle.com/kaushal2896/bengali-graphemes-starter-eda-multi-output-cnn">Kaushal Shah</a>. The ` MultiOutputDataGenerator` class for multiple output is also from this kernel.</p>
-  </li>
-  <li>
-    <p>The image <code class="language-plaintext highlighter-rouge">resize</code> method is based on the kernel by <a href="https://www.kaggle.com/shawon10/bangla-graphemes-image-processing-deep-cnn">Ashadullah Shawon</a>.</p>
-  </li>
-  <li>
-    <p>The code for inference and result submission is heavily adapted from the kernel by <a href="https://www.kaggle.com/rsmits/keras-efficientnet-b3-training-inference">Robin Smits</a>.</p>
-  </li>
-  <li>
-    <p>The <code class="language-plaintext highlighter-rouge">crop_resize</code>, <code class="language-plaintext highlighter-rouge">plot_count</code>, <code class="language-plaintext highlighter-rouge">display_image_from_data</code> and <code class="language-plaintext highlighter-rouge">display_writting_variety</code> functions are from <a href="https://www.kaggle.com/gpreda/bengali-ai-handwritten-grapheme-getting-started">Gabriel Preda</a></p>
-  </li>
-  <li>
-    <p>We are also thankful to many useful discussions on Kaggle, for example <a href="https://www.kaggle.com/c/bengaliai-cv19/discussion/130311">Things does not work</a> and <a href="https://www.kaggle.com/c/bengaliai-cv19/discussion/132118#754943">Things that might work</a>.</p>
-  </li>
-</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry></feed>
+<p><strong>Update:</strong> We won a silver medal in this competition, ranked 90\(^{\rm{th}}\) place among 2059 teams :fireworks:.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry></feed>
