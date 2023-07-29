@@ -99,3 +99,31 @@ Natural language processing to find the text segment that supports the tweet sen
 - [Final blog](https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html)
 
 **I completed this competitions with a solo silver medal, ranking 90$$^{\rm{th}}$$ out of 2225 teams.**
+
+---
+
+#### M5 Forecasting - Accuracy
+Complex time series forecasting to predict the point of scales based on historical observations.
+
+<div class="row justify-content-sm-center">
+        {% include figure.html path="assets/img/projects/kaggle-competitions/m5-graphical-concept.png" title="M5 Accuracy" width=320 height=320 class="img-fluid rounded z-depth-1"%}
+</div>
+
+
+
+> ##### **Competition description**
+>
+> This is one of the two complementary competitions that together comprise the M5 forecasting challenge. Can you estimate, as precisely as possible, the point forecasts of the unit sales of various products sold in the USA by Walmart? If you are interested in estimating the uncertainty distribution of the realized values of the same series.
+>
+>In this competition, the fifth iteration, you will use hierarchical sales data from Walmart, the world’s largest company by revenue, to forecast daily sales for the next 28 days. The data, covers stores in three US States (California, Texas, and Wisconsin) and includes item level, department, product categories, and store details. In addition, it has explanatory variables such as price, promotions, day of the week, and special events. Together, this robust dataset can be used to improve forecasting accuracy.
+>
+>If successful, your work will continue to advance the theory and practice of forecasting. The methods used can be applied in various business areas, such as setting up appropriate inventory or service levels. Through its business support and training, the MOFC will help distribute the tools and knowledge so others can achieve more accurate and better calibrated forecasts, reduce waste and be able to appreciate uncertainty and its risk implications.
+
+
+##### Competition blogs
+
+- [Initial blog](http://0.0.0.0:8080/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog.html)
+- [Midway blog](http://0.0.0.0:8080/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html)
+- [Final blog](http://0.0.0.0:8080/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html)
+
+**I finished this competition with a rank of 645/5558 teams.**
