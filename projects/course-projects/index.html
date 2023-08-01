@@ -10,10 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>computer-vision | Cheng  Zeng</title>
+    <title>Course projects | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
-    <meta name="description" content="Cheng Zeng's personal website
-">
+    <meta name="description" content="A collection of data science courses supported by Brown's open graduate education program">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -37,7 +36,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/blog/tag/computer-vision/">
+    <link rel="canonical" href="https://cengc13.github.io/website/projects/course-projects/">
 
     <!-- Dark Mode -->
     
@@ -76,8 +75,8 @@
               </li>
               
               <!-- Blog -->
-              <li class="nav-item active">
-                <a class="nav-link" href="/website/blog/">Blog<span class="sr-only">(current)</span></a>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/blog/">Blog</a>
               </li>
 
               <!-- Other pages -->
@@ -112,43 +111,125 @@
     <!-- Content -->
     <div class="container mt-5">
       
+        <!-- page.html -->
         <div class="post">
 
-  <header class="post-header">
-    <h1 class="post-title"> <i class="fas fa-hashtag fa-sm"></i> computer-vision </h1>
-    <p class="post-description"> an archive of posts with this tag </p>
-  </header>
+          <header class="post-header">
+            <h1 class="post-title">Course projects</h1>
+            <p class="post-description">A collection of data science courses supported by Brown's open graduate education program</p>
+          </header>
 
-  <article>
-    <div class="table-responsive">
-      <table class="table table-sm table-borderless">
-        
-        <tr>
-          <th scope="row">Mar 3, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/03/03/kaggle-bengali-final.html">Bengali.AI Handwritten Grapheme Classification - Final Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Feb 25, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/02/25/kaggle-bengali-midway.html">Bengali.AI Handwritten Grapheme Classification - Midway Blog</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Feb 18, 2020</th>
-          <td>
-              <a class="post-link" href="/website/kaggle/2020/02/18/kaggle-bengali-start.html">Bengali.AI Handwritten Grapheme Classification - Start Blog</a>
-          </td>
-        </tr>
-      
-      </table>
-    </div>
-  </article>
+          <article>
+            <h3 id="open-graduate-education-program"><strong>Open Graduate Education Program</strong></h3>
+
+<blockquote>
+  <p>The Open Graduate Education Program allows select Brown doctoral students to pursue a master’s degree in a secondary field. All doctoral students are invited to propose their own combination of studies, free of any disciplinary barrier.</p>
+</blockquote>
+
+<p>I was blessed to participate in the Open graduate education program starting in 2019. I took this opportunity to pursue a secondary master’s degree in Data Science to extend research opportunities as my PhD research is highly multidisciplinary at the boundary between physical chemistry, machine learning and solid mechanics.</p>
+
+<hr>
+
+<h3 id="course-projects"><strong>Course projects</strong></h3>
+
+<h4 id="hands-on-data-science---final-project">Hands-on Data Science - Final Project</h4>
+
+<p>Project title: <strong>Using Machine Learning to Estimate the Energy Performance of Residential Buildings</strong></p>
+
+<div class="row justify-content-sm-center">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/course-projects/green-buildings.jpg" class="img-fluid rounded z-depth-1" width="500" height="400" title="Energy-efficient buildings" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
 
 </div>
+
+<p>In this project, I used geographic features to predict the energy efficiency of residential buildings which are characterized by heating and cooling loads. I went through standard procedure for machine learning projects, from exploratory data analysis to machine learning pipeline for hyper-parameter tuning and cross-validation, and finally global and local feature importance analysis.</p>
+
+<p>The final report for this project can be found <a href="https://github.com/cengc13/DATA1030_final_project/blob/master/reports/final_report/final_report.pdf" rel="external nofollow noopener" target="_blank">here</a> and project code is <a href="https://github.com/cengc13/DATA1030_final_project" rel="external nofollow noopener" target="_blank">available</a> on github.</p>
+
+<hr>
+
+<h4 id="data-engineering---final-project">Data Engineering - Final Project</h4>
+
+<p>Project title: <strong>US Covid-19 Tracker</strong></p>
+
+<p><strong>About</strong></p>
+
+<p>This web application is available on github <a href="https://github.com/cengc13/data1050-final-project" rel="external nofollow noopener" target="_blank">here</a>. It can be run on a cloud web development environment <a href="https://www.gitpod.io/" rel="external nofollow noopener" target="_blank">gitpod</a> or you can run it locally with the notebook <a href="https://github.com/cengc13/data1050-final-project/blob/main/Local_Dash.ipynb" rel="external nofollow noopener" target="_blank">Local_Dash.ipynb</a>. Note that you need to install the python packages listed in <code class="language-plaintext highlighter-rouge">requirement.txt</code> first.</p>
+
+<ul>
+  <li>
+    <p>Team “Old Boys” members: Cheng Zeng (Leader), Tianqi Tang, Zhi Wang</p>
+  </li>
+  <li>Project &amp; Executive Summary
+    <ul>
+      <li>We will create a live data-science web application named “Covid-19 tracker”.
+  It uses covid-19 data from the New York Times to understand and project the
+  spread of the outbreak in the United States at hierarchical granularity,
+  ranging from national to county level. It will allow users to interactively
+  view the covid cases and death at different levels.</li>
+      <li>This final project uses gitpod as the platform, an online IDE for github repo for data collection, clean-up, transformation and visualization.
+  The data will be stored in Mongodb, through the adaptor of a python module named “pymongo”.
+  The <a href="https://github.com/cengc13/data1050-final-project/blob/main/ETL_EDA.ipynb" rel="external nofollow noopener" target="_blank">EDA</a>, <a href="https://github.com/cengc13/data1050-final-project/blob/main/Visualization.ipynb" rel="external nofollow noopener" target="_blank">visualization</a> and <a href="https://github.com/cengc13/data1050-final-project/blob/main/Enhancement.ipynb" rel="external nofollow noopener" target="_blank">enhancement</a> will be  in jupyter notebooks.
+  The interactive web application will be realized using plotly and Dash.
+  It will mainly comprise three sections, namely Introduction, EDA &amp; Visualization and Enhancement.
+  The enhancement section is aimed at figure out whether two factors of interest might affect the transmission
+  in states, and also a simple regression model is constructed to  project the trend of the pandemic in US.</li>
+      <li>At the end of this project, we hope to build up a web application which tracks the up-to-date Covid-19 situation
+   at various geographical levels. Meanwhile it aims to provide some insights on if restrictions, such as wearing masks,
+   can help to contain the pandemic.</li>
+    </ul>
+  </li>
+  <li>Datasets used:
+    <ul>
+      <li>The covid national-level and state-level datasets  are from The New York Times, based on reports from state and local health agencies. They contain a series of data files with cumulative counts of coronavirus cases in the United States, at the national and state level, over time. They are regularly updated every day.
+ The national level data is about 7 KB. The state level data is 463 KB. The covid datasets are scaped from the github repo of New York Times. These are raw texts that can be retrieved in a straightforward way using the “request” python module. The raw data will be updated every day. So the incremental updates using the web scraping method will be done automatically.</li>
+      <li>The static survey data regarding the propensity to wearing masks (109 KB), state-level population data (1 KB),
+  and state area data (884 B) are used to understand how the role of wearing face coverings and population density
+  in the course of the pandemic.</li>
+    </ul>
+  </li>
+  <li>Summary of performance with respect to the baseline model(s)
+    <ul>
+      <li>We figure out that there is a strong correlation between infection rate and population density in US states.</li>
+      <li>There exists a high negative correlation between the propensity to wear masks and the case fatality rate in states.</li>
+      <li>In the next steps, we aim to build a simple regression model to predict the trend of outbreak in US.
+  We use the historical covid data and demongraphic featurs ad predictors, and we target on prediction of
+  near-future case and death count.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Project Architecture</strong></p>
+
+<p>This project uses MongoDB as the database. All data acquired are stored in raw form to the database (with de-duplication). An abstract layer is built in database.py so all queries can be done via function call. For a more complicated app, the layer will also be responsible for schema consistency. A plot.ly &amp; dash app is serving this web page through. Actions on responsive components on the page is redirected to app.py which will then update certain components on the page.</p>
+
+<div class="row justify-content-sm-center">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/course-projects/webapp_architecture.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Web application architecture" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+</div>
+
+          </article>
+
+        </div>
 
       
     </div>
