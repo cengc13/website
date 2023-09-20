@@ -107,7 +107,7 @@ them do it. In this final project, we discussed Roles of AI & human beings in th
 
 #### Statistical Learning - Final Project
 
-Project title: African Economic Crisis Analysis: Informative Indicators for Crisis
+Project title: **African Economic Crisis Analysis: Informative Indicators for Crisis**
 
 Team Members: Hanxiao Chen, Zeyan Du, Yiwei Sang, Zhi Wang, Cheng Zeng, Yue Zhuang
 
