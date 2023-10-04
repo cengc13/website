@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Projects | Cheng  Zeng</title>
+    <title>A computational framework for brittle particle cold spray | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
-    <meta name="description" content="A collection of research and data science projects.">
+    <meta name="description" content="Past, present and perspective of Multiphysics, Multiscale and Machine learning (M3) modeling">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -36,7 +36,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/projects/">
+    <link rel="canonical" href="https://cengc13.github.io/website/projects/mm-brittle-cs/">
 
     <!-- Dark Mode -->
     
@@ -83,8 +83,8 @@
               <li class="nav-item ">
                 <a class="nav-link" href="/website/publications/">Publications</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="/website/projects/">Projects<span class="sr-only">(current)</span></a>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/projects/">Projects</a>
               </li>
 
               <!-- Toogle theme mode -->
@@ -115,209 +115,97 @@
         <div class="post">
 
           <header class="post-header">
-            <h1 class="post-title">Projects</h1>
-            <p class="post-description">A collection of research and data science projects.</p>
+            <h1 class="post-title">A computational framework for brittle particle cold spray</h1>
+            <p class="post-description">Past, present and perspective of Multiphysics, Multiscale and Machine learning (M3) modeling</p>
           </header>
 
           <article>
-            <!-- pages/projects.md -->
-<div class="projects">
-  <!-- Display categorized projects -->
-  <h2 class="category">Current research</h2>
-  <!-- Generate cards for each project -->
-  <div class="grid">
-<!-- _includes/projects.html -->
-<div class="grid-sizer"></div>
-<div class="grid-item">
-  <a href="/website/projects/ml-hea/">
-      <div class="card hoverable">
-<figure>
+            <p>Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute and the Experitial AI institute of Northeastern University. Computational simulations were conducted in part using the Discovery cluster, supported by the Research Computing team at Northeastern University.</p>
+
+<p>This project focuses on an emerging additive manufacturing technique developed by a small Virginia-based company named TTEC. This technique is termed <strong>Brittle particle cold spray (BPCS)</strong>. In contrast with conventional cold spray that is mainly designed for ductile materials, this new technique has been demonstrated to fabricate dense coatings on thermally sensitive substrates with unlimited thickness. The TTEC system and an example deposit are shown in the below figure.</p>
+
+<div class="row justify-content-sm-center">
+        <figure>
 
   <picture>
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/ml-hea-design/ml-hea-thumbnail.png" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/mm-ml-brittle-cs/instrument.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Hardware and an example deposit" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
 </figure>
 
-        <div class="card-body">
-          <h3 class="card-title">Materials design with machine learning: A case study of high-entropy alloys</h3>
-          <p class="card-text">Methods and algorithms for machine learning assisted materials design</p>
-          <div class="row ml-1 mr-1 p-0">
-          </div>
-        </div>
-      </div>
-    </a>
 </div>
-<!-- _includes/projects.html -->
-<div class="grid-sizer"></div>
-<div class="grid-item">
-  <a href="/website/projects/hea-corrosion/">
-      <div class="card hoverable">
-<figure>
+<div class="caption">
+    The hardware used in BPCS (R&amp;D scale) can fit into a (b) sand blast cabinet.  (c) depicts a fully dense sprayed semiconductor material (Figure courtesy of TTEC LLC).
+</div>
+
+<p>This new technique is in essence a custom-designed, type-one, low-pressure cold spray system. As shown in the schematic illustration below, the system uses the expansion of the gas in the diverging section of the nozzle to create a supersonic gas stream.</p>
+
+<div class="row justify-content-sm-center">
+        <figure>
 
   <picture>
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/hea-corrosion/corrosion-three-metrics.png" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/mm-ml-brittle-cs/csam-sketch.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="BPCS sketch" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
 </figure>
 
-        <div class="card-body">
-          <h3 class="card-title">Discovery of high-entropy alloys for corrosion protection</h3>
-          <p class="card-text">A machine learning framework to evaluate corrosion performance for given compositions of high-entropy alloys</p>
-          <div class="row ml-1 mr-1 p-0">
-          </div>
-        </div>
-      </div>
-    </a>
 </div>
-<!-- _includes/projects.html -->
-<div class="grid-sizer"></div>
-<div class="grid-item">
-  <a href="/website/projects/mm-brittle-cs/">
-      <div class="card hoverable">
-<figure>
+<div class="caption">
+    Schematics of a BPCS system developed by TTEC LLC.
+</div>
+
+<p>While this technique has been used to establish correct particle size distributions of a few materials, the mechanics and the bonding mechanism of BPCS is unclear. It is well-acknowledged that bonding of two ductile materials in a high-pressure setting results from plastic deformation (termed as “adiabatic shear instability”). Current understandings for BPCS mechanics include mechanical interlocking followed after the fragmentation of sub-micron brittle particles and metallurgical bonding. Since BPCS processes are impacted by many factors as illustrated in the process diagram below, which span in multiple length- and time-scales, and involve a variety of complex physical processes, multiscale and multiphysics simulations are required to fully understand BPCS mechanics.</p>
+
+<p>A multiscale approach spans from microscale first-principles calculations of minimum inputs, to mesoscale phase-field modeling and macroscale discrete element modeling, as depicted in the following figure.</p>
+
+<div class="row justify-content-sm-center">
+        <figure>
 
   <picture>
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/mm-ml-brittle-cs/mm-ml-thumbnail.png" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/mm-ml-brittle-cs/multiscale-modeling.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Multiscale simulations" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
 </figure>
 
-        <div class="card-body">
-          <h3 class="card-title">A computational framework for brittle particle cold spray</h3>
-          <p class="card-text">Past, present and perspective of Multiphysics, Multiscale and Machine learning (M3) modeling</p>
-          <div class="row ml-1 mr-1 p-0">
-          </div>
-        </div>
-      </div>
-    </a>
 </div>
-  </div>
-  <h2 class="category">Past research</h2>
-  <!-- Generate cards for each project -->
-  <div class="grid">
-<!-- _includes/projects.html -->
-<div class="grid-sizer"></div>
-<div class="grid-item">
-  <a href="/website/projects/exascale-computing/">
-      <div class="card hoverable">
-<figure>
+<div class="caption">
+    Number of inputs for Multiscale simulations: From quantum to continuum.
+</div>
+
+<p>Multiphysics simulations are needed to draw insights into the temperature, phase and microstructure evolution for many analyses.</p>
+
+<div class="row justify-content-sm-center">
+        <figure>
 
   <picture>
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/exascale-computing/exascale-thumbnail.png" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/mm-ml-brittle-cs/multiphysics.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Multiphysics modeing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
 </figure>
 
-        <div class="card-body">
-          <h3 class="card-title">Enabling exascale computing of chemical systems</h3>
-          <p class="card-text">Machine learning potentials for large-size nanoparticle catalysts</p>
-          <div class="row ml-1 mr-1 p-0">
-          </div>
-        </div>
-      </div>
-    </a>
 </div>
-<!-- _includes/projects.html -->
-<div class="grid-sizer"></div>
-<div class="grid-item">
-  <a href="/website/projects/physical-models/">
-      <div class="card hoverable">
-<figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/physical-models/model-thumbnail.png" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-        <div class="card-body">
-          <h3 class="card-title">Atomistic models to expedite catalyst design</h3>
-          <p class="card-text">Force-displacement models for strain effect, surface relaxation and lateral interaction</p>
-          <div class="row ml-1 mr-1 p-0">
-          </div>
-        </div>
-      </div>
-    </a>
+<div class="caption">
+    Multiphysics simulations for BPCS.
 </div>
-  </div>
-  <h2 class="category">Data science</h2>
-  <!-- Generate cards for each project -->
-  <div class="grid">
-<!-- _includes/projects.html -->
-<div class="grid-sizer"></div>
-<div class="grid-item">
-  <a href="/website/projects/kaggle-competition/">
-      <div class="card hoverable">
-<figure>
 
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/kaggle-competitions/kaggle-logo.png" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-        <div class="card-body">
-          <h3 class="card-title">Machine learning competitions on Kaggle</h3>
-          <p class="card-text">A list of past kaggle competitions</p>
-          <div class="row ml-1 mr-1 p-0">
-          </div>
-        </div>
-      </div>
-    </a>
-</div>
-<!-- _includes/projects.html -->
-<div class="grid-sizer"></div>
-<div class="grid-item">
-  <a href="/website/projects/course-projects/">
-      <div class="card hoverable">
-<figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/course-projects/interdisciplinary.jpg" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-        <div class="card-body">
-          <h3 class="card-title">Course projects</h3>
-          <p class="card-text">A collection of data science courses supported by Brown's open graduate education program</p>
-          <div class="row ml-1 mr-1 p-0">
-          </div>
-        </div>
-      </div>
-    </a>
-</div>
-  </div>
-</div>
+<p>Moreover, as more reliable sensory techniques have been developed and implemented in the manufacturing process, more data become available, enabling a more well-rounded understanding and analysis of this process via data-driven machine learning modeling.
+However, machine learning algorithms for additive manufacturing often suffers from challenges in limited, noisy and high-dimensional data. Also, development of physics-informed complex models to understand intricate physical processes in BPCS may require intensive computation and substantial expertise. Opportunities emerge along with those challenges for using machine learning to enhance fundamental research and application of BPCS. For instance, machine learning can be used for fast predictive modeling, which allows for process optimization and real-time control. Besides, machine learning techniques have a potential in integrating multiscale simulations seamlessly, expanding the knowledge body in this area. In addition, interpretable machine learning models can help identify the root cause of build failures, suggesting corrective actions for adaptive control.</p>
 
           </article>
 
