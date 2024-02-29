@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-I gave a seminar at Worcester Polytechnic Institute (WPI) Mechanical & Materials Engineering graduate seminar on Feb 21, 2024 about "Rational Design of Nanoalloy Electrocatalysts".
+I gave a virtual seminar at Worcester Polytechnic Institute (WPI) Mechanical & Materials Engineering graduate seminar on Feb 21, 2024 about "Rational Design of Nanoalloy Electrocatalysts".
