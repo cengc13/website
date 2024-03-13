@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Course projects
-description: A collection of data science courses supported by Brown's open graduate education program
+description: A collection of data science course projects supported by Brown's open graduate education program
 img: assets/img/projects/course-projects/interdisciplinary.jpg
 importance: 2
 category: Data science
