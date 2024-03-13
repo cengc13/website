@@ -36,4 +36,4 @@ This methodology was applied to AlCrFeCoNi high-entropy alloys. Compositions of 
     Single phase formability (a), Pilling-Bedworth ratios (b) and FCC111 surface energies (c) of AlCrFeCoNi as a function of Al and Cr compositions. In part (a), single phase (SP) and multiple phase training points are indicated by respective red squares and green circles. Decision boundary from <a href='https://www.sciencedirect.com/science/article/pii/S1359645419307050'>Wu et al</a> is represented by a grey dashed line.
 </div>
 
-This work is now out at [arXiv](https://arxiv.org/abs/2307.06384) and has also been submitted to the journal "Integrating Materials and Manufacturing Innovation" for peer review.
+This work is now published in Computational Materials Science [here](https://www.sciencedirect.com/science/article/pii/S0927025624001460).
