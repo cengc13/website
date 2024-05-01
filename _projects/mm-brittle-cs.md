@@ -29,7 +29,9 @@ The bonding mechanics of brittle particle cold spray ranges from atomistic-scale
 The hypothesis is that small-scale particles are more likely to bond at a substrate. It implies a size-dependent plasticity. Plasticity for ceramics can originate from phase transformation, dislocation dynamics and defet structures. Here using a dislocation based mechanism, we will first develop a machine learning potential (MLP) to upsclae atomistic simulations for mechanics of ceramic particles. The MLP will be developed in an active learning manner, incorporating a *MaxVol* uncertainty metric and a *Nearsighted force training* approach to generate small-size data inforamtive to improve the MLP as well as affordable by *ab initio* calculations. Next, we will use the MLP to conduct MD nanocompression tests to generate the stress-strain relationship for the ceramic particles. However, even with MLP, the largest size is limited to the order of 10 nm. To approach the experimental size range around 0.1-10 $$\mu$$m, dislocation characteristics will be utilized to upscale the simulations using discrete dislocation dynamcis (DDD).
 
 <div class="row justify-content-sm-center">
+    <div class="col-sm-11 mt-3 mt-md-0">
         {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/size-dependent-plasticity.png" title="Single particle plasticity" class="img-fluid rounded z-depth-1"%}
+    </div>
 </div>
 <div class="caption">
     Singe particle size dependent plasticity: (a) Active learning loop to develop a MLP, (b) MD nanocompression tests  and (c) Upscaled DDD simulations.
@@ -42,7 +44,9 @@ The hypothesis is that irredugar particle shapes are more prone to building up t
 
 
 <div class="row justify-content-sm-center">
+    <div class="col-sm-10 mt-3 mt-md-0">
         {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/shape-dependent-packing.png" title="Shape dependent mechanical interlocking" class="img-fluid rounded z-depth-1"%}
+    </div>
 </div>
 <div class="caption">
     Shape dependent mechanical interlocking: (a) Machine learning enabled contact detection and recognition, (b) Linear parallel bond model  and (c) The workflow of DEM for brittle particle cold spray deposition.
@@ -54,7 +58,9 @@ The hypothesis is that irredugar particle shapes are more prone to building up t
 At above, we introduce machine learning enabled simulation methods to understand single particle plasticity and layer buildup during BPCS deposition. The last piece to complete our understanding of BPCS mechanics is the bonding at the particle/substrate interface. We will use a hybrid QM/MM approach to set up a MD simulation single particle impact behavior. The interface will be treated at quantum mechanic level using a machine learning potential whereas the regions in particle and susbtrate away from the interface will be evaluated based on molecular mechanics using a COMB potential. To prevent shockwave bouncing off and propagating through the surface, a three-layer substrate structure will be used.
 
 <div class="row justify-content-sm-center">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/ml-mm-single-particle-impact.png" title="Single particle impact: ML/MM hybrid approach and the MD system setup." class="img-fluid rounded z-depth-1"%}
+    </div>
 </div>
 <div class="caption">
     Single particle impact: ML/MM hybrid approach and the MD system setup.
@@ -63,7 +69,9 @@ At above, we introduce machine learning enabled simulation methods to understand
 For multiple particle impact, we will coarse grain the COMB potential for the particle and substrate region to enable mesoscale simulations. Then the coarse-grained and atomistic regions will be coupled via a finite-temperature Quasi-Continuum approach. The coarse graining is achieved by setting multiple conventional crystal cells as one bead and coarse-grained parameters will be found and optimized via an evolutionary algorithm by performing simulations targeting multiple mechanical properties. The impact behavior will be used to focus on the microstructure evolution, dislocation dynamics and phase changes due to a thermo-mechanical coupling effect.
 
 <div class="row justify-content-sm-center">
+    <div class="col-sm-11 mt-3 mt-md-0">
         {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/atomistic-mesoscale-approach.png" title="Multiple particle impact: Atomistic-mesoscale coupled framework." class="img-fluid rounded z-depth-1"%}
+    </div>
 </div>
 <div class="caption">
     Multiple particle impact behavior: (a) Atomistic-mesoscale coupled scheme, (b) n-level coarse graining, and (c) The workflow for ML enabled coarse-grained force fields.
