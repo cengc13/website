@@ -1,24 +1,17 @@
 ---
 layout: page
-title: "A computational framework for brittle particle cold spray"
-description: Past, present and perspective of Multiphysics, Multiscale and Machine learning (M3) modeling
+title: "Machine learning enabled multiscale simulations for brittle particle cold spray"
+description: Atomistic-mesoscale simulation framework to understand size and shape effects of particle feedstock for brittle particle cold spray
 img: assets/img/projects/mm-ml-brittle-cs/mm-ml-thumbnail.png
 importance: 2
 category: Current research
 ---
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
 Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute and the Experitial AI institute of Northeastern University. Computational simulations were conducted in part using the Discovery cluster, supported by the Research Computing team at Northeastern University.
 
-This project focuses on an emerging additive manufacturing technique developed by a small Virginia-based company named TTEC. This technique is termed **Brittle particle cold spray (BPCS)**. In contrast with conventional cold spray that is mainly designed for ductile materials, this new technique has been demonstrated to fabricate dense coatings on thermally sensitive substrates with unlimited thickness. The TTEC system and an example deposit are shown in the below figure.
+This project focuses on an emerging additive manufacturing technique developed by a small company named TTEC LLC. This technique is termed **Brittle particle cold spray (BPCS)**. Conventional cold spray is mainly designed for ductile materials, this new technique demonstrated with brittle materials to make dense coatings on a variety of substrates at a high deposition rate and with unlimited thickness. This new technique is in essence a custom-designed low-pressure cold spray system, which uses the expansion of the gas in the diverging section of the nozzle to create a supersonic gas stream. A few experiments found that BPCS favors small-size (0.1--10 $$\mu$$m) and irregular-shapes partile feedstocks for a successful build versus large sizes (5-50 $$\mu$$m) and spherical shapes used for ductile material cold spray.
 
-<div class="row justify-content-sm-center">
-        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/instrument.jpg" title="Hardware and an example deposit" class="img-fluid rounded z-depth-1"%}
-</div>
-<div class="caption">
-    The hardware used in BPCS (R&D scale) can fit into a (b) sand blast cabinet.  (c) depicts a fully dense sprayed semiconductor material (Figure courtesy of TTEC LLC).
-</div>
-
-This new technique is in essence a custom-designed, type-one, low-pressure cold spray system. In contrast with high-pressure cold spray, this system uses the expansion of the gas in the diverging section of the nozzle to create a supersonic gas stream.
 
 <div class="row justify-content-sm-center">
         {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/csam-sketch.png" title="BPCS sketch" class="img-fluid rounded z-depth-1"%}
@@ -27,33 +20,51 @@ This new technique is in essence a custom-designed, type-one, low-pressure cold 
     Schematics of a BPCS system developed by TTEC LLC.
 </div>
 
-While this technique has been used to establish correct particle size distributions of a few materials, the mechanics and the bonding mechanism of BPCS is unclear. It is well-acknowledged that bonding of two ductile materials in a high-pressure setting results from plastic deformation (termed as "adiabatic shear instability"). Current understandings for BPCS mechanics include mechanical interlocking followed after the fragmentation of sub-micron brittle particles and metallurgical bonding. Since BPCS processes are impacted by many factors as illustrated in the process diagram below, which span in multiple length- and time-scales, and involve a variety of complex physical processes, multiscale and multiphysics simulations are required to fully understand BPCS mechanics.
+The bonding mechanics of brittle particle cold spray ranges from atomistic-scale chemical bondings at particle/substrate interface to mesoscale mechanical interlocking for particle/particle packing, necessitating a multiscale approach to understand its fundamentals. I proposed an atomistic-mesoscale simulation approach to address the effects of unique size ranges and shapes suitable for BPCS.
+
+
+### 1. Single particle size dependent plasticity
+
+
+The hypothesis is that small-scale particles are more likely to bond at a substrate. It implies a size-dependent plasticity. Plasticity for ceramics can originate from phase transformation, dislocation dynamics and defet structures. Here using a dislocation based mechanism, we will first develop a machine learning potential (MLP) to upsclae atomistic simulations for mechanics of ceramic particles. The MLP will be developed in an active learning manner, incorporating a *MaxVol* uncertainty metric and a *Nearsighted force training* approach to generate small-size data inforamtive to improve the MLP as well as affordable by *ab initio* calculations. Next, we will use the MLP to conduct MD nanocompression tests to generate the stress-strain relationship for the ceramic particles. However, even with MLP, the largest size is limited to the order of 10 nm. To approach the experimental size range around 0.1-10 $$\mu$$m, dislocation characteristics will be utilized to upscale the simulations using discrete dislocation dynamcis (DDD).
 
 <div class="row justify-content-sm-center">
-        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/input-output.png" title="BPCS process diagram" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/size-dependent-plasticity.png" title="Single particle plasticity" class="img-fluid rounded z-depth-1"%}
 </div>
 <div class="caption">
-    Process diagram of a BPCS system.
+    Singe particle size dependent plasticity: (a) Active learning loop to develop a MLP, (b) MD nanocompression tests  and (c) Upscaled DDD simulations.
 </div>
 
-A multiscale approach spans from microscale first-principles calculations of minimum inputs, to mesoscale phase-field modeling and macroscale discrete element modeling, as depicted in the following figure.
 
-<div class="row justify-content-sm-center">
-        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/multiscale-modeling.png" title="Multiscale simulations" class="img-fluid rounded z-depth-1"%}
-</div>
-<div class="caption">
-    Number of inputs for Multiscale simulations: From quantum to continuum.
-</div>
+### 2. Shape dependent mechanical interlocking
 
-Multiphysics simulations are needed to draw insights into the temperature, phase and microstructure evolution for many analyses.
+The hypothesis is that irredugar particle shapes are more prone to building up the layers during particle deposition, suggesting a mechanical interlocking mechanism. I propose to use discrete element modeling to study the interlocking phenomenon for particles in various shapes. The contact behavior can be complex and varied for irregular shapes, hence a machine learning enabled contact detection algorithm will be employed to relate features of object and cue particles to the contact geometry. The contract geometry will be next fed into a linear parallel bond model to compute the contact forces. Using Netwon's Second law of motion, particle velocity, position and moment can be updated via a Verlet time integration algorithm. A simple mass-volume analysis indicates that for one batch of BPCS load around 5g and if we assume a uniform size of 2.5 $$\mu$$m spherical alumina feedstock particles with a density of 3.98 g/cm$$^3$$, we will have numbers of particles on the order of 10 billion, which is not feasible computationally. So a reduced number of particle 10000 is used to study the layer buildup. We initialize the system by defining the simulation space and boundary conditions. The next step introduces a small number of particles, followed a contact detection and time integration. Once particles are settled on the substrate, more particles are added until all particles are allowed to deposit, after which the packing density and mechanical behavior can be analyzed separately.
 
 
 <div class="row justify-content-sm-center">
-        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/multiphysics.png" title="Multiphysics modeing" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/shape-dependent-packing.png" title="Shape dependent mechanical interlocking" class="img-fluid rounded z-depth-1"%}
 </div>
 <div class="caption">
-    Multiphysics simulations for BPCS.
+    Shape dependent mechanical interlocking: (a) Machine learning enabled contact detection and recognition, (b) Linear parallel bond model  and (c) The workflow of DEM for brittle particle cold spray deposition.
 </div>
 
-Moreover, as more reliable sensory techniques have been developed and implemented in the manufacturing process, more data become available, enabling a more well-rounded understanding and analysis of this process via data-driven machine learning modeling.
-However, machine learning algorithms for additive manufacturing often suffers limited, noisy and high-dimensional data. Also, development of physics-informed complex models to understand intricate physical processes in BPCS may require intensive computation and substantial expertise. Opportunities emerge along with those challenges using machine learning to enhance fundamental research and application of BPCS. For instance, machine learning can be used for fast predictive modeling, which allows for process optimization and real-time control. Besides, machine learning techniques have a potential in integrating multiscale simulations seamlessly, expanding the knowledge body in this area. In addition, interpretable machine learning models can help identify the root cause of build failures, suggesting corrective actions for adaptive control.
+
+### 3. Size and shape dependent impact behavior
+
+At above, we introduce machine learning enabled simulation methods to understand single particle plasticity and layer buildup during BPCS deposition. The last piece to complete our understanding of BPCS mechanics is the bonding at the particle/substrate interface. We will use a hybrid QM/MM approach to set up a MD simulation single particle impact behavior. The interface will be treated at quantum mechanic level using a machine learning potential whereas the regions in particle and susbtrate away from the interface will be evaluated based on molecular mechanics using a COMB potential. To prevent shockwave bouncing off and propagating through the surface, a three-layer substrate structure will be used.
+
+<div class="row justify-content-sm-center">
+        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/ml-mm-single-particle-impact.png" title="Single particle impact: ML/MM hybrid approach and the MD system setup." class="img-fluid rounded z-depth-1"%}
+</div>
+<div class="caption">
+    Single particle impact: ML/MM hybrid approach and the MD system setup.
+</div>
+
+For multiple particle impact, we will coarse grain the COMB potential for the particle and substrate region to enable mesoscale simulations. Then the coarse-grained and atomistic regions will be coupled via a finite-temperature Quasi-Continuum approach. The coarse graining is achieved by setting multiple conventional crystal cells as one bead and coarse-grained parameters will be found and optimized via an evolutionary algorithm by performing simulations targeting multiple mechanical properties. The impact behavior will be used to focus on the microstructure evolution, dislocation dynamics and phase changes due to a thermo-mechanical coupling effect.
+
+<div class="row justify-content-sm-center">
+        {% include figure.html path="assets/img/projects/mm-ml-brittle-cs/atomistic-mesoscale-approach.png" title="Multiple particle impact: Atomistic-mesoscale coupled framework." class="img-fluid rounded z-depth-1"%}
+</div>
+<div class="caption">
+    Multiple particle impact behavior: (a) Atomistic-mesoscale coupled scheme, (b) n-level coarse graining, and (c) The workflow for ML enabled coarse-grained force fields.
+</div>
