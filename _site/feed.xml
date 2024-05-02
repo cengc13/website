@@ -1,0 +1,1997 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://0.0.0.0:8080/website/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:8080/website/" rel="alternate" type="text/html" hreflang="en" /><updated>2024-05-01T03:17:24+00:00</updated><id>http://0.0.0.0:8080/website/feed.xml</id><title type="html">blank</title><subtitle>Cheng Zeng&apos;s personal website
+</subtitle><entry><title type="html">M5 Forecasting Accuracy - Final Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html" rel="alternate" type="text/html" title="M5 Forecasting Accuracy - Final Blog" /><published>2020-07-05T00:00:00+00:00</published><updated>2020-07-05T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html"><![CDATA[<p>This is the final blog documenting my learning experience for the M5 accuracy kaggle competition. In the previous blogs, we walked through the general information about this competition and elaborated many methods for featurization. Here, we will discuss the models, a magic trick to improve the model performance and import findings summarized by the competition host.</p>
+
+<h2 id="lightgbm-model">LightGBM model</h2>
+
+<p>We carried feature engineering to obtain additional features in addition to the features already found in the original dataset. We introduced 9 additional features, including two lags features with 7 and 28 days of shigt, 7 and 28 days of rolling mean with respect to lags features, three date features including ‘week’, ‘quarter’ and <code class="language-plaintext highlighter-rouge">mday</code>.</p>
+
+<p>Next we define the categorical feauters and columns that will not be used for training. We have</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cat_feats</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">item_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">dept_id</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">store_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cat_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">state_id</span><span class="sh">'</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sh">"</span><span class="s">event_name_1</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">event_name_2</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">event_type_1</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">event_type_2</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">useless_cols</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">id</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">date</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">sales</span><span class="sh">"</span><span class="p">,</span><span class="sh">"</span><span class="s">d</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wm_yr_wk</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">weekday</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">train_cols</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="nf">isin</span><span class="p">(</span><span class="n">useless_cols</span><span class="p">)]</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">train_cols</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">"</span><span class="s">sales</span><span class="sh">"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Followed by feature specification, we define the dataset for lightdbm models. Next, the lightgbm hyperparameters are shown below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="sh">"</span><span class="s">objective</span><span class="sh">"</span> <span class="p">:</span> <span class="sh">"</span><span class="s">poisson</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">metric</span><span class="sh">"</span> <span class="p">:</span><span class="sh">"</span><span class="s">rmse</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">force_row_wise</span><span class="sh">"</span> <span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">learning_rate</span><span class="sh">"</span> <span class="p">:</span> <span class="mf">0.075</span><span class="p">,</span>
+<span class="c1">#         "sub_feature" : 0.8,
+</span>        <span class="sh">"</span><span class="s">sub_row</span><span class="sh">"</span> <span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">bagging_freq</span><span class="sh">"</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">lambda_l2</span><span class="sh">"</span> <span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+<span class="c1">#         "nthread" : 4
+</span>        <span class="sh">"</span><span class="s">metric</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="sh">"</span><span class="s">rmse</span><span class="sh">"</span><span class="p">],</span>
+        <span class="sh">'</span><span class="s">verbosity</span><span class="sh">'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">num_iterations</span><span class="sh">'</span> <span class="p">:</span> <span class="mi">2500</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Training is as simple as</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_lgb</span> <span class="o">=</span> <span class="n">lgb</span><span class="p">.</span><span class="nf">train</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">valid_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">fake_valid_data</span><span class="p">],</span> <span class="n">verbose_eval</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After which, the model can be saved directly:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_lgb</span><span class="p">.</span><span class="nf">save_model</span><span class="p">(</span><span class="sh">"</span><span class="s">model.lgb</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In terms of the inference, we predict the next day sales recursively by <strong>predicting on past predictions</strong>.</p>
+
+<h2 id="a-magic-trick">A magic trick</h2>
+
+<p>It was found by many participants that multiplying the prediction by certain scaling coefficients can somehow improve the model performance on the public leaderboard. The multipliers should depend on the hierarchical levels. In addition, a rolling factor for future predictions may also be helpful. By inspecting the public leaderboard performance, it was found a rolling factor larger than 1 is most effective. However, for the private leaderboard performance, it turns out that a less than 1 rolling factor works best.</p>
+
+<h2 id="key-findings-by-the-host">Key findings by the host</h2>
+
+<p>The key findings of the host is <a href="https://www.sciencedirect.com/science/article/pii/S0169207021001874?via%3Dihub">published</a> on International Journal of Forecasting. We list those findings as follows:</p>
+
+<ul>
+  <li>
+    <p><strong>Superior performance of machine learning methods</strong>. Unlike the first three M-series competitions demonstrate the merit of simplicity of models. This competition fully proved the power of machine learning methods, suggesting that top ranked teams all used ML models and achieve superior solutions compared to the benchmark methods.</p>
+  </li>
+  <li>
+    <p><strong>Value of combining</strong>. The model performance can be improved by combining the results from different models, even relatively simple ones.</p>
+  </li>
+  <li>
+    <p><strong>Value of “cross-learning”</strong>. Cross-learning implies using a single model to capture patterns of different time series trends, which may appear opposite to the value of combining. However, we can still employ multiple models, that look at different parts of the total data. Actually all top 50-performing methods somehow used “cross-learning” to exploit all of the information in the data set.</p>
+  </li>
+  <li>
+    <p><strong>Notable differences between the winning methods and benchmarks used for sales forecasting</strong>. Although the winning teams demonstrated overall advantages of ML methods, the actual differences at low-level aggregation were much smaller. Also, one should note that the benchmark methods, say exponential smoothing, overperform the vast majority teams (about 92.5%). It suggests that standard conventional simple methods may still be useful in assisting decision making to support the operations of retail companies.</p>
+  </li>
+  <li>
+    <p><strong>Beneficial effects of external adjustments</strong>. As mentioned in the previous section, using multipliers at different levels can help to improve forecasting accuracy. Some of those adjustments are not completely based on meaningful rationale but instead on the analytical alignment of predictions on the lowest aggregation level with the those at the highest levels.</p>
+  </li>
+  <li>
+    <p><strong>Value added by effective CV strategies</strong>. For complex forecasting tasks like this competition, adopting effective CV strategies is critical to capture post-sample accuracy in an objective manner, to avoid overfitting and to mitigate uncertainty. Yet, various CV methods can be applied. Some important factors to be considered include the time period for validation, the size of the validation windows, how those windows will be updated, and criteria to rationalize the CV scores.</p>
+  </li>
+  <li>
+    <p><strong>Importance of exogenous/explanatory variables</strong>. Methods solely rely on the historical data patterns may sometimes fail to account for the effects of holidays, special days, promotions, prices and weather. It was observed that price-related features were significantly important for improving forecasting accuracy. Besides, importance of exogenous variables was substantiated by comparisons between the benchmarks in this competition.</p>
+  </li>
+</ul>
+
+<p>For this competition, I ended up with 645 place out of 5558 teams.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="time-series-forecasting" /><category term="data-science" /><summary type="html"><![CDATA[Estimate the unit sales of Walmart retail goods]]></summary></entry><entry><title type="html">M5 Forecasting Accuracy - Midway Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html" rel="alternate" type="text/html" title="M5 Forecasting Accuracy - Midway Blog" /><published>2020-06-28T00:00:00+00:00</published><updated>2020-06-28T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html"><![CDATA[<p>One of the most common techniques for time series forecasting is feature engineering. Effective feature engineering can boost the performance of your models. In this blog, we will discuss a few feature engineering strategies useful for this challenge.</p>
+
+<h2 id="feature-engineering-fe">Feature Engineering (FE)</h2>
+
+<p>Since we have a large number of data, we can use the simplest data types for each column to reduce the memory usage. For example, the following function <code class="language-plaintext highlighter-rouge">reduce_mem_uage</code> reduces the memory for <code class="language-plaintext highlighter-rouge">df</code>, which is a <code class="language-plaintext highlighter-rouge">pandas</code> dataframe.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Memory Reducer
+# :df pandas dataframe to reduce size             # type: pd.DataFrame()
+# :verbose                                        # type: bool
+</span><span class="k">def</span> <span class="nf">reduce_mem_usage</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">int16</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">int32</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">int64</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">float16</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">float32</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">float64</span><span class="sh">'</span><span class="p">]</span>
+    <span class="n">start_mem</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">memory_usage</span><span class="p">().</span><span class="nf">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">col_type</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">dtypes</span>
+        <span class="k">if</span> <span class="n">col_type</span> <span class="ow">in</span> <span class="n">numerics</span><span class="p">:</span>
+            <span class="n">c_min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">min</span><span class="p">()</span>
+            <span class="n">c_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">max</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nf">str</span><span class="p">(</span><span class="n">col_type</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">int</span><span class="sh">'</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                       <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="nf">finfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">end_mem</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">memory_usage</span><span class="p">().</span><span class="nf">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Mem. usage decreased to {:5.2f} Mb ({:.1f}% reduction)</span><span class="sh">'</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">end_mem</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">start_mem</span> <span class="o">-</span> <span class="n">end_mem</span><span class="p">)</span> <span class="o">/</span> <span class="n">start_mem</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div></div>
+<p>Other simple methods to see memory consumption are:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">os</span><span class="p">,</span> <span class="n">psutil</span>
+<span class="k">def</span> <span class="nf">get_memory_usage</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="n">psutil</span><span class="p">.</span><span class="nc">Process</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="nf">getpid</span><span class="p">()).</span><span class="nf">memory_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mf">2.</span><span class="o">**</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sizeof_fmt</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="sh">'</span><span class="s">B</span><span class="sh">'</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">''</span><span class="p">,</span><span class="sh">'</span><span class="s">Ki</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Mi</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Gi</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Ti</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Pi</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Ei</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">Zi</span><span class="sh">'</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nf">abs</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sh">"</span><span class="s">%3.1f%s%s</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">num</span> <span class="o">/=</span> <span class="mf">1024.0</span>
+    <span class="k">return</span> <span class="sh">"</span><span class="s">%.1f%s%s</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="sh">'</span><span class="s">Yi</span><span class="sh">'</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Another way to save memory is to condense a sparse matrix using <code class="language-plaintext highlighter-rouge">scipy.sparse.csr_matrix</code> method. For example, if you have a sparse dataframe <code class="language-plaintext highlighter-rouge">df</code>, you can save memory by</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">scipy</span> <span class="kn">import</span> <span class="n">sparse</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">.</span><span class="nf">csr_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Many of the feature engineering ideas are conceived by <a href="https://www.kaggle.com/kyakovlev">Konstantin Yakovlev</a>.</p>
+
+<h3 id="simple-fe">Simple FE</h3>
+
+<p>We first discuss simple methods based on statistics of existing variables.
+Specific methods include</p>
+
+<ul>
+  <li>Basic aggregations such as taking the <code class="language-plaintext highlighter-rouge">max</code>, <code class="language-plaintext highlighter-rouge">min</code>, <code class="language-plaintext highlighter-rouge">std</code> and <code class="language-plaintext highlighter-rouge">mean</code></li>
+  <li>Min/max scaling</li>
+  <li>Unique items to identify items that may depend on inflation</li>
+  <li>Rolling aggregations using months or years as windows.</li>
+  <li>“Momentum” of prices. Prices that are shifted by week, month or year.</li>
+</ul>
+
+<p>In addition, we can merge event features and snap features, and we can also use some features from date. Combining all those features we arrive at a initial dataset after simple feature engineering, column names and data types of which are shown as below.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/midway-blog/simple-fe.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data summary after simple feature engineering" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>A summary of data info with simple feature engineering.</figcaption>
+</div>
+
+<h3 id="lags-features">Lags features</h3>
+
+<p>We can also create lags features by shifting the values by dates. Note that we need to sort the data by date before using shifts. Also note that we need to aggregate the data values on <code class="language-plaintext highlighter-rouge">id</code> (item) level. You can apply rolling max/min/mean with different time windows to get more lags features.</p>
+
+<h3 id="custom-features">Custom features</h3>
+
+<p>Other methods to customize and select features use simple and fast models (e.g. <code class="language-plaintext highlighter-rouge">LightGBM</code>) along with feature selection methods based on permutation tests, dimensional reduction techniques such as principal component analysis (PCA), and mean/std target encoding.</p>
+
+<p>Suppose <code class="language-plaintext highlighter-rouge">grid_df</code> is the dataframe after the initial featurization. An iterative mean/std featurization implementation is given below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">icols</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Encoding</span><span class="sh">'</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+    <span class="n">temp_df</span> <span class="o">=</span> <span class="n">grid_df</span><span class="p">[</span><span class="n">grid_df</span><span class="p">[</span><span class="sh">'</span><span class="s">d</span><span class="sh">'</span><span class="p">]</span><span class="o">&lt;=</span><span class="p">(</span><span class="mi">1913</span><span class="o">-</span><span class="mi">28</span><span class="p">)]</span> <span class="c1"># to be sure we don't have leakage in our validation set
+</span>
+    <span class="n">temp_df</span> <span class="o">=</span> <span class="n">temp_df</span><span class="p">.</span><span class="nf">groupby</span><span class="p">([</span><span class="n">col</span><span class="p">,</span><span class="sh">'</span><span class="s">store_id</span><span class="sh">'</span><span class="p">]).</span><span class="nf">agg</span><span class="p">({</span><span class="n">TARGET</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">std</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">mean</span><span class="sh">'</span><span class="p">]})</span>
+    <span class="n">joiner</span> <span class="o">=</span> <span class="sh">'</span><span class="s">_</span><span class="sh">'</span><span class="o">+</span><span class="n">col</span><span class="o">+</span><span class="sh">'</span><span class="s">_encoding_</span><span class="sh">'</span>
+    <span class="n">temp_df</span><span class="p">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">joiner</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">col</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">temp_df</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="n">values</span><span class="p">]</span>
+    <span class="n">temp_df</span> <span class="o">=</span> <span class="n">temp_df</span><span class="p">.</span><span class="nf">reset_index</span><span class="p">()</span>
+    <span class="n">grid_df</span> <span class="o">=</span> <span class="n">grid_df</span><span class="p">.</span><span class="nf">merge</span><span class="p">(</span><span class="n">temp_df</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">,</span><span class="sh">'</span><span class="s">store_id</span><span class="sh">'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="sh">'</span><span class="s">left</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">temp_df</span>
+</code></pre></div></div>
+
+<p>When all the features are generated and selected, the new dataframe is saved to hard disk for training models in the next step. In the next blog, we will discuss the model architecture and tricks to improve the model performance.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="time-series-forecasting" /><category term="data-science" /><summary type="html"><![CDATA[Estimate the unit sales of Walmart retail goods]]></summary></entry><entry><title type="html">M5 Forecasting Accuracy - Start Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog.html" rel="alternate" type="text/html" title="M5 Forecasting Accuracy - Start Blog" /><published>2020-06-25T00:00:00+00:00</published><updated>2020-06-25T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog.html"><![CDATA[<p>This kaggle competition asks participants to estimate, as precisely as possible, the point forecasts of the unit sales of various products sold in the USA by Walmart.</p>
+
+<blockquote>
+  <p>How much camping gear will one store sell each month in a year? To the uninitiated, calculating sales at this level may seem as difficult as predicting the weather. Both types of forecasting rely on science and historical data. While a wrong weather forecast may result in you carrying around an umbrella on a sunny day, inaccurate business forecasts could result in actual or opportunity losses. In this competition, in addition to traditional forecasting methods you’re also challenged to use machine learning to improve forecast accuracy.</p>
+</blockquote>
+
+<p>This competition is the fifth iteration of its kind in which hierarchical sales data from Walmart will be used to forecast the sales for the next 28 consecutive days. This blog gives an overview of the competition. The data set and competition metric will be discussed.</p>
+
+<h2 id="data-set">Data set</h2>
+
+<h3 id="files">Files</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">calendar.csv</code> - Contains information about the dates on which the products are sold.</li>
+  <li><code class="language-plaintext highlighter-rouge">sales_train_validation.csv</code> - Contains the historical daily unit sales data per product and store [d_1 - d_1913]</li>
+  <li><code class="language-plaintext highlighter-rouge">sample_submission.csv</code> - The correct format for submissions.</li>
+  <li><code class="language-plaintext highlighter-rouge">sell_prices.csv</code> - Contains information about the price of the products sold per store and date.</li>
+</ul>
+
+<h3 id="data-format">Data format</h3>
+
+<p>The historic data has the format shown below. Each row represents the sale history of an item across 1913 days. The id tells us the item type, state and store. No explicit item information is provided. The historical data range from 2011-01-29 to 2016-06-19.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/data-format.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data format" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Data format of training and validation datasets.</figcaption>
+</div>
+
+<h3 id="submission-format">Submission format</h3>
+
+<p>It requires us to extract patterns in the previous 1913 days and predict the point sales in the next 56 days. The first 28 days represent validation rows which participants are required to predict in state I and the ground truth will be offered. The prediction for the last 28 days will be used as the test data for final competition standings.</p>
+
+<p>The submission example file looks like</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/submission-format.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Submission format" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>A few example data entries for the final submission.</figcaption>
+</div>
+
+<h2 id="evaluation-metrics">Evaluation metrics</h2>
+
+<p>For each series of the same item, a <em>Root Mean Squared Scaled Error</em> (RMSSE) is calculated. It reads as:</p>
+
+\[\begin{align*}
+RMSSE = \sqrt{\frac{1}{h} \frac{\sum_{t=n+1}^{n+h} (Y_t - \widehat{Y_t})}{\frac{1}{n-1} \sum_{t=2}^{n} (Y_t - Y_{t-1})}}
+\end{align*}\]
+
+<p>The choice of the measure is justified in the competitors guide, saying that rather than using absolut errors optimized for median, squared errors are more suitable for the mean. Also, the measure is scale independent and it can be used to compare series with different scales. The metric is symmetric because it equally penalize positive and negative errors, as well as small and large forecasts.</p>
+
+<p>With the RMSSE for all time series, the final error is ranked using the <em>Weighted RMSSE</em> (WRMSSE), as described below:</p>
+
+\[\begin{align*}
+WRMSSE = \sum_{t=1}^{N} w_i \times RMSSE_i
+\end{align*}\]
+
+<p>A pytorch implementation of the WRMSSE designed for this competition is detailed in the <a href="https://www.kaggle.com/code/chrisrichardmiles/weights-and-scales-for-the-past-2-years/notebook">notebook</a> by Chris Miles.</p>
+
+<h2 id="exploratory-data-analysis-eda">Exploratory data analysis (EDA)</h2>
+
+<p>A Trick: When you plot with <code class="language-plaintext highlighter-rouge">matplotlib</code>, you can define colors to use using <code class="language-plaintext highlighter-rouge">color_cycle = cycle(plt.rcParams['axes.prop_cycle'].by_key()['color'])</code>.</p>
+
+<p>The EDA figures were generated with methods heavily adapted from the <a href="https://www.kaggle.com/code/robikscube/m5-forecasting-starter-data-exploration">notebook</a> copied from Rob Mulla.</p>
+
+<h3 id="a-view-into-a-single-item-time-series">A view into a single item time series</h3>
+
+<p>For example, the item ‘FOODS_3_090_CA_3_validation’ seems to be sold a lot historically. Note that there are days when it appears the item is not available and not sold due to special events, corresponding to the flat lines in the below plot. Also we can see in a certain period, spikes may come up.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/one-item.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="One item example" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>The time series data of an example item.</figcaption>
+</div>
+
+<h3 id="counts-of-item-by-types">Counts of item by types</h3>
+
+<p>Number of items by Category shows that FOODS account for the majority of the items, followed by HOUSEHOLDS and then HOBBIES items.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/counts-by-category.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Counts of items by category" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Counts of items by category.</figcaption>
+</div>
+
+<h3 id="rollout-of-sold-items">Rollout of sold items</h3>
+
+<h4 id="sales-by-store">Sales by store</h4>
+
+<p>In total there are 10 unique stores, we would like to find the sales patterns for each store. Results shown below indicate that some stores (e.g. CA_3 and CA_1) show more steady patterns than other stores (e.g. WI_1 and WI_2). The abrupt changes may be attributed to the shortage in supply chains or the rise of new competitors.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/sales-by-store.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Store-wise sales history" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Rolling 90 day average total sales by store id.</figcaption>
+</div>
+
+<h4 id="sales-heatmap-calendar">Sales heatmap calendar</h4>
+
+<p>Using the method by <a href="https://github.com/rougier">Nicolas P. Rougier</a>, we plot out the heatmap calendar for sales of each type of items. Some observations from the heatmap are:</p>
+
+<ul>
+  <li>Food tends to have lower number of purchases at the end of each month</li>
+  <li>Household and Hobby items sell much less in January.</li>
+  <li>Weekends are more popular shopping days regardless of the item types.</li>
+</ul>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/sales-heatmap-calendar.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Heatmap of sales" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Heatmap calendar of sales by item category.</figcaption>
+</div>
+
+<h3 id="sale-prices">Sale prices</h3>
+
+<p>Sale prices over time for each store indicate a gradual increase of prices.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-m5/start-blog/saleprice-history.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Sale price over time" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Store-wise sale prices over time.</figcaption>
+</div>
+
+<p>In summary, the sale prices at different hierarchical levels may display different patterns. It looks like aggregated levels tend to show more clear patterns than granular levels. Also, special patterns such as flat lines and spikes exist across different items, implying the importance of understanding exogenous/explanatory variables.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="time-series-forecasting" /><category term="data-science" /><summary type="html"><![CDATA[Estimate the unit sales of Walmart retail goods]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Final Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Final Blog" /><published>2020-06-23T00:00:00+00:00</published><updated>2020-06-23T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/06/23/kaggle-tweet-final-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html"><![CDATA[<p>This is final blog for this NLP competition. We will discuss some caveats
+to move up through the leaderboard. We used the RoBERTa model in the midway blog for the infences. In this blog, we will discuss sentiment-specific predictions, noise of the data and post-processing tricks to improve the prediction scores.</p>
+
+<h2 id="sentiment-specific-jaccard-score">Sentiment-specific Jaccard score</h2>
+
+<p>If we breakdown the average jaccard scores based on the sentiment, the average Jaccard values of the three sentiments are:</p>
+
+<ul>
+  <li>Positive: 0.581</li>
+  <li>Negative: 0.590</li>
+  <li>Neutral: 0.976</li>
+</ul>
+
+<p>Many tweets with positive and negative sentiment have a jaccard score of zero. Let us figure out the issues.</p>
+
+<h2 id="the-noise-in-labels--the-magic">The Noise in labels &amp; The Magic</h2>
+<p>At a first glimpse, those results look pretty weird as the selected texts look like random noise which are not a subset of the full text. For instance, <a href="https://www.kaggle.com/code/debanga/what-the-no-ise">cases</a> found by DEBANGA RAJ NEOG:</p>
+
+<ol>
+  <li>
+    <p>Missing a <code class="language-plaintext highlighter-rouge">!</code>  <span style="color:orange">Damn! It <code class="language-plaintext highlighter-rouge">hurts!!!</code></span></p>
+  </li>
+  <li>
+    <p>Missing a <code class="language-plaintext highlighter-rouge">.</code>  <span style="color:orange">It is <code class="language-plaintext highlighter-rouge">stupid...</code></span></p>
+  </li>
+  <li>
+    <p>Missing <code class="language-plaintext highlighter-rouge">d</code> in <code class="language-plaintext highlighter-rouge">good</code>?  <span style="color:orange">LOL. It’s not <code class="language-plaintext highlighter-rouge">goo</code></span></p>
+  </li>
+  <li>
+    <p>Missing <code class="language-plaintext highlighter-rouge">ng</code> in <code class="language-plaintext highlighter-rouge">amazing</code>?  <span style="color:orange">Dude. It’s not <code class="language-plaintext highlighter-rouge">amazi</code> at all!</span></p>
+  </li>
+</ol>
+
+<p>It was found that the noise originated from the consecutive spaces in the data. This insight can be leveraged to match the <em>noisy</em> selected text using the predicted probabilities of start and end indices at the token level and an alignment post-processing, which is called <em>the Magic</em> for this competition. This technique was implemented by the 1st place solution <a href="https://www.kaggle.com/c/tweet-sentiment-extraction/discussion/159254">here</a>, and found to be super helpful, which can increase the CV score by around 0.2. The implementation idea of <em>the Magic</em> is sketched at below.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/final-blog/the-magic.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="The Magic" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>The pattern of noisy labels and how to leverage it.</figcaption>
+</div>
+
+<h2 id="post-processing-tricks">Post-processing tricks</h2>
+
+<p>I campe up with a postprocessing method below which consistently helps to improve the CV score by about 0.001–0.002. This post-processing comprises of two tricks. The first one is to have a back-up indices with the second highest probabilities for both start and end indices of tokens, which will be used when the start indice is larger than the end indice. The code for the first trick is below.
+The second trick deals with the special characters using the <code class="language-plaintext highlighter-rouge">regex</code> package, as shown in the function <code class="language-plaintext highlighter-rouge">post_process</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">a_bak</span><span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argsort</span><span class="p">(</span><span class="n">preds_start_avg</span><span class="p">[</span><span class="n">k</span><span class="p">,])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span><span class="p">,</span> <span class="n">b_bak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argsort</span><span class="p">(</span><span class="n">preds_end_avg</span><span class="p">[</span><span class="n">k</span><span class="p">,])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">a_bak</span> <span class="o">&lt;=</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a_bak</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">a_bak</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b_bak</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">a_bak</span> <span class="o">&lt;=</span> <span class="n">b_bak</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a_bak</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">b_bak</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">count_abn_2</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">full_text</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+<span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="nf">startswith</span><span class="p">(</span><span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="sh">"</span><span class="s">([\.]+)</span><span class="sh">"</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">split</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">!!!!</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">!</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">???</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">?</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="nf">endswith</span><span class="p">(</span><span class="sh">'</span><span class="s">...</span><span class="sh">'</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">..</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">...</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></div>
+
+<p>Moreover, I submitted results with the highest local CV score rather than the one with the highest public leaderboard score. Luckily I survived the huge shakeup in the end. I ended up with <strong>a solo silver medal for this competition, ranking 90th place out of 2225 teams in total.</strong></p>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Extract support phrases for sentiment labels]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Midway Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Midway Blog" /><published>2020-06-09T00:00:00+00:00</published><updated>2020-06-09T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/06/09/kaggle-tweet-midway-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html"><![CDATA[<p>This blog is the second entry documenting my effort in the <strong>“Tweet Sentiment Extraction”</strong> kaggle competition. In this blog, we will discuss the language model to tackle this specific challenge.</p>
+
+<h2 id="the-roberta-model">The RoBERTa model</h2>
+
+<p>We will use the TensorFlow to construct the RoBERTa model. The model was constructed following the <a href="https://www.kaggle.com/code/cdeotte/tensorflow-roberta-0-705">kaggle kernel</a> written by Chris Deotte. Next, we show how to tokenize the text and create question answer head.</p>
+
+<h3 id="tokenizer">Tokenizer</h3>
+
+<p>We used pretrained RoBERTa Byte level Byte-pair Encoding tokenizer to convert the data into tokens. The tokenizer can be loaded by:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">tokenizers</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span> <span class="n">to</span> <span class="n">your</span> <span class="n">tokenizer</span> <span class="n">files</span><span class="p">]</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizers</span><span class="p">.</span><span class="nc">ByteLevelBPETokenizer</span><span class="p">(</span>
+    <span class="n">vocab_file</span><span class="o">=</span><span class="n">PATH</span><span class="o">+</span><span class="sh">'</span><span class="s">vocab-roberta-base.json</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">merges_file</span><span class="o">=</span><span class="n">PATH</span><span class="o">+</span><span class="sh">'</span><span class="s">merges-roberta-base.txt</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">lowercase</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">add_prefix_space</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The key to find the selected text is construct a mapping between characters in the original text and the tokens transformed from the text.
+After tokenization, the inputs look like the below:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/midway-blog/bpe-tokenization.jpeg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="RoBERTa tokenization" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Original text and its Byte-level BPE tokenization.</figcaption>
+</div>
+
+<p>Note that the same tokenization should be applied to the test data.</p>
+
+<h3 id="build-roberta-model">Build RoBERTa model</h3>
+
+<p>A pretrained RoBERTa base model was used and a custom question answer head was added. First tokens were sent to a BERT model to obtain the embedding of the token sequence. The embedding went through a 1D convolution layer and activation layer to find the one-hot encodings of the start token indices. Likewise, the end index of the tokens can be found. An <code class="language-plaintext highlighter-rouge">Adam</code> optimizer with a learning rate of 3e-5 and a <code class="language-plaintext highlighter-rouge">categorical_crossentropy</code> were used to compile the model. The schematic diagram is shown at below:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/midway-blog/roberta-model.jpeg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="RoBERTa model with question answer head" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>RoBERTa model with a custom question answer head to find the start and end token indices of the selected text.</figcaption>
+</div>
+
+<h3 id="training">Training</h3>
+
+<p>The training was carried out with 5 folds stratified based on sentiment. A <code class="language-plaintext highlighter-rouge">batch</code> size of 32 and 3 <code class="language-plaintext highlighter-rouge">epochs</code> were used for training the model.
+In order to obtain the <code class="language-plaintext highlighter-rouge">Jaccard</code> score, we need to decode the identified token sequence into the text. This was achieved by:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+  <span class="nb">all</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">idxV</span><span class="p">:</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">oof_start</span><span class="p">[</span><span class="n">k</span><span class="p">,])</span>
+      <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">oof_end</span><span class="p">[</span><span class="n">k</span><span class="p">,])</span>
+      <span class="k">if</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">:</span>
+          <span class="n">st</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">text</span><span class="sh">'</span><span class="p">]</span>
+      <span class="k">else</span><span class="p">:</span>
+          <span class="n">text1</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="o">+</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">text</span><span class="sh">'</span><span class="p">].</span><span class="nf">split</span><span class="p">())</span>
+          <span class="n">enc</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">text1</span><span class="p">)</span>
+          <span class="n">st</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">b</span><span class="p">])</span>
+      <span class="nb">all</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">jaccard</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]))</span>
+  <span class="n">jac</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="nb">all</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="kaggle-submission">Kaggle submission</h2>
+
+<p>The same decoding process should be applied to the text data. Next, we created a csv file for submission following the competition requirements. A few samples from the file looks like the below table.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">[</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">all</span>
+<span class="n">test</span><span class="p">[[</span><span class="sh">'</span><span class="s">textID</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">selected_text</span><span class="sh">'</span><span class="p">]].</span><span class="nf">to_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">submission.csv</span><span class="sh">'</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="nf">set_option</span><span class="p">(</span><span class="sh">'</span><span class="s">max_colwidth</span><span class="sh">'</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">test</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/midway-blog/submission-file.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Table file for submission" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Table for final submission: A number of example items.</figcaption>
+</div>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Extract support phrases for sentiment labels]]></summary></entry><entry><title type="html">Tweet Sentiment Extraction - Start Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html" rel="alternate" type="text/html" title="Tweet Sentiment Extraction - Start Blog" /><published>2020-06-01T00:00:00+00:00</published><updated>2020-06-01T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/06/01/kaggle-tweet-start-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/06/01/kaggle-tweet-start-blog.html"><![CDATA[<p>This kaggle competition aims to construct a language model that can not only identify the sentiment of a tweet but also understand why it is so.
+In other words, competitors are expected to figure out what word or phrase best supports the labeled sentiment.</p>
+
+<blockquote>
+  <p>With all of the tweets circulating every second it is hard to tell whether the sentiment behind a specific tweet will impact a company, or a person’s, brand for being viral (positive), or devastate profit because it strikes a negative tone. Capturing sentiment in language is important in these times where decisions and reactions are created and updated in seconds. But, which words actually lead to the sentiment description? In this competition you will need to pick out the part of the tweet (word or phrase) that reflects the sentiment.</p>
+</blockquote>
+
+<p>This blog describes the background and motivation, dataset, evaluation metrics and exploratory data analysis (EDA).</p>
+
+<h2 id="data-set">Data set</h2>
+
+<h3 id="files">Files</h3>
+
+<ul>
+  <li>
+    <p><strong>train.csv</strong> - the training set</p>
+  </li>
+  <li>
+    <p><strong>test.csv</strong> - the test set</p>
+  </li>
+  <li>
+    <p><strong>sample_submission.csv</strong> - a sample submission file in the correct format</p>
+  </li>
+</ul>
+
+<h3 id="data-format">Data format</h3>
+
+<p>Each row contains the <code class="language-plaintext highlighter-rouge">text</code> of a tweet and a <code class="language-plaintext highlighter-rouge">sentiment</code> label. In the training set you are provided with a word or phrase drawn from the tween <code class="language-plaintext highlighter-rouge">selected_text</code> that encapsulates the provided sentiment.</p>
+
+<h3 id="columns">Columns</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">textID</code> - unique ID for each piece of text</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">text</code>  the text of the tweet</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">sentiment</code> - the general sentiment of the tweet</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">selected_text</code> - [train only] the text that supports the tweet’s sentiment</p>
+  </li>
+</ul>
+
+<h3 id="submission-format">Submission format</h3>
+
+<p>We are attempting to predict the word or phrase from the tweet that exemplifies the provided sentiment. The word or phrase should include all characters within that span (i.e. including commas, spaces, etc.). The format is as follows:</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;id&gt;, "&lt;word or phrase that supports the sentiment&gt;"</code></p>
+
+<p>For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span><span class="p">,</span> <span class="sh">"</span><span class="s">Very good</span><span class="sh">"</span>
+<span class="mi">5</span><span class="p">,</span> <span class="sh">"</span><span class="s">I am neutral about this</span><span class="sh">"</span>
+<span class="mi">3</span><span class="p">,</span> <span class="sh">"</span><span class="s">Awful</span><span class="sh">"</span>
+<span class="mi">8</span><span class="p">,</span> <span class="sh">"</span><span class="s">If you say so!</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<h2 id="evaluation-metrics">Evaluation metrics</h2>
+
+<p>The metric in this competition is the <a href="https://en.wikipedia.org/wiki/Jaccard_index">word-level Jaccard score</a>. A good description of Jaccard similarity for strings is <a href="https://towardsdatascience.com/overview-of-text-similarity-metrics-3397c4601f50">here</a>. The formula is expressed as:</p>
+
+<p>\begin{equation}
+score = \frac{1}{n} \sum_{i=1}^{n} jaccard(gt_i, dt_i)
+\end{equation}</p>
+
+<p>where:</p>
+
+\[\begin{align*}
+n &amp;= \textrm{number of documents} \\
+jaccard &amp;= \textrm{the function provided above} \\
+gt_i &amp;= \textrm{the ith ground truth} \\
+dt_i &amp;= \textrm{the ith prediction} \\
+\end{align*}\]
+
+<p>A python implementation of the jaccard score is as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">str1</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">str2</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="mf">0.5</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="nf">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">float</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nf">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="eda">EDA</h2>
+
+<p>The EDA figures were retrieved from the <a href="https://www.kaggle.com/code/tanulsingh077/twitter-sentiment-extaction-analysis-eda-and-model">kaggle kernel</a> by MR_KNOWNNOTHING.</p>
+
+<h3 id="data-balance">Data balance</h3>
+
+<p>The balance of the training set can be obtained with</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="n">plotly</span> <span class="kn">import</span> <span class="n">graph_objs</span> <span class="k">as</span> <span class="n">go</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">/kaggle/input/tweet-sentiment-extraction/train.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="p">.</span><span class="nc">Figure</span><span class="p">(</span><span class="n">go</span><span class="p">.</span><span class="nc">Funnelarea</span><span class="p">(</span>
+    <span class="n">text</span> <span class="o">=</span><span class="n">train</span><span class="p">.</span><span class="n">sentiment</span><span class="p">,</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">position</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">top center</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">text</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Funnel-Chart of Sentiment Distribution</span><span class="sh">"</span><span class="p">}</span>
+    <span class="p">))</span>
+<span class="n">fig</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/tweet-data-balance.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data balance" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Sentiment-specific ratios of training data</figcaption>
+</div>
+
+<h3 id="world-cloud">World Cloud</h3>
+
+<p>We use world clouds to show the most common words in the tweets based on their corresponding sentiment. The code is shown below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="n">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span><span class="p">,</span> <span class="n">STOPWORDS</span><span class="p">,</span> <span class="n">ImageColorGenerator</span>
+<span class="c1">### mask for the lay-out of word cloud
+</span><span class="n">d</span> <span class="o">=</span> <span class="sh">'</span><span class="s">/kaggle/input/masks-for-wordclouds/</span><span class="sh">'</span>
+<span class="n">pos_mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">d</span><span class="o">+</span> <span class="sh">'</span><span class="s">twitter_mask.png</span><span class="sh">'</span><span class="p">))</span>
+<span class="nf">plot_wordcloud</span><span class="p">(</span><span class="n">Neutral_sent</span><span class="p">.</span><span class="n">text</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="n">pos_mask</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">white</span><span class="sh">'</span><span class="p">,</span><span class="n">max_font_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="sh">"</span><span class="s">WordCloud of Neutral Tweets</span><span class="sh">"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">plot_wordcloud</code> function can be found in the kaggle kernel by aashita <a href="https://www.kaggle.com/code/aashita/word-clouds-of-various-shapes/notebook">here</a>.</p>
+
+<p>World cloud of neural tweets:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-neural-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of neural tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Word cloud of neural tweets</figcaption>
+</div>
+
+<p>World cloud of positive tweets:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-positive-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of positive tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Word cloud of positive tweets</figcaption>
+</div>
+
+<p>World cloud of negative tweets:</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-tweet/start-blog/wordcloud-negative-tweet.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Word cloud of negative tweets" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Word cloud of negative tweets</figcaption>
+</div>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Extract support phrases for sentiment labels]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification - Final Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification - Final Blog" /><published>2020-05-08T00:00:00+00:00</published><updated>2020-05-08T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html"><![CDATA[<p>This blog is the last of the three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. In the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, the simplest logistic regression model is taken as an example to illustrate the essential components of a language model. A <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX">multilingual classification model</a> using BERT architecture is also developed. In addition, we went over state-of-the-art multilingual models, including BERT, XLM and XLM-RoBERTa. The novel techniques in each type of architecture are elaborated and compared.</p>
+
+<p>This blog summarizes relevant techniques employed to improving the model performance, which is evaluated by the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/leaderboard">public leaderboard score</a> on Kaggle. I will start with the basic BERT multilingual model, after which I will illustrate how we can improve the model by tackling the three main challenges for this competition.</p>
+
+<p>Honestly this is my first NLP project. I chose a project on Kaggle because the Kaggle community is an awesome place to share and learn machine learning knowledge. I would like to thank all those great participants on Kaggle, who make this learning process so rewarding and enjoyable.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="https://www.freelancinggig.com/blog/wp-content/uploads/2017/07/Natural-Language-Processing.png" width="600px" />
+  <br />
+  <figcaption>Natural Language Processing. Image source:
+    <a href="https://medium.com/voice-tech-podcast/predicting-the-type-of-event-based-on-comments-using-natural-language-processing-dd9c04546159/">Medium</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[The Basic BERT Model](#basic-bert)**
+  * The Objective
+  * Tokenizer, Transformer and Classifier
+  * Model Evaluation
+* **[Model Refinement](#model-refinement)**
+  * Model Architectures
+  * Hyper-parameter Tuning
+  * Data Augmentation
+  * Ensemble Magic
+
+</div> -->
+
+<h2 id="the-basic-bert-model-"><a href="#basic-bert" name="basic-bert">The Basic BERT Model </a></h2>
+
+<h3 id="the-objective">The Objective</h3>
+
+<p>Our goal is to take a comment text as input, and produce either 1(the comment is toxic) or 0 (the comment is non-toxic). It is basically a binary classification problem. There are three significant challenges regarding this competition that one needs to take care of.</p>
+
+<ul>
+  <li>
+    <p><strong>Data Size Issue</strong>: the training dataset consists of more than 200,000 data, which thus requires a huge amount of time to clean and pre-process the data. In addition, training on regular GPUs might not be able to give us a decent model in a limited time. For example ,the commit time should be less than three hours on Kaggle, which is almost impossible for a typical multilingual model of 100 million parameters to converge on such a large size dataset.</p>
+  </li>
+  <li>
+    <p><strong>Imbalance Issue</strong>: the training and validation set is highly unbalanced with a toxic/nontoxic ratio around 1:9. Therefore, this competition uses the ROC-AUC value as the evaluation metric. In other words, if we train the model based on the unbalanced dataset, the model should predict better on nontoxic comments than toxic ones.</p>
+  </li>
+  <li>
+    <p><strong>Multilingual Issue</strong>: the training set is written in English. The validation is given in three languages, Turkish, Spanish, and Italian. Besides the multilingual validation set, the testing set is written in three more types of languages, i.e. Russian, French and Portuguese.</p>
+  </li>
+</ul>
+
+<p>We will discuss how we can circumvent or mitigate those three issues in the  model refinement part.</p>
+
+<h3 id="tokenizer-transformer-and-classifier">Tokenizer, Transformer and Classifier</h3>
+
+<p>Simply for demonstration of a multilingual model, we  will use the BERT tokenizer and transformer as implemented in the <a href="https://huggingface.co/">HuggingFace package</a>. In the following we use the example illustrated in Jay’s <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">awesome blog</a> to show how we encode a comment text, pass it through the model and finally do the classification.</p>
+
+<h4 id="tokenizer">Tokenizer</h4>
+
+<p>The first step is to split the words into tokens. Then special tokens are added for the purpose of classification. For example, [CLS] is added as the first position of a comment/review, and [SEP] is added at the end of each sentence. Note that a comment/review may consist of many sentences, therefore we could have many [SEP]s in one comment, but only one [CLS].</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-1.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 1 and 2 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 1 and 2</a></figcaption>
+</div>
+
+<p>Lastly, the tokens are embedded into its id using the embedding model-specific table component. As we mentioned in the <a href="https://cengc13.github.io/final-project-midway-blog/">second blog</a>, BERT uses word-piece tokenization while XLM uses Byte-Pair Encoding to grasp the most common sub-words across all languages.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-2-token-ids.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 3 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 3</a></figcaption>
+</div>
+
+<p>Now the input comment is ready to be sent to a language model which  is typically made up of stacks of RNN.</p>
+
+<h4 id="transformer">Transformer</h4>
+
+<p>A normal transformer usually comprises of an encoder and a decoder. Yet for BERT, it is made up by stacks of only encoders. When an embedded input sequence passes through the model, the output would be a vector for each input token, which is made up of 768 float numbers for a BERT model. As this is a sentence classification problem, we take out the first vector associated with the [CLS] token, which is also the one we send to the classifier. The illustrative figure in the following recaps the journey of a comment</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-input-to-output-tensor-recap.png" width="800px" />
+  <br />
+  <figcaption>Recap of the journey of a comment. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Recap</a></figcaption>
+</div>
+
+<p>With the output of the transformer, we can slice the important hidden states for classification.</p>
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-output-tensor-selection.png" width="800px" />
+  <br />
+  <figcaption>Slice the important output hidden states for classification. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Slice the output</a></figcaption>
+</div>
+
+<h4 id="classifier">Classifier</h4>
+
+<p>In terms of the classifier, since we already put everything in a neural network, it is straightforward to do the same for the classification.
+If we use a dense layer with only one output activated by a <code class="language-plaintext highlighter-rouge">sigmoid</code> function as the last layer, it is intrinsically a logistic regression classifier. Alternatively, we can add 
+additional dense layers to extract more non-linear features between the output vector of the transformer layer and the prediction of probability.</p>
+
+<h3 id="evaluation-metrics">Evaluation Metrics</h3>
+
+<p>The dataset is highly skewed towards the non-toxic comments. ROC-AUC is taken as the evaluation metric to represent the extent to which the comments are misclassified. Intuitively, the higher the AUC value, the less overlap the prediction for the two classes will be. In light of this characteristic of AUC metric, further separating the two classes distribution or reduce the variance of the prediction will be helpful to increase the AUC.</p>
+
+<h3 id="the-code">The Code</h3>
+
+<p>This section describes the code to train a multilingual model using BERT. 
+The notebook is available on <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT">colab</a>. The framework of the codes are from <a href="https://www.kaggle.com/xhlulu/jigsaw-tpu-xlm-roberta">this kernel by xhlulu</a>.</p>
+
+<p>Let’s start by importing some useful packages</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="n">tqdm</span><span class="p">.</span><span class="nf">pandas</span><span class="p">()</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.metrics</span> <span class="kn">import</span> <span class="n">AUC</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ModelCheckpoint</span><span class="p">,</span> <span class="n">Callback</span><span class="p">,</span><span class="n">LearningRateScheduler</span><span class="p">)</span>
+<span class="kn">import</span> <span class="n">tensorflow.keras.backend</span> <span class="k">as</span> <span class="n">K</span>
+</code></pre></div></div>
+
+<p>Download the latest Huggingface <code class="language-plaintext highlighter-rouge">transformers</code> and <code class="language-plaintext highlighter-rouge">tokenizer</code> packages. Then we import necessary modules.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">tokenizers</span><span class="o">==</span><span class="mf">0.7</span><span class="p">.</span><span class="mi">0</span>
+<span class="err">!</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">transformers</span>
+<span class="kn">from</span> <span class="n">tokenizers</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="n">tokenizers</span> <span class="kn">import</span> <span class="n">BertWordPieceTokenizer</span>
+<span class="kn">import</span> <span class="n">transformers</span>
+<span class="kn">from</span> <span class="n">transformers</span> <span class="kn">import</span> <span class="n">TFAutoModel</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+</code></pre></div></div>
+
+<p><strong>Configure TPU environment</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Detect hardware, return appropriate distribution strategy
+# Change the runtime type to TPU if you are on colab or Kaggle
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># TPU detection. No parameters necessary if TPU_NAME environment variable is
+</span>    <span class="c1"># set
+</span>    <span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">cluster_resolver</span><span class="p">.</span><span class="nc">TPUClusterResolver</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Running on TPU </span><span class="sh">'</span><span class="p">,</span> <span class="n">tpu</span><span class="p">.</span><span class="nf">master</span><span class="p">())</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="n">tpu</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">if</span> <span class="n">tpu</span><span class="p">:</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="nf">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">tpu</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="nf">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="nc">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Default distribution strategy in Tensorflow. Works on CPU and single GPU.
+</span>    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="nf">get_strategy</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">REPLICAS: </span><span class="sh">"</span><span class="p">,</span> <span class="n">strategy</span><span class="p">.</span><span class="n">num_replicas_in_sync</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Nowadays Kaggle and Colab provide TPU running time. If you already turn on the TPU, it will print “REPLICAS:  8”.</p>
+
+<p>Next we load the data. Note that if you do not save the competition on your Google drive, there is an alternative way doing that, as we show in the simple <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS">logistic regression notebook</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_FOLDER</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="o">-</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">competition</span><span class="o">-</span><span class="n">data</span><span class="p">]</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/train.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/validation.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/test.csv</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">DATA_FOLDER</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/sample_submission.csv</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Shuffle the train set
+</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">1.</span><span class="p">).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then we define some configurations for tokenization, model architecture and training settings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AUTO</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">experimental</span><span class="p">.</span><span class="n">AUTOTUNE</span>
+<span class="c1"># Configuration
+</span><span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">*</span> <span class="n">strategy</span><span class="p">.</span><span class="n">num_replicas_in_sync</span>
+<span class="n">MAX_LEN</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">MODEL</span> <span class="o">=</span> <span class="sh">'</span><span class="s">bert-base-cased</span><span class="sh">'</span>
+</code></pre></div></div>
+
+<p>Load the tokenizer and save the configuration files for the vocabulary library and the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># First load the real tokenizer
+</span><span class="n">save_path</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">./</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="sh">'</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">save_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="nf">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="p">.</span><span class="nf">save_pretrained</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+<span class="n">fast_tokenizer</span> <span class="o">=</span> <span class="nc">BertWordPieceTokenizer</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s">/vocab.txt</span><span class="sh">'</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Define the encode function. Basically it splits a comment text into chunks of length 256. The EDA shows that the majority of the comment texts are of length less than 200. Therefore, for most of the cases, we only deal with one-chunk tokenization.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    From:
+    https://www.kaggle.com/xhlulu/jigsaw-tpu-distilbert-with-huggingface-and-keras
+    </span><span class="sh">"""</span>
+    <span class="n">tokenizer</span><span class="p">.</span><span class="nf">enable_truncation</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">maxlen</span><span class="p">)</span>
+    <span class="n">tokenizer</span><span class="p">.</span><span class="nf">enable_padding</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">maxlen</span><span class="p">)</span>
+    <span class="n">all_ids</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">texts</span><span class="p">),</span> <span class="n">chunk_size</span><span class="p">)):</span>
+        <span class="n">text_chunk</span> <span class="o">=</span> <span class="n">texts</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">chunk_size</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
+        <span class="n">encs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">encode_batch</span><span class="p">(</span><span class="n">text_chunk</span><span class="p">)</span>
+        <span class="n">all_ids</span><span class="p">.</span><span class="nf">extend</span><span class="p">([</span><span class="n">enc</span><span class="p">.</span><span class="n">ids</span> <span class="k">for</span> <span class="n">enc</span> <span class="ow">in</span> <span class="n">encs</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">all_ids</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Tokenize the train, validation and test sets in the same manner. Also extract the labels for train and validation sets. Note  till now we do not conduct cross-validation since for an effective model using XLM architecture, it requires an average training time of 75 minutes. Therefore, performing k-fold CV will exceed the time limit on Kaggle (less than 3 hours for a TPU commit).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">time</span>
+<span class="c1">## tokenization
+</span><span class="n">x_train</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">comment_text</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="n">x_valid</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">valid</span><span class="p">.</span><span class="n">comment_text</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="nf">fast_encode</span><span class="p">(</span><span class="n">test</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">fast_tokenizer</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+<span class="c1">## Extract the labels
+</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">toxic</span><span class="p">.</span><span class="n">values</span>
+<span class="n">y_valid</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">toxic</span><span class="p">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<p><strong>Build the <code class="language-plaintext highlighter-rouge">Dataset</code> objects</strong> for fast data fetching</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">repeat</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">shuffle</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">valid_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">((</span><span class="n">x_valid</span><span class="p">,</span> <span class="n">y_valid</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">cache</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span>
+    <span class="p">.</span><span class="nf">from_tensor_slices</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>We then build the BERT model and the model structure is as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">time</span>
+<span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="sh">'</span><span class="s">binary_crossentropy</span><span class="sh">'</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="n">input_word_ids</span> <span class="o">=</span> <span class="nc">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">max_len</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">input_word_ids</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">sequence_output</span> <span class="o">=</span> <span class="nf">transformer</span><span class="p">(</span><span class="n">input_word_ids</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># extract the vector for [CLS] token
+</span>    <span class="n">cls_token</span> <span class="o">=</span> <span class="n">sequence_output</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.35</span><span class="p">)(</span><span class="n">cls_token</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">sigmoid</span><span class="sh">'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="nc">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_word_ids</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="nc">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span> <span class="n">loss</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="nc">AUC</span><span class="p">()])</span>
+    
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">with</span> <span class="n">strategy</span><span class="p">.</span><span class="nf">scope</span><span class="p">():</span>
+    <span class="n">transformer_layer</span> <span class="o">=</span> <span class="n">transformers</span><span class="p">.</span><span class="n">TFBertModel</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="n">MODEL</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">transformer_layer</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/model_summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Model structure</figcaption>
+</div>
+
+<p>We pass the <code class="language-plaintext highlighter-rouge">Dataset</code> object into the model and start training.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_steps</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">BATCH_SIZE</span>
+<span class="n">train_history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span>
+    <span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="n">valid_dataset</span><span class="p">,</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now that the model is trained. We can visualize the training history using the following function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="k">def</span> <span class="nf">plot_loss</span><span class="p">(</span><span class="n">his</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span><span class="sh">'</span><span class="s">ggplot</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">epoch</span><span class="p">),</span> <span class="n">his</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">train_loss</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">epoch</span><span class="p">),</span> <span class="n">his</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Epoch #</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="sh">'</span><span class="s">upper right</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+<span class="nf">plot_loss</span><span class="p">(</span><span class="n">train_history</span><span class="p">,</span> <span class="n">EPOCHS</span><span class="p">,</span> <span class="sh">"</span><span class="s">training loss</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/training_loss_history.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>History of training and validation losses. </figcaption>
+</div>
+
+<p>The training history shows that although there is a bump from Epoch 5 to Epoch 6 for the validation loss, the overall loss for both train and validation decreases gradually.</p>
+
+<p>Also, we can look at the distributions of the prediction probabilities on the validation set. It indicates that if the predicted probability is below 0.3, the comment is more likely to be non-toxic. In contrast, a probability of above 0.6 will predict toxic for the comment. In the probability region between those two, there is some overlap, which means it is challenging to predict the nature of the comment if it falls into this intermediate region.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/pred_prob.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>History of predicted probabilities on validation set. </figcaption>
+</div>
+
+<h2 id="model-refinement"><a href="#model-refinement" name="model-refinement">Model Refinement</a></h2>
+
+<p>Next we will discussion various techniques to improve the model performance.</p>
+
+<h3 id="model-architectures">Model Architectures</h3>
+
+<p>The model architecture is mainly associated with the “Multilingual Issue”. Since different architectures are pre-trained on varying size dataset and targeted on different semi-unsupervised tasks, their capability of mining cross-lingual knowledge is different.</p>
+
+<p>The Basic BERT model performs not too bad on this multilingual task, which has a public LB score of around 0.916. As we mentioned in the second blog, the most successful multilingual model is probably the XLM-RoBERTa model, especially the large XLM-R model. The large XLM-R model has more than 500 million parameters, and it demonstrates to be superior to other language models in multilingual modeling. With XLM-R architecture, our baseline LB score goes up to 0.9365, a significant improvement compared to BERT.</p>
+
+<h3 id="hyperparameter-tuning">Hyperparameter Tuning</h3>
+
+<p>The hyperparameter tuning aims to the resolve the “Data Size Issue” and “Unbalance Issue”. However, we are not able to tune too many hyperparameters due to such a limited time for this final project. 
+Instead, I will elaborate the techniques I tried and the reasoning.</p>
+
+<ul>
+  <li>
+    <p>Adjust the maximum length for the input vector sequence. I tried lengths of 150, 192, 210, and 224. 224 maximum length gives the best LB score of 0.9378.</p>
+  </li>
+  <li>
+    <p>Change the data size of training set. Only a fraction of the training data corresponding to non-toxic comments is selected. It was found that sub-sampling the non-toxic comments help a lot in balancing the dataset. It 
+increases the LB score to 0.9401 with the best maximum length.</p>
+  </li>
+  <li>
+    <p>Tweak the loss function. The most typical loss function for a binary classification problem is the <code class="language-plaintext highlighter-rouge">binary_crossentropy</code> as implemented in <code class="language-plaintext highlighter-rouge">Tensorflow</code>. Yet, a great work by <a href="https://arxiv.org/pdf/1708.02002.pdf">Lin et.al</a> proves that a novel loss they term “Focal Loss” that adds a pre-factor to the standard cross entropy criterion can boost the model accuracy. The name “focal” comes from the fact that the model now pays less attention to the well classified samples while putting more focus on hard, misclassified examples. A weighting factor is also introduced to mitigate the class unbalance issue. The figure below shows why Focal loss focuses more on the misclassified data. Unfortunately, models with focal loss perform similarly compared to the standard binary cross entropy.</p>
+  </li>
+</ul>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/focal_loss.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Focal Loss trend with different hyperparameters. Source:
+    <a href="https://arxiv.org/pdf/1708.02002.pdf">focal loss</a></figcaption>
+</div>
+
+<ul>
+  <li>Other random efforts. We add an additional dense layer and a dropout layer right ahead of the final layer. Then the dropout rate and the number of nodes in the dense layer are tuned. Although the model does not improve a lot in terms of the validation accuracy and the LB score, we believe that it will be helpful because adding regularization into a model will increase the generalization capability on unseen data. Moreover, I also tried a learning rate scheduler. However, no significant improvement was observed.</li>
+</ul>
+
+<h3 id="data-augmentation">Data Augmentation</h3>
+
+<p>This strategy is of central importance as in the training data we only have English-written comments while in the validation and test set, we have comments written in other languages. Although the multilingual model can capture some of the shared knowledge between various languages, data augmentation is necessary to improve the model performance. As of now, two approaches are tested.</p>
+
+<ul>
+  <li>
+    <p>Translate the training set to other languages and keep the validation and test set unchanged. This approach gives me a best LB score of 0.9365.</p>
+  </li>
+  <li>
+    <p>Translate the validation and test set to English. This model performs a little better, with a LB score of 0.9378.</p>
+  </li>
+</ul>
+
+<h3 id="ensemble-magic">Ensemble Magic</h3>
+
+<p>I did weighted ensemble on four models. The LB score for individual models are 0.9427, 0.9416, 0.9401 and 0.9365, respectively. By carefully tuning the weights, I arrived at a LB score of 0.9453.</p>
+
+<p>Further combining my own best submission with public top-score submissions, I am able to achieve a Public LB score of 0.9476, which leads to a top 5% position out of more than 800 teams. The following snapshot for the Public ranking is taken on May 6th.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/final-blog/pub_lb.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Snapshot of the public leaderboard, taken on May 6th, 2020. </figcaption>
+</div>
+
+<h3 id="next-steps">Next steps</h3>
+
+<ul>
+  <li>
+    <p>Metric learning: post process the prediction to further improve the ranking on public leaderboard.</p>
+  </li>
+  <li>
+    <p>Transfer learning: using the trained model for other purposes such as predicting the state of a reddit post, which can be mainly categorized as upvote and downvote.</p>
+  </li>
+</ul>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>Jay Alammer. (2019, November 26). <em>A Visual Guide to Using BERT for the First Time</em>. Retrieved from <a href="https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb">BERT notebook</a>. The vivid figures for illustration of key components in a language model are taken from this awesome blog.</p>
+  </li>
+  <li>
+    <p>Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2019. This is the original paper for the basic BERT model.</p>
+  </li>
+  <li>
+    <p>Tsung-Yi Lin et al. Focal Loss for Dense Object Detection. 2017. This paper introduces the idea of using <em>Focal Loss</em> to make the model focus more on those misclassified images.</p>
+  </li>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Use TPUs to identify toxicity comments across multiple languages]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification - Midway Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification - Midway Blog" /><published>2020-04-26T00:00:00+00:00</published><updated>2020-04-26T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html"><![CDATA[<p>This blog is the second of the three blogs documenting my entry into <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. To move forward, the primary purpose of the next step is to develop the baseline model from scratch. The link is provided in the <a href="https://github.com/cengc13/2040FinalProject/blob/master/src/models/logistic_regression.ipynb">notebook for the model</a> or <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS">running it on colab</a>. The essential components of a language model are summarized, including the tokenizer, the model architecture, and the evaluation metrics. In addition, we will cover some state-of-the-art multilingual models, such as BERT, XLM and XLM-RoBERT.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="https://www.topbots.com/wp-content/uploads/2019/02/NLP_feature_image_1600px-1280x640.jpg" width="600px" />
+  <br />
+  <figcaption>Natural Language Processing. Image source:
+    <a href="https://venturebeat.com/2018/09/29/investing-in-ai-when-natural-language-processing-pays-off/">Investing in AI</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[Part 1: The Baseline Model](#part-1-baseline-model)**
+  * Dataset
+  * Tokenizer
+  * The Model
+* **[Part 2: Cross-lingual Modeling](#part-2-multilingual-models)**
+  * BERT and its Variants
+  * XLM
+  * XLM-RoBERTa
+
+</div> -->
+
+<h2 id="the-baseline-model-"><a href="#part-1-baseline-model" name="part-1-baseline-model">The Baseline Model </a></h2>
+
+<p>Our goal is to take a comment text as input, and produces either 1(the comment is toxic) or 0 (the comment is non-toxic). It is basically a binary classification problem. The simplest model we can think of is the logistic regression model, for which we need to figure out how to digitalize comments so that we can use logistic regression to predict the probabilities of a comment being toxic. Next we will do a quick overview of the dataset, introduce the concepts of tokenizer, and go over the architecture of a baseline model.</p>
+
+<h3 id="dataset-jigsaw-multilingual-comments">Dataset: Jigsaw Multilingual Comments</h3>
+
+<p>The dataset we will use, as mentioned in the first blog, is from the Kaggle competition <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">Jigsaw Multilingual Toxic Analysis</a>, which contains the comment texts and its toxicity labels, indicating whether the comment text is disrespectful, rude or insulting.</p>
+
+<table class="features-table">
+  <tr>
+    <th class="mdc-text-light-green-600">
+    Comment
+    </th>
+    <th class="mdc-text-purple-600">
+    Toxic
+    </th>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      This is so cool. It's like, 'would you want your mother to read this??' Really great idea, well done!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      Thank you!! This would make my life a lot less anxiety-inducing. Keep it up, and don't let anyone get in your way!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      This is such an urgent design problem; kudos to you for taking it on. Very impressive!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      haha you guys are a bunch of losers.
+    </td>
+    <td class="mdc-bg-purple-50">
+      1
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      Is this something I'll be able to install on my site? When will you be releasing it?
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+</table>
+
+<p>We can load the dataset with <code class="language-plaintext highlighter-rouge">pandas</code>. Then we split the dataset to train and test sets in a stratified fashion as the dataset is highly unbalanced.
+The splitting ratio is 8:2.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">"</span><span class="s">./jigsaw-toxic-comment-train.csv</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">comment_text</span><span class="p">,</span> <span class="n">train</span><span class="p">.</span><span class="n">toxic</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="nf">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">y_test</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="tokenizer">Tokenizer</h3>
+
+<p>A tokenizer works as a pipeline. It processes some raw text as input and output encoding. It is usually structured into three steps. Here we illustrate the idea of tokenization by the example provided in the blog <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">“A Visual Guide to Using BERT for the First Time”</a>. For instance, if we would like to classify the sentence ““a visually stunning rumination on love”, the tokenizer will firstly split the sentences into words with some separator, say whitespace. In the next step, special tokens will be added for sentence classifications for some tokenizers.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-1.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 1 and 2 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 1 and 2</a></figcaption>
+</div>
+
+<p>The final step is to replace each token with its numeric id from the embedding table, which is a natural component of a pre-trained model. Then the sentence is ready to be sent for a language model to be processed.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-2-token-ids.png" width="800px" />
+  <br />
+  <figcaption>Tokenization: step 3 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/">Tokenization step 3</a></figcaption>
+</div>
+
+<p>For the purpose of demonstration, in the baseline model, we will use a classic tokenization method <code class="language-plaintext highlighter-rouge">TF-IDF</code>, which is short for “term frequency-inverse document frequency”. Basically it counts the number of occurrence of a word in the documents, and then it is offset by the number of documents that contain the word. This tokenization approach is available in the package <code class="language-plaintext highlighter-rouge">sklearn</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">### Define the vectorizer
+</span><span class="kn">from</span> <span class="n">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="nc">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="c1">### Suppose X_train is a corpus of texts
+## Fit the vectorizer
+</span><span class="n">X_train_fitted</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_fitted</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In addition, <a href="https://huggingface.co/">HUGGING FACE</a> provides a open-source package, named <code class="language-plaintext highlighter-rouge">tokenizer</code>, where you can find many fast state-of-the-art tokenizers for research and production. For example, to implement a pre-trained DistilBERT tokenizer and model/transformer, you just need two-line codes as follows</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">transformers</span> <span class="k">as</span> <span class="n">ppb</span>
+<span class="c1"># For DistilBERT:
+</span><span class="n">tokenizer_class</span><span class="p">,</span> <span class="n">pretrained_weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">ppb</span><span class="p">.</span><span class="n">DistilBertTokenizer</span><span class="p">,</span> <span class="sh">'</span><span class="s">distilbert-base-uncased</span><span class="sh">'</span><span class="p">)</span>
+<span class="c1"># load pretrained tokenizer
+</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer_class</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="n">pretrained_weights</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After tokenization, we can build a model and train it with the tokenized comments.</p>
+
+<h3 id="the-model">The Model</h3>
+
+<p>We define the simplest binary classification model with logistic regression.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="c1"># C is a term to control the l2 regularization strength
+</span><span class="n">model_lr</span> <span class="o">=</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">6.0</span><span class="p">)</span>
+</code></pre></div></div>
+<p>If you want to optimize the hyperparameter <code class="language-plaintext highlighter-rouge">C</code>, you can do a simple grid search.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">C</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)}</span>
+<span class="n">grid_search</span> <span class="o">=</span> <span class="nc">GridSearchCV</span><span class="p">(</span><span class="nc">LogisticRegression</span><span class="p">(),</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">grid_search</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_fitted</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best parameters: </span><span class="sh">'</span><span class="p">,</span> <span class="n">grid_search</span><span class="p">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best scrores: </span><span class="sh">'</span><span class="p">,</span> <span class="n">grid_search</span><span class="p">.</span><span class="n">best_score_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We train and evaluate the model by the prediction accuracy. 
+<strong>Note</strong> the official metric for this competition is <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/overview/evaluation">ROC-AUC</a>, which is more reasonable for a highly unbalanced dataset.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## training
+</span><span class="n">model_lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_fitted</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="c1">## prediction on testing set
+</span><span class="n">model_lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">X_test_fitted</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note that Tfi-df tokenization is not capable of dealing with multiple languages. Instead we should refer to other tokenizers, for example a BERT tokenizer. The example using <code class="language-plaintext highlighter-rouge">bert-base-uncase</code> model and tokenizer can be found in this <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX">colab notebook</a>.</p>
+
+<h2 id="cross-lingual-models-"><a href="#part-2-multilingual-models" name="part-2-multilingual-models">Cross-lingual Models </a></h2>
+
+<h3 id="bert">BERT</h3>
+
+<p><strong>BERT</strong>, which stands for <strong>B</strong>idirectional <strong>E</strong>ncoder <strong>R</strong>epresentations from <strong>T</strong>ransformers, have achieved great success in Natural Language Processing. In contrast with previous language models looking at a text sequence from left to right, the innovation of BERT lies in that it is designed to train bidirectional representation by jointly conditioning on both the left and right context. The following figure shows a high-level description of the BERT architecture. It is essentially a stack of Transformer encoders. The input is a ‘sentence’ which is tokenized and word-embedded with a 30,000 token vocabulary. The output is a sequence of vectors, for which each vector represents an input token with the same index.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT_MLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Schematic for the Masked Language Modeling in BERT. Source:
+  	<a href="https://towardsdatascience.com/bert-explained-state-of-the-art-language-model-for-nlp-f8b21a9b6270">MLM</a></figcaption>
+</div>
+
+<p>It is natural that a language model typically looks at part of the sentence and predict the next words. However, it is challenging to define prediction tasks when we look at the sentence bidirectionally.</p>
+
+<p>The authors of the <a href="https://arxiv.org/pdf/1810.04805.pdf">original paper</a> uses two pretraining techniques to overcome this issue. They are both unsupervised approaches, namely masked language modeling (MLM) and next sentence prediction (NSP).</p>
+
+<h4 id="masked-language-modeling">Masked Language Modeling</h4>
+
+<p>15% of the words in a sentence are masked with a [MASK] token. Then the model tries to predict the original tokens in the masked positions. In practice, BERT implemented a more statistically mask scheme. For more details, please refer to the <a href="https://arxiv.org/pdf/1810.04805.pdf">Appendix C</a></p>
+
+<h4 id="next-sentence-prediction-nsp">Next Sentence Prediction (NSP)</h4>
+
+<p>In BERT, the model can take two sentences as input, and learned to predict if the second sentence of the pair sentences is the subsequent or antecedent. During pretraining, for 50% of the pair sentences, the second sentence is the actual next sentence, whereas for the rest 50%, the second sentence is randomly chosen, which is supposed to be disconnected from the first sentence.</p>
+
+<p>The pretraining is conducted on documents from BooksCorpus and English Wikipedia. In this scenario, a document-level corpus is used to extract long sequences.</p>
+
+<h4 id="fine-tuning">Fine tuning</h4>
+
+<p>The fine tuning process refers to using the pretrained BERT to do a downstream task. The process is straightforward and task specific. The architecture is the same except the output layers. Although during fine-tuning, all parameters are fine-tuned, it turns out that most parameters will stay the same.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Overall pre-training and fine-tuning procedures for BERT. Source:<a href="https://arxiv.org/pdf/1810.04805.pdf">BERT</a> </figcaption>
+</div>
+
+<p>In order to get a in-depth understanding of this technique, we highly recommend reading the  <a href="https://arxiv.org/pdf/1810.04805.pdf">paper</a>, or the <a href="https://github.com/google-research/bert">open source code</a> by Google research.</p>
+
+<h3 id="xlm">XLM</h3>
+
+<p>Though BERT is trained on over 100 languages, it was not optimized for multilingual models since most of its vocabulary does not commute between languages, and as a result, the knowledge shared is limited. To overcome this issue, instead of using word or characters as input, XLM uses Byte-Pair Encoding (BPE) that splits the input into the most common sub-words across all languages (see <a href="https://en.wikipedia.org/wiki/Byte_pair_encoding">BPE wiki page</a> for more details about this data compression technique).</p>
+
+<p>Intrinsically XLM is a updated BERT techniques. It updates BERT architecture in two ways.</p>
+
+<ul>
+  <li>
+    <p>Each training sample consists of the same text in two languages. To predict a masked word in one language, the model can either attend to surrounding words in the same language or the other language. In this way, alignment between contexts of the two languages can be facilitated.</p>
+  </li>
+  <li>
+    <p>The model also uses language IDs and the order of the tokens in the format of positional embeddings to better understand the relationship of related tokens in various languages.</p>
+  </li>
+</ul>
+
+<p>This new approach is named as Translation Language Modeling (TLM). The model pretraining is carried out as the following schematic representation.</p>
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/XLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Cross-lingual language model pretraining. Source:<a href="https://arxiv.org/pdf/1901.07291.pdf">XLM</a></figcaption>
+</div>
+
+<p>The model is trained by using MLM, TLM or a combination of both.</p>
+
+<h3 id="xlm-roberta">XLM-RoBERTa</h3>
+
+<p>Similar to XLM, XLM-RoBERTa is also a transformer-based architecture, both relied on MLM and are capable of processing texts across 100 languages. However, the biggest update is that the new architecture is trained on way more data than the original one, i.e. 2.5 TB storage. And the ‘RoBERTa’ comes from that the training is the same as the monolingual RoBERTa model, for which the sole objective is the MLM, without NSP and TLM. COnsidering the diffuculties of using various tokenization tools for different languages, Sentence Piece model is trained at the first step and then it is applied to all languages. The XLM-RoBERTa model has demonstrated to be superior than the state-of-the-art multilingual models such as GermEval18.</p>
+
+<p><strong>Note</strong> that all the pretrained models mentioned above can be easily called by using Huggingface packages.</p>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>T. Kudo and J. Richardson. SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing. 2018. This is a paper discussing various tokenization techniques.</p>
+  </li>
+  <li>
+    <p>Alexis Conneau and Kartikay Khandelwal et.al. Unsupervised Cross-lingual Representation Learning at Scale. 2020.The XLM-RoBERTa model originates from this paper.</p>
+  </li>
+  <li>
+    <p>Guillaume Lample and Alexis Conneau. Cross-lingual Language Model Pretraining. 2019. This paper is the first work using the XLM architecture for language modeling.</p>
+  </li>
+  <li>
+    <p>Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2019. This is the original paper for BERT architecture.</p>
+  </li>
+  <li>
+    <p>Jay Alammer. (2019, November 26). <em>A Visual Guide to Using BERT for the First Time</em>. Retrieved from <a href="https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb">BERT notebook</a>. The vivid figures for illustration of key components in a language model are taken from this awesome blog.</p>
+  </li>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Use TPUs to identify toxicity comments across multiple languages]]></summary></entry><entry><title type="html">Jigsaw Multilingual Toxic Comment Classification - Start Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html" rel="alternate" type="text/html" title="Jigsaw Multilingual Toxic Comment Classification - Start Blog" /><published>2020-04-12T00:00:00+00:00</published><updated>2020-04-12T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/04/12/kaggle-jigsaw-start-blog.html"><![CDATA[<p>This is the first of three blogs documenting my entry into the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">toxic comment classification kaggle competition</a>. It is a natural language processing (NLP) task. I chose this topic as the final project because NLP is a very hot topic nowadays and I am new to this area. I hope to take advantages of this opportunity to learn more about deep learning targeted towards the state-of-art application in NLP.</p>
+
+<p>In the first blog, I walk you through an overview of the competition, the exploratory data analysis, and  the basics of language models for this project.</p>
+
+<!-- <center><img src="https://i.imgur.com/4WNesOq.png" width="400px"></center> -->
+
+<div class="img-div" style="text-align:center">
+  <image src="https://i.imgur.com/4WNesOq.png" width="400px" />
+  <br />
+  <figcaption>Competition Logo. Source:
+    <a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge">Logo</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[Part 1: Introduction](#part-1-introduction-and-background)**
+  * Background & Motivation
+  * Description of The Competition
+  * Evaluation Metrics and Submission Requirements
+* **[Part 2: Data Exploration](#part-2-eda)**
+  * Dataset
+  * Preprocessing
+  * Exploratory data analysis
+* **[Part 3: Basics of Language Models](#part-3-basics-of-language-models)**
+  * What is a Language Model?
+  * Word Embeddings
+  * Attention
+
+</div> -->
+
+<h2 id="introduction-"><a href="#part-1-introduction-and-background" name="part-1-introduction-and-background">Introduction </a></h2>
+
+<h3 id="background--motivation">Background &amp; Motivation</h3>
+<p>Thanks to the rapid development of deep learning techniques and computational hardwares, NLP has been gaining its momentum in the past two decades. As believed by machine learning experts, NLP is experiencing a boom in the short-term future, same as computer vision once did. The popularity of it brought a great amount of investment. Recently Kaggle released two NLP competitions (<a href="https://www.kaggle.com/c/tweet-sentiment-extraction">tweet sentiment extraction</a> and <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification">comment toxicity analysis</a>). Of focus here is the second one because it is based off two previous Kaggle competitions regarding the same topic (<a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge">2018 toxicity</a> and <a href="https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification">2019 toxicity</a>). For the very first competion, contestants are challenged to buld multi-headed models to recognize toxicity and several subtypes of toxicity. <em>Toxicity is defined as anything rude, disrespectful or other wise likely to make someone leave a discussion</em>. The 2019 Challenges asks Kagglers to work across a diverse range of conversations. The main purpose of this final project is to understand the basics of deep learning techniques applied to NLP. So it would be more doable to work on a project in such a limited time for which there exist many established references/documents.</p>
+
+<h3 id="description-of-the-competition">Description of The Competition</h3>
+<p>Taking advantage of Kaggle’s TPU support, this competition aims to build multilingual models with English-only training data. The model will be tested on Wikipedia talk page comments in several different languages. It is supported by The Conversation AI team, which is funded by <a href="https://jigsaw.google.com/">Jiasaw</a> and Google.</p>
+
+<h3 id="evaluation-metrics-and-submission-requirements">Evaluation Metrics and Submission Requirements</h3>
+<p>Basically it is a classification problem. The model performance is evaluated by the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">area under the ROC curve</a> between the predictions and the observations.</p>
+
+<p>The submission file consists of two columns. The first column indicates the comment <code class="language-plaintext highlighter-rouge">id</code> and the second one is the probability for the <code class="language-plaintext highlighter-rouge">toxicity</code> variable. Following is a sample submission file.</p>
+
+<table class="features-table">
+  <tr>
+    <th class="mdc-text-light-green-600">
+    id
+    </th>
+    <th class="mdc-text-purple-600">
+    toxic
+    </th>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      0
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.3
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      1
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.7
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+     2
+    </td>
+    <td class="mdc-bg-purple-50">
+      0.9
+    </td>
+  </tr>
+</table>
+
+<p>In addition to the well defined metrics evaluated on the given testing set. We might also want to further apply the language model to additional applications. For example,</p>
+
+<ul>
+  <li>
+    <p>As mentioned before, there is another NLP competition on Kaggle, which challenges contestants to analyze the tweet sentiment. Basically there are three types of sentiment, including <em>neural</em>, <em>negative</em> and <em>positive</em>.</p>
+  </li>
+  <li>
+    <p>Another possible application is to scrape comments from some social media, say “reddit”, and predict whether the comment will receive upvote, downvote or be removed.</p>
+  </li>
+</ul>
+
+<h2 id="data-exploration-"><a href="#part-2-eda" name="part-2-eda">Data Exploration </a></h2>
+
+<h3 id="dataset">Dataset</h3>
+<p>Following is the list of the datasets we have for this project. The primary data is the <code class="language-plaintext highlighter-rouge">comment_text</code> column which contains the text of comment to be classified as toxic or non-toxic (0…1 in the <code class="language-plaintext highlighter-rouge">toxic</code> column). The trainingset’s comments are mostly written in English whereas the validation and testing sets’ comments are composed of multiple non-English languages. A detailed explanation of the dataset can be found on the <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/data">competition web page</a></p>
+
+<!-- <div class="img-div" markdown="0" style="text-align:center">
+  <image src="/assets/img/kaggle-jigsaw/starter-blog/datasets.png"/>
+  <br />
+</div> -->
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/train_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="training data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the training set</figcaption>
+</div>
+
+<p><br /></p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="validation data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the validation set</figcaption>
+</div>
+
+<p>Below shows the five top rows of the training set, validation set and testing set. There are mainly four columns for all datasets, in which <code class="language-plaintext highlighter-rouge">id</code> is the identifier, <code class="language-plaintext highlighter-rouge">commen_text</code> is the text of comment, <code class="language-plaintext highlighter-rouge">lang</code> is the language of the comment, and <code class="language-plaintext highlighter-rouge">toxic</code> is whether or not the comment is toxic. In the training set, we can see 5 additional columns which represent the subtypes of toxic comment. Moreover, we do not have the <code class="language-plaintext highlighter-rouge">toxic</code> column in the testing set.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_header.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="test data header" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Top five rows of the testing set</figcaption>
+</div>
+
+<p>As mentioned before, most comments in the training set are in English while most comments in validation and testing set are in Non-English, including Spanish, French, Turkish and Portuguese etc. The number for all types of languages in validation and test set are summarized at below.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/validation_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Language-specific data counts in the validation set</figcaption>
+</div>
+
+<p><br /></p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/test_languages.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <br />
+  <figcaption>Language counts in the test set</figcaption>
+</div>
+
+<h3 id="preprocessing">Preprocessing</h3>
+<p>We can do a few data preprocessing steps before feeding the data into a language model.</p>
+
+<ul>
+  <li>
+    <p>Clean up the comment texts by dropping redundant information, such as usernames, emails, hyperlinks and line breakers.</p>
+  </li>
+  <li>
+    <p>Remove unnecessary columns in the trainingset such as the subtypes of toxicity because the target for submission is only the <code class="language-plaintext highlighter-rouge">toxic</code>.</p>
+  </li>
+  <li>
+    <p>Tokenize the words, which can be also considered as a step for building up a model.</p>
+  </li>
+</ul>
+
+<h3 id="exploratory-data-analysis-eda">Exploratory data analysis (EDA)</h3>
+
+<p><strong>Note that</strong> the analysis for “wordcloud” is  inspired by this kernel <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models">EDA and Modeling Kernel</a>.</p>
+
+<h4 id="comment-wordcloud">Comment Wordcloud</h4>
+<p>Firstly we take a look at the comments in the training set.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+</div>
+
+<p>The most common words include “Wikipedia”, “article”, “will” and “see”.</p>
+
+<p>Another plot in the following shows the wordcloud for common words in the toxic comments.</p>
+
+<blockquote class="block-warning">
+  <h5 id="warning">WARNING</h5>
+
+  <p>The following figure contains text that may be considered profane, vulgar, or offensive.</p>
+</blockquote>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/toxic_wordcloud.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+</div>
+
+<p>As expected, there exist more insulting or hateful words, such as “die” and “pig”.</p>
+
+<h4 id="histograms-of-number-of-words-and-sentences-in-all-comments">Histograms of number of words and sentences in all comments</h4>
+
+<p>The figure below shows the distribution for number of words in all comments. One can see that the distribution is right-skewed, and it is peaked at 13 words per comment.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_words.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Histogram of # words</figcaption>
+</div>
+
+<h4 id="histogram-of-number-of-sentences-in-all-comments">Histogram of number of sentences in all comments</h4>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/comment_sentences.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Histogram of # sentences</figcaption>
+</div>
+
+<p>The distribution for number of sentences is also right skewed.</p>
+
+<h4 id="balance-of-training-set">Balance of training set</h4>
+
+<p>This bar plot indicates that the balance of the dataset is about 90%. The dataset is hence highly unbalanced.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/starter-blog/balance.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Counts of toxic and non-toxic comments</figcaption>
+</div>
+
+<h2 id="basics-of-language-models-"><a href="#part-3-basics-of-language-models" name="part-3-basics-of-language-models">Basics of Language Models </a></h2>
+
+<h3 id="what-is-a-language-model">What is a Language Model?</h3>
+<p>A language model is basically a machine learning model that looks at part of a sentence and is able to predict the next one, such as next word recommendation for cellphone keyboard typing.</p>
+
+<p>Statistically, a language model is a probability distribution over sequence of words. Most language models rely on the basic assumption that the probability of a word only depends on the previous <em>n</em> words, which is known as the <em>n</em>-gram model. Language models are useful in many scenarios such speech recognition, parsing and information retrieval. Please refer to the <a href="https://en.wikipedia.org/wiki/Language_model">Wiki  page</a> for more information.</p>
+
+<h3 id="word-embeddings">Word Embeddings</h3>
+<p>Word embedding is a type of word representation that allows words with similar meaning to have a similar representation. It is a groundbreaking progress for developing high-performance deep learning models for NLP. The intuitive approach to word representation is the <strong>one-hot</strong> encoding. To represent each word, we create a zero vector with length equal to the vocabulary. Then one is placed in the index that corresponds to the word. In that sense, we will create a sparse vector. An alternative approach is to encode each word with a unique number so that the resulting vector is short and dense. However, the way how each word is encoded is arbitrary, and we do not know the relationship between the words. Here comes the technique of <strong>word embeddings</strong>. In this scenario, we do not have to specify the encoding by hand. Instead of manually defining the embedding vector, the values of the vector are trained in the same way a model learns weights of a dense layer. A high-dimensional embedding can capture fine relationships between words.</p>
+
+<h3 id="attention">Attention</h3>
+
+<p>The key idea of Attention is to focus on the most relevant parts of the input sequence as needed. It provides a direct path to the inputs. So it also alleviates the vanishing gradient issue. This significantly improves the model performance when confronting with long sentence analysis.</p>
+
+<p>For a typical language model, it is composed of an encoder and a decoder.
+The encoder processes each item in the input sequence, and then compile the transformed information into a vector. After processing the entire input sequence, the encoder send the context to the decoder for the next step. Both the encoder and decoder are intrinsically recurrent nueral networks (RNN) which processes the input vector and previous hidden state, and produces the next-step hidden state and output at that time step.</p>
+
+<p>At a high level of abstraction, an attention model differs in two main ways. Firstly, instead of passing only the last hidden state at the encoder side, the attention model holds all the hidden states and passes all hidden state to the decoder. Secondly, in the decoder side it does one more step before calculating its output. The basic idea is that each hidden state produced at the encoder side is associated with a certain word in the input sequence, thus we can assign a score to each hidden state and use that to amplify the word with high score and drown out words with low scores. A illustrative and comprehensive tutorial of an attention model can be found in the blog <a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">visualizing a neural machine translation model</a>.</p>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>Tarun Paparaju. (2020, March). <em>Jigsaw Multilingual Toxicity : EDA + Models</em>. Retrieved from <a href="https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models">https://www.kaggle.com/tarunpaparaju/jigsaw-multilingual-toxicity-eda-models</a>. The function for plotting the WordCloud is adapted from this kernel.</p>
+  </li>
+  <li>
+    <p>Jay Alammer. (2018, May 9). <em>Visualizing A Neural Machine Translation Model</em>. Retrieved from <a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/</a>.  Some explanation for <strong>attention</strong> comes from this blog.</p>
+  </li>
+  <li>
+    <p>Barry Clark. (2016, March). <em>Build a Jekyll blog in minutes, without touching the command line</em>. Retrieved from <a href="https://github.com/barryclark/jekyll-now">https://github.com/barryclark/jekyll-now</a>.This site offers the github page template using <code class="language-plaintext highlighter-rouge">Jekyll</code>.</p>
+  </li>
+  <li>
+    <p>Jason Brownlee. (2017, October 11). <em>What Are Word Embeddings for Text?</em> Retrieved from <a href="https://machinelearningmastery.com/what-are-word-embeddings/">https://machinelearningmastery.com/what-are-word-embeddings/</a>. This site provides some examples to explain the idea of <strong>word embedding</strong>.</p>
+  </li>
+  <li>
+    <p>Mohammed Terry-Jack. (2019, April 21). <em>NLP: Everything about Embeddings</em>. Retrieved from <a href="https://medium.com/@b.terryjack/nlp-everything-about-word-embeddings-9ea21f51ccfe">https://medium.com/@b.terryjack/nlp-everything-about-word-embeddings-9ea21f51ccfe</a>. More explanation about the word embedding can be found in this Medium blog.</p>
+  </li>
+  <li>
+    <p>Anusha Lihala. (2019, March 29). <em>Attention and its Different Forms</em>. Retrieved from <a href="https://towardsdatascience.com/attention-and-its-different-forms-7fc3674d14dc">https://towardsdatascience.com/attention-and-its-different-forms-7fc3674d14dc</a>. The original attention and its variants are detailed and compared in this Medium blog.</p>
+  </li>
+  <li>
+    <p>Sean Robertson. (2017). <em>NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTION</em>. Retrieved from <a href="https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html">https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html</a>. Code implementation in the framework of <code class="language-plaintext highlighter-rouge">PyTorch</code> is discussed in this web page.</p>
+  </li>
+</ul>]]></content><author><name></name></author><category term="kaggle" /><category term="nlp" /><category term="data-science" /><summary type="html"><![CDATA[Use TPUs to identify toxicity comments across multiple languages]]></summary></entry><entry><title type="html">Bengali.AI Handwritten Grapheme Classification - Final Blog</title><link href="http://0.0.0.0:8080/website/kaggle/2020/03/03/kaggle-bengali-final.html" rel="alternate" type="text/html" title="Bengali.AI Handwritten Grapheme Classification - Final Blog" /><published>2020-03-03T00:00:00+00:00</published><updated>2020-03-03T00:00:00+00:00</updated><id>http://0.0.0.0:8080/website/kaggle/2020/03/03/kaggle-bengali-final</id><content type="html" xml:base="http://0.0.0.0:8080/website/kaggle/2020/03/03/kaggle-bengali-final.html"><![CDATA[<!-- En-Dash         &ndash;    &#150;
+Em-Dash         &mdash;    &#151;
+Minus Symbol    &minus;    &#8722; -->
+
+<p><strong>Team: Zzz…</strong></p>
+
+<p><strong>Members: Cheng Zeng, Zhi Wang, Peter Huang</strong></p>
+
+<h2 id="model-evaluation">Model evaluation</h2>
+
+<p>All the desnet 121 details already explained at Midway Blog.
+With all the transformed training data, we fed them into the data generator and trained the model. The training history with 30 epochs was saved and visualized. In the following two plots using one dataset as an example is shown.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/final-blog/training-history.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="History of training and validation loss" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Training and validation loss versus training epochs</figcaption>
+</div>
+
+<p>The first thing we can see is that the loss decreases gradually with the number of epochs, indicative of the absence of overfitting for this model. Another important feature we can tell is that the loss of accuracy almost reaches a plateau when the epoch is up to 30. It suggests that further training for more epochs may not necessarily improve the accuracy of the model.</p>
+
+<h2 id="inference-and-submission">Inference and Submission</h2>
+
+<p>Inference and Submission
+In the first step, we define some parameters, including the original image size and the target image size after preprocessing, the number of channels for input images and the batch dimension for batch submission (A <code class="language-plaintext highlighter-rouge">TestDataGenerator</code> is created for batch submission).</p>
+
+<p>Then we create the submission file by predicting the three constituent components of a Grapheme word.</p>
+
+<p>For the testing images, we merely resized the images to the target size without augmentation. After that, we loaded the two pre-trained models for prediction. We used two models rather than only one because it takes advantage of the idea of ensemble prediction, which indeed pushes the leaderboard score up by about 0.35%.</p>
+
+<p>In the end, we save the prediction results into a file named <code class="language-plaintext highlighter-rouge">submission.csv</code>, as detailed in the competition rules.</p>
+
+<h2 id="approaches-for-model-improvement">Approaches for model improvement</h2>
+
+<h3 id="different-augmentation-methods">Different augmentation methods</h3>
+
+<p>We tried to use more aggressive augmentation methods such as <code class="language-plaintext highlighter-rouge">cutout</code> to mitigate the overfitting issue. It adds improved regularization for the CNN model. It masks out random sections of input images during training. See below for some examples.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/final-blog/example-augmentation.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Image augmentation examples" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+  <figcaption>Example augmentation methods</figcaption>
+</div>
+
+<h3 id="increasing-resolution-of-resized-images">Increasing resolution of resized images</h3>
+
+<p>This can increase the public LB score by as much as 0.01, from around 0.95 to 0.96. The top figure indicates resized images with size 64\(\times\)64, and the bottom plot shows the resized images with size 128\(\times\)128. With a larger input image size, it makes sense that the accuracy is increased since more information is kept. The figure below shows the comparision of four example handwritten grapheme images using 64\(\times\)64 and 128\(\times\)128 resizing.</p>
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-6 mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/final-blog/64by64.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="64x64 resizing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm-6 mt-3 mt-md-0" style="top:0px">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-bengali/final-blog/128by128.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="128x128 resizing" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Example images of 64x64 resizing (Left) and 128x128 resizing (Right)
+</div>
+
+<h3 id="ensembling">Ensembling</h3>
+
+<p>The two single models using <code class="language-plaintext highlighter-rouge">Densenet121</code> architecture with 128\(\times\)128 input size give public leaderboard (LB) scores of 0.9620 and 0.9630. Those two models are only different in the <code class="language-plaintext highlighter-rouge">random_state</code> for training data splitting. If we combine both models, it can lead to a LB of 0.9657, about 0.3% increase.</p>
+
+<h3 id="hyperparameter-tuning">Hyperparameter tuning</h3>
+
+<p>Since the training overall datasets are computationally expensive, we only explored a limited region of the parameter space. We found that these methods do not change the final validation accuracy significantly. We finally used <code class="language-plaintext highlighter-rouge">kernel_size=(3,3)</code>, initial learning rate of 0.001 with the <code class="language-plaintext highlighter-rouge">ReduceLROnPlateau</code> scheduler, and <code class="language-plaintext highlighter-rouge">relu</code> activation function.</p>
+
+<h2 id="the-best-model">The best model</h2>
+
+<p>Till now, the best model we have is the <code class="language-plaintext highlighter-rouge">Densenet121</code> with input image size of 128x128, using a combination of shiftscalerotate and cutout as image augmentation, it gives a LB score of 0.9630. We use two models for prediction and submission on Kaggle, and the LB score is 0.9657, slightly better than a single model. The kaggle entry for the best model is here <a href="https://www.kaggle.com/cengc13/bengali-handwritten-grapheme-inference?scriptVersionId=29454598">Kaggle entry</a>.</p>
+
+<h2 id="future-directions">Future directions</h2>
+
+<p>As we noted when the competition was closed, the number of unique handwritten graphemes (four thousand) is way less than the number of all graphemes (more than ten thousand). It indicates that some graphemes may not be observed in the training set. This probably explains the power of aggressive augmentation in this competition. In light of this analysis, we can use the generative adversarial network (GAN) to make unseen images to further improve the model performance.</p>
+
+<p><strong>Update:</strong> We won a silver medal in this competition, ranked 90\(^{\rm{th}}\) place among 2059 teams :fireworks:.</p>]]></content><author><name></name></author><category term="kaggle" /><category term="computer-vision" /><category term="data-science" /><category term="multiclass-classification" /><summary type="html"><![CDATA[Classify the components of handwritten Bengali]]></summary></entry></feed>

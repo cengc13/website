@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <!-- Metadata, OpenGraph and Schema.org -->
+    
+
+    <!-- Standard metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Jigsaw Multilingual Toxic Comment Classification - Midway Blog | Cheng  Zeng</title>
+    <meta name="author" content="Cheng  Zeng">
+    <meta name="description" content="Use TPUs to identify toxicity comments across multiple languages">
+    <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
+
+
+    <!-- Bootstrap & MDB -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+
+    <!-- Bootstrap Table -->
+    <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
+
+    
+    <!-- Sidebar Table of Contents -->
+    <link href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css" rel="stylesheet">
+    
+
+    <!-- Styles -->
+    
+    <link rel="stylesheet" href="/website/assets/css/main.css">
+    <link rel="canonical" href="http://0.0.0.0:8080/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html">
+
+    <!-- Dark Mode -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark">
+
+    <script src="/website/assets/js/theme.js"></script>
+    <script src="/website/assets/js/dark_mode.js"></script>
+    
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav sticky-bottom-footer">
+
+    <!-- Header -->
+    <header>
+
+      <!-- Nav Bar -->
+      <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+          <a class="navbar-brand title font-weight-lighter" href="/website/"><span class="font-weight-bold">Cheng </span>Zeng</a>
+          <!-- Navbar Toggle -->
+          <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+
+          <div class="collapse navbar-collapse text-right" id="navbarNav">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+
+              <!-- About -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/">About</a>
+              </li>
+              
+              <!-- Blog -->
+              <li class="nav-item active">
+                <a class="nav-link" href="/website/blog/">Blog<span class="sr-only">(current)</span></a>
+              </li>
+
+              <!-- Other pages -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/publications/">Publications</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/projects/">Projects</a>
+              </li>
+
+              <!-- Toogle theme mode -->
+              <li class="toggle-container">
+                <button id="light-toggle" title="Change theme">
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Scrolling Progress Bar -->
+      <progress id="progress" value="0">
+        <div class="progress-container">
+          <span class="progress-bar"></span>
+        </div>
+      </progress>
+    </header>
+
+
+    <!-- Content -->
+    <div class="container mt-5">
+      
+        
+        <div class="row">
+          <!-- sidebar, which will move to the top on a small screen -->
+          <div class="col-sm-3">
+            <nav id="toc-sidebar" class="sticky-top"></nav>
+          </div>
+          <!-- main content area -->
+          <div class="col-sm-9">
+            <!-- _layouts/post.html -->
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Jigsaw Multilingual Toxic Comment Classification - Midway Blog</h1>
+    <p class="post-meta">April 26, 2020</p>
+    <p class="post-tags">
+      <a href="/website/blog/2020"> <i class="fas fa-calendar fa-sm"></i> 2020 </a>
+        ·  
+        <a href="/website/blog/tag/nlp">
+          <i class="fas fa-hashtag fa-sm"></i> nlp</a>  
+          <a href="/website/blog/tag/data-science">
+          <i class="fas fa-hashtag fa-sm"></i> data-science</a>  
+          
+        ·  
+        <a href="/website/blog/category/kaggle">
+          <i class="fas fa-tag fa-sm"></i> kaggle</a>  
+          
+
+    </p>
+  </header>
+
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p>This blog is the second of the three blogs documenting my entry into <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification" rel="external nofollow noopener" target="_blank">toxic comment classification kaggle competition</a>. In the <a href="https://cengc13.github.io/final-project-start-blog/" rel="external nofollow noopener" target="_blank">first blog</a>, we introduced the dataset, the EDA analysis and some fundamental knowledge about a language model. To move forward, the primary purpose of the next step is to develop the baseline model from scratch. The link is provided in the <a href="https://github.com/cengc13/2040FinalProject/blob/master/src/models/logistic_regression.ipynb" rel="external nofollow noopener" target="_blank">notebook for the model</a> or <a href="https://colab.research.google.com/drive/1bVBPSKS0JGhOUUaj1yiNmDYRwnFxNsYS" rel="external nofollow noopener" target="_blank">running it on colab</a>. The essential components of a language model are summarized, including the tokenizer, the model architecture, and the evaluation metrics. In addition, we will cover some state-of-the-art multilingual models, such as BERT, XLM and XLM-RoBERT.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="https://www.topbots.com/wp-content/uploads/2019/02/NLP_feature_image_1600px-1280x640.jpg" width="600px"></image>
+  <br>
+  <figcaption>Natural Language Processing. Image source:
+    <a href="https://venturebeat.com/2018/09/29/investing-in-ai-when-natural-language-processing-pays-off/" rel="external nofollow noopener" target="_blank">Investing in AI</a></figcaption>
+</div>
+
+<!--more-->
+
+<!-- <div style="font-size:75%; background-color:#eee; border: 1px solid #bbb; display: table; padding: 7px" markdown="1">
+
+<div style="text-align:center" markdown="1">  
+
+**Contents**
+
+</div>
+
+* **[Part 1: The Baseline Model](#part-1-baseline-model)**
+  * Dataset
+  * Tokenizer
+  * The Model
+* **[Part 2: Cross-lingual Modeling](#part-2-multilingual-models)**
+  * BERT and its Variants
+  * XLM
+  * XLM-RoBERTa
+
+</div> -->
+
+<h2 id="the-baseline-model-"><a href="#part-1-baseline-model" name="part-1-baseline-model">The Baseline Model </a></h2>
+
+<p>Our goal is to take a comment text as input, and produces either 1(the comment is toxic) or 0 (the comment is non-toxic). It is basically a binary classification problem. The simplest model we can think of is the logistic regression model, for which we need to figure out how to digitalize comments so that we can use logistic regression to predict the probabilities of a comment being toxic. Next we will do a quick overview of the dataset, introduce the concepts of tokenizer, and go over the architecture of a baseline model.</p>
+
+<h3 id="dataset-jigsaw-multilingual-comments">Dataset: Jigsaw Multilingual Comments</h3>
+
+<p>The dataset we will use, as mentioned in the first blog, is from the Kaggle competition <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification" rel="external nofollow noopener" target="_blank">Jigsaw Multilingual Toxic Analysis</a>, which contains the comment texts and its toxicity labels, indicating whether the comment text is disrespectful, rude or insulting.</p>
+
+<table class="features-table">
+  <tr>
+    <th class="mdc-text-light-green-600">
+    Comment
+    </th>
+    <th class="mdc-text-purple-600">
+    Toxic
+    </th>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      This is so cool. It's like, 'would you want your mother to read this??' Really great idea, well done!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      Thank you!! This would make my life a lot less anxiety-inducing. Keep it up, and don't let anyone get in your way!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      This is such an urgent design problem; kudos to you for taking it on. Very impressive!
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      haha you guys are a bunch of losers.
+    </td>
+    <td class="mdc-bg-purple-50">
+      1
+    </td>
+  </tr>
+  <tr>
+    <td class="mdc-bg-light-green-50" style="text-align:left">
+      Is this something I'll be able to install on my site? When will you be releasing it?
+    </td>
+    <td class="mdc-bg-purple-50">
+      0
+    </td>
+  </tr>
+</table>
+
+<p>We can load the dataset with <code class="language-plaintext highlighter-rouge">pandas</code>. Then we split the dataset to train and test sets in a stratified fashion as the dataset is highly unbalanced.
+The splitting ratio is 8:2.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">"</span><span class="s">./jigsaw-toxic-comment-train.csv</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">comment_text</span><span class="p">,</span> <span class="n">train</span><span class="p">.</span><span class="n">toxic</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="nf">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">y_test</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="tokenizer">Tokenizer</h3>
+
+<p>A tokenizer works as a pipeline. It processes some raw text as input and output encoding. It is usually structured into three steps. Here we illustrate the idea of tokenization by the example provided in the blog <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">“A Visual Guide to Using BERT for the First Time”</a>. For instance, if we would like to classify the sentence ““a visually stunning rumination on love”, the tokenizer will firstly split the sentences into words with some separator, say whitespace. In the next step, special tokens will be added for sentence classifications for some tokenizers.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-1.png" width="800px"></image>
+  <br>
+  <figcaption>Tokenization: step 1 and 2 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">Tokenization step 1 and 2</a></figcaption>
+</div>
+
+<p>The final step is to replace each token with its numeric id from the embedding table, which is a natural component of a pre-trained model. Then the sentence is ready to be sent for a language model to be processed.</p>
+
+<div class="img-div" style="text-align:center">
+  <image src="http://jalammar.github.io/images/distilBERT/bert-distilbert-tokenization-2-token-ids.png" width="800px"></image>
+  <br>
+  <figcaption>Tokenization: step 3 for a basic BERT model. Image source:
+    <a href="http://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/" rel="external nofollow noopener" target="_blank">Tokenization step 3</a></figcaption>
+</div>
+
+<p>For the purpose of demonstration, in the baseline model, we will use a classic tokenization method <code class="language-plaintext highlighter-rouge">TF-IDF</code>, which is short for “term frequency-inverse document frequency”. Basically it counts the number of occurrence of a word in the documents, and then it is offset by the number of documents that contain the word. This tokenization approach is available in the package <code class="language-plaintext highlighter-rouge">sklearn</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">### Define the vectorizer
+</span><span class="kn">from</span> <span class="n">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="nc">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="c1">### Suppose X_train is a corpus of texts
+## Fit the vectorizer
+</span><span class="n">X_train_fitted</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_fitted</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In addition, <a href="https://huggingface.co/" rel="external nofollow noopener" target="_blank">HUGGING FACE</a> provides a open-source package, named <code class="language-plaintext highlighter-rouge">tokenizer</code>, where you can find many fast state-of-the-art tokenizers for research and production. For example, to implement a pre-trained DistilBERT tokenizer and model/transformer, you just need two-line codes as follows</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">transformers</span> <span class="k">as</span> <span class="n">ppb</span>
+<span class="c1"># For DistilBERT:
+</span><span class="n">tokenizer_class</span><span class="p">,</span> <span class="n">pretrained_weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">ppb</span><span class="p">.</span><span class="n">DistilBertTokenizer</span><span class="p">,</span> <span class="sh">'</span><span class="s">distilbert-base-uncased</span><span class="sh">'</span><span class="p">)</span>
+<span class="c1"># load pretrained tokenizer
+</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer_class</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="n">pretrained_weights</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After tokenization, we can build a model and train it with the tokenized comments.</p>
+
+<h3 id="the-model">The Model</h3>
+
+<p>We define the simplest binary classification model with logistic regression.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="c1"># C is a term to control the l2 regularization strength
+</span><span class="n">model_lr</span> <span class="o">=</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">6.0</span><span class="p">)</span>
+</code></pre></div></div>
+<p>If you want to optimize the hyperparameter <code class="language-plaintext highlighter-rouge">C</code>, you can do a simple grid search.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">C</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)}</span>
+<span class="n">grid_search</span> <span class="o">=</span> <span class="nc">GridSearchCV</span><span class="p">(</span><span class="nc">LogisticRegression</span><span class="p">(),</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">grid_search</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_fitted</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best parameters: </span><span class="sh">'</span><span class="p">,</span> <span class="n">grid_search</span><span class="p">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best scrores: </span><span class="sh">'</span><span class="p">,</span> <span class="n">grid_search</span><span class="p">.</span><span class="n">best_score_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We train and evaluate the model by the prediction accuracy. 
+<strong>Note</strong> the official metric for this competition is <a href="https://www.kaggle.com/c/jigsaw-multilingual-toxic-comment-classification/overview/evaluation" rel="external nofollow noopener" target="_blank">ROC-AUC</a>, which is more reasonable for a highly unbalanced dataset.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## training
+</span><span class="n">model_lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_fitted</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="c1">## prediction on testing set
+</span><span class="n">model_lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">X_test_fitted</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note that Tfi-df tokenization is not capable of dealing with multiple languages. Instead we should refer to other tokenizers, for example a BERT tokenizer. The example using <code class="language-plaintext highlighter-rouge">bert-base-uncase</code> model and tokenizer can be found in this <a href="https://colab.research.google.com/drive/1Pesk5LFMvDXQR0EqRzVRPIBBPNqNSEbT#scrollTo=8BSCrjLN2WSX" rel="external nofollow noopener" target="_blank">colab notebook</a>.</p>
+
+<h2 id="cross-lingual-models-"><a href="#part-2-multilingual-models" name="part-2-multilingual-models">Cross-lingual Models </a></h2>
+
+<h3 id="bert">BERT</h3>
+
+<p><strong>BERT</strong>, which stands for <strong>B</strong>idirectional <strong>E</strong>ncoder <strong>R</strong>epresentations from <strong>T</strong>ransformers, have achieved great success in Natural Language Processing. In contrast with previous language models looking at a text sequence from left to right, the innovation of BERT lies in that it is designed to train bidirectional representation by jointly conditioning on both the left and right context. The following figure shows a high-level description of the BERT architecture. It is essentially a stack of Transformer encoders. The input is a ‘sentence’ which is tokenized and word-embedded with a 30,000 token vocabulary. The output is a sequence of vectors, for which each vector represents an input token with the same index.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT_MLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Schematic for the Masked Language Modeling in BERT. Source:
+  	<a href="https://towardsdatascience.com/bert-explained-state-of-the-art-language-model-for-nlp-f8b21a9b6270" rel="external nofollow noopener" target="_blank">MLM</a></figcaption>
+</div>
+
+<p>It is natural that a language model typically looks at part of the sentence and predict the next words. However, it is challenging to define prediction tasks when we look at the sentence bidirectionally.</p>
+
+<p>The authors of the <a href="https://arxiv.org/pdf/1810.04805.pdf" rel="external nofollow noopener" target="_blank">original paper</a> uses two pretraining techniques to overcome this issue. They are both unsupervised approaches, namely masked language modeling (MLM) and next sentence prediction (NSP).</p>
+
+<h4 id="masked-language-modeling">Masked Language Modeling</h4>
+
+<p>15% of the words in a sentence are masked with a [MASK] token. Then the model tries to predict the original tokens in the masked positions. In practice, BERT implemented a more statistically mask scheme. For more details, please refer to the <a href="https://arxiv.org/pdf/1810.04805.pdf" rel="external nofollow noopener" target="_blank">Appendix C</a></p>
+
+<h4 id="next-sentence-prediction-nsp">Next Sentence Prediction (NSP)</h4>
+
+<p>In BERT, the model can take two sentences as input, and learned to predict if the second sentence of the pair sentences is the subsequent or antecedent. During pretraining, for 50% of the pair sentences, the second sentence is the actual next sentence, whereas for the rest 50%, the second sentence is randomly chosen, which is supposed to be disconnected from the first sentence.</p>
+
+<p>The pretraining is conducted on documents from BooksCorpus and English Wikipedia. In this scenario, a document-level corpus is used to extract long sequences.</p>
+
+<h4 id="fine-tuning">Fine tuning</h4>
+
+<p>The fine tuning process refers to using the pretrained BERT to do a downstream task. The process is straightforward and task specific. The architecture is the same except the output layers. Although during fine-tuning, all parameters are fine-tuned, it turns out that most parameters will stay the same.</p>
+
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/BERT.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Overall pre-training and fine-tuning procedures for BERT. Source:<a href="https://arxiv.org/pdf/1810.04805.pdf" rel="external nofollow noopener" target="_blank">BERT</a> </figcaption>
+</div>
+
+<p>In order to get a in-depth understanding of this technique, we highly recommend reading the  <a href="https://arxiv.org/pdf/1810.04805.pdf" rel="external nofollow noopener" target="_blank">paper</a>, or the <a href="https://github.com/google-research/bert" rel="external nofollow noopener" target="_blank">open source code</a> by Google research.</p>
+
+<h3 id="xlm">XLM</h3>
+
+<p>Though BERT is trained on over 100 languages, it was not optimized for multilingual models since most of its vocabulary does not commute between languages, and as a result, the knowledge shared is limited. To overcome this issue, instead of using word or characters as input, XLM uses Byte-Pair Encoding (BPE) that splits the input into the most common sub-words across all languages (see <a href="https://en.wikipedia.org/wiki/Byte_pair_encoding" rel="external nofollow noopener" target="_blank">BPE wiki page</a> for more details about this data compression technique).</p>
+
+<p>Intrinsically XLM is a updated BERT techniques. It updates BERT architecture in two ways.</p>
+
+<ul>
+  <li>
+    <p>Each training sample consists of the same text in two languages. To predict a masked word in one language, the model can either attend to surrounding words in the same language or the other language. In this way, alignment between contexts of the two languages can be facilitated.</p>
+  </li>
+  <li>
+    <p>The model also uses language IDs and the order of the tokens in the format of positional embeddings to better understand the relationship of related tokens in various languages.</p>
+  </li>
+</ul>
+
+<p>This new approach is named as Translation Language Modeling (TLM). The model pretraining is carried out as the following schematic representation.</p>
+<div class="img-div" style="text-align:center">
+  <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/kaggle-jigsaw/midway-blog/XLM.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  <figcaption>Cross-lingual language model pretraining. Source:<a href="https://arxiv.org/pdf/1901.07291.pdf" rel="external nofollow noopener" target="_blank">XLM</a></figcaption>
+</div>
+
+<p>The model is trained by using MLM, TLM or a combination of both.</p>
+
+<h3 id="xlm-roberta">XLM-RoBERTa</h3>
+
+<p>Similar to XLM, XLM-RoBERTa is also a transformer-based architecture, both relied on MLM and are capable of processing texts across 100 languages. However, the biggest update is that the new architecture is trained on way more data than the original one, i.e. 2.5 TB storage. And the ‘RoBERTa’ comes from that the training is the same as the monolingual RoBERTa model, for which the sole objective is the MLM, without NSP and TLM. COnsidering the diffuculties of using various tokenization tools for different languages, Sentence Piece model is trained at the first step and then it is applied to all languages. The XLM-RoBERTa model has demonstrated to be superior than the state-of-the-art multilingual models such as GermEval18.</p>
+
+<p><strong>Note</strong> that all the pretrained models mentioned above can be easily called by using Huggingface packages.</p>
+
+<h2 id="annotated-citations">Annotated Citations</h2>
+
+<ul>
+  <li>
+    <p>T. Kudo and J. Richardson. SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing. 2018. This is a paper discussing various tokenization techniques.</p>
+  </li>
+  <li>
+    <p>Alexis Conneau and Kartikay Khandelwal et.al. Unsupervised Cross-lingual Representation Learning at Scale. 2020.The XLM-RoBERTa model originates from this paper.</p>
+  </li>
+  <li>
+    <p>Guillaume Lample and Alexis Conneau. Cross-lingual Language Model Pretraining. 2019. This paper is the first work using the XLM architecture for language modeling.</p>
+  </li>
+  <li>
+    <p>Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2019. This is the original paper for BERT architecture.</p>
+  </li>
+  <li>
+    <p>Jay Alammer. (2019, November 26). <em>A Visual Guide to Using BERT for the First Time</em>. Retrieved from <a href="https://colab.research.google.com/github/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb" rel="external nofollow noopener" target="_blank">BERT notebook</a>. The vivid figures for illustration of key components in a language model are taken from this awesome blog.</p>
+  </li>
+</ul>
+
+    </div>
+  </article>
+</div>
+
+          </div>
+        </div>
+        
+      
+    </div>
+
+    <!-- Footer -->    <footer class="sticky-bottom mt-5">
+      <div class="container">
+        © Copyright 2024 Cheng  Zeng. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="external nofollow noopener">al-folio</a> theme.
+Last updated: May 01, 2024.
+      </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Bootsrap & MDB scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+
+    <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script defer src="/website/assets/js/masonry.js" type="text/javascript"></script>
+    
+  <!-- Medium Zoom JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script defer src="/website/assets/js/zoom.js"></script>
+  <!-- Sidebar Table of Contents -->
+  <script defer src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+
+  <!-- Bootstrap Table -->
+  <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+  <!-- Load Common JS -->
+  <script src="/website/assets/js/no_defer.js"></script>
+  <script defer src="/website/assets/js/common.js"></script>
+  <script defer src="/website/assets/js/copy_code.js" type="text/javascript"></script>
+
+    
+
+    <!-- MathJax -->
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        tags: 'ams'
+      }
+    };
+  </script>
+  <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    
+    
+
+<!-- Scrolling Progress Bar -->
+<script type="text/javascript">
+  /*
+   * This JavaScript code has been adapted from the article 
+   * https://css-tricks.com/reading-position-indicator/ authored by Pankaj Parashar, 
+   * published on the website https://css-tricks.com on the 7th of May, 2014.
+   * Couple of changes were made to the original code to make it compatible 
+   * with the `al-foio` theme.
+   */
+  const progressBar = $("#progress");
+  /*
+   * We set up the bar after all elements are done loading.
+   * In some cases, if the images in the page are larger than the intended
+   * size they'll have on the page, they'll be resized via CSS to accomodate
+   * the desired size. This mistake, however, breaks the computations as the
+   * scroll size is computed as soon as the elements finish loading.
+   * To account for this, a minimal delay was introduced before computing the
+   * values.
+   */
+  window.onload = function () {
+    setTimeout(progressBarSetup, 50);
+  };
+  /*
+   * We set up the bar according to the browser.
+   * If the browser supports the progress element we use that.
+   * Otherwise, we resize the bar thru CSS styling
+   */
+  function progressBarSetup() {
+    if ("max" in document.createElement("progress")) {
+      initializeProgressElement();
+      $(document).on("scroll", function() {
+        progressBar.attr({ value: getCurrentScrollPosition() });
+      });
+      $(window).on("resize", initializeProgressElement);
+    } else {
+      resizeProgressBar();
+      $(document).on("scroll", resizeProgressBar);
+      $(window).on("resize", resizeProgressBar);
+    }
+  }
+  /*
+   * The vertical scroll position is the same as the number of pixels that
+   * are hidden from view above the scrollable area. Thus, a value > 0 is
+   * how much the user has scrolled from the top
+   */
+  function getCurrentScrollPosition() {
+    return $(window).scrollTop();
+  }
+
+  function initializeProgressElement() {
+    let navbarHeight = $("#navbar").outerHeight(true);
+    $("body").css({ "padding-top": navbarHeight });
+    $("progress-container").css({ "padding-top": navbarHeight });
+    progressBar.css({ top: navbarHeight });
+    progressBar.attr({
+      max: getDistanceToScroll(),
+      value: getCurrentScrollPosition(),
+    });
+  }
+  /*
+   * The offset between the html document height and the browser viewport
+   * height will be greater than zero if vertical scroll is possible.
+   * This is the distance the user can scroll
+   */
+  function getDistanceToScroll() {
+    return $(document).height() - $(window).height();
+  }
+
+  function resizeProgressBar() {
+    progressBar.css({ width: getWidthPercentage() + "%" });
+  }
+  // The scroll ratio equals the percentage to resize the bar
+  function getWidthPercentage() {
+    return (getCurrentScrollPosition() / getDistanceToScroll()) * 100;
+  }
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <!-- Metadata, OpenGraph and Schema.org -->
+    
+
+    <!-- Standard metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Materials design with machine learning: A case study of high-entropy alloys | Cheng  Zeng</title>
+    <meta name="author" content="Cheng  Zeng">
+    <meta name="description" content="Methods and algorithms for machine learning assisted materials design">
+    <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
+
+
+    <!-- Bootstrap & MDB -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+
+    <!-- Bootstrap Table -->
+    <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
+
+    
+
+    <!-- Styles -->
+    
+    <link rel="stylesheet" href="/website/assets/css/main.css">
+    <link rel="canonical" href="http://0.0.0.0:8080/website/projects/ml-hea/">
+
+    <!-- Dark Mode -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark">
+
+    <script src="/website/assets/js/theme.js"></script>
+    <script src="/website/assets/js/dark_mode.js"></script>
+    
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav sticky-bottom-footer">
+
+    <!-- Header -->
+    <header>
+
+      <!-- Nav Bar -->
+      <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+          <a class="navbar-brand title font-weight-lighter" href="/website/"><span class="font-weight-bold">Cheng </span>Zeng</a>
+          <!-- Navbar Toggle -->
+          <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+
+          <div class="collapse navbar-collapse text-right" id="navbarNav">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+
+              <!-- About -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/">About</a>
+              </li>
+              
+              <!-- Blog -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/blog/">Blog</a>
+              </li>
+
+              <!-- Other pages -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/publications/">Publications</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/website/projects/">Projects</a>
+              </li>
+
+              <!-- Toogle theme mode -->
+              <li class="toggle-container">
+                <button id="light-toggle" title="Change theme">
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Scrolling Progress Bar -->
+      <progress id="progress" value="0">
+        <div class="progress-container">
+          <span class="progress-bar"></span>
+        </div>
+      </progress>
+    </header>
+
+
+    <!-- Content -->
+    <div class="container mt-5">
+      
+        <!-- page.html -->
+        <div class="post">
+
+          <header class="post-header">
+            <h1 class="post-title">Materials design with machine learning: A case study of high-entropy alloys</h1>
+            <p class="post-description">Methods and algorithms for machine learning assisted materials design</p>
+          </header>
+
+          <article>
+            <p>Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.</p>
+
+<p>High-entropy alloys, defined as alloys with no less than five elements with almost equiatomic compositions, are emerging materials with superior corrosion resistance, irradiation resistance, strength and catalytic activity.
+The complexity of defect structure is shown in the below figure.
+However, design of high-entropy alloys is challenging as many factors should be considered such as compositions, configuration, defect structures and processing of those materials. Thanks to the advance of computer hardware and algorithms, the past decade has witnessed success of ML enabled discovery of high-entropy alloys.
+Purposes of machine learning high-entropy alloys include prediction, knowledge mining and optimization.
+Machine learning methods used for high-entropy alloys can essentially be grouped into three categories. Each category, its current state-of-the-art implementation and future challenges are outlined below.</p>
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-5 mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/ml-hea-design/hea-structures.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="HEA various defects" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm-6 mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/ml-hea-design/hea-ml-ability.png" class="img-fluid rounded z-depth-1" style="position:relative; top: 30px; border:none;" width="auto" height="auto" title="HEA ML purposes" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Possible defects in high-entropy alloys (Left), source:<a href="https://www.nature.com/articles/s41578-019-0121-4" rel="external nofollow noopener" target="_blank">George et al</a>. Machine learning complex multidimensional space of high-entropy alloys (Right), source: <a href="https://www.science.org/doi/10.1126/science.abn3103?url_ver=Z39.88-2003&amp;rfr_id=ori:rid:crossref.org&amp;rfr_dat=cr_pub%20%200pubmed" rel="external nofollow noopener" target="_blank">Yao et al</a>.
+</div>
+
+<p>The mainstream is machine learning inter-atomic potentials (MLIP) that aim to fit inter-atomic interactions based on first-principles data. The fitted machine leaning models can accelerate atomistic simulations by orders of magnitude compared to first-principles calculations. This category belongs to the forward design with machine leaning models. Schematic of typical finite-ranged machine learning potentials is depicted in the below figure. Atomic positions are first transformed to features via representations invariant to rotation, translation and reflection. Each atom has its own feature vector to describe the atom interacting with its neighbors. Atomic energies are approximated by machine learning algorithms, which in the end are summed to yield the total energy. The training iterates by minimizing the energy (and forces) differences between machine learning models and <em>ab initio</em> calculations. Since high-entropy materials live in high-dimensional configuration space, a large amount of training data and features are needed. In addition, current MLIPs mostly use element-specific descriptors which significantly limit the transferability of MLIP when predicting materials comprising elements not existent in the training structures. Besides, the MLIPs only perform well in regions where training data are sufficient, necessitating effective sampling of informative structures. <strong>Future research directions in this line include develop a universal element-agnostic representation of atomic structures, robust machine learning architecture for inter-atomic interactions and efficient sampling methods.</strong></p>
+
+<div class="row justify-content-sm-center">
+    <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/ml-hea-design/mlip-scheme.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Scheme of MLIP" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+</div>
+<div class="caption">
+    Schematic of machine learning inter-atomic potential, source: <a href="https://www.sciencedirect.com/science/article/pii/S0010465516301266?via%3Dihub" rel="external nofollow noopener" target="_blank">Khorshidi and Peterson</a>
+</div>
+
+<p>The second category features generative models for inverse materials design. The basic idea of generative models is to learn a probabilistic mapping between continuous latent space variables and materials properties. A typical generative model uses variational autoencoder where inputs are projected to a low dimensional space by an encoder and then a decoder maps the latent space back to the same inputs. Nevertheless, general models often suffer from the overfitting issue, leading to a high failure rate when predicted materials are validated through first-principles calculations or experiments. Generative models also strongly depend on massive data, in particular for complex materials like high-entropy alloys. In addition, the inverse of materials from atomic representation is very challenging because the mapping between configuration space and latent space is not invertible for most machine learning methods. As a result, <strong>Incorporation of uncertainty quantification and active learning is required to balance the exploitation and exploration of inverse materials design using generative models. Future development of data-efficient and interpretable algorithms are needed to unleash the full potential of generative methods. Future advance in invertible representation is necessary to expand use cases of generative models.</strong></p>
+
+<div class="row justify-content-sm-center">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/ml-hea-design/generative_design.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Variational autoencoder" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+</div>
+<div class="caption">
+    Inverse materials design with variational autoencoder, source: <a href="https://www.nature.com/articles/s41578-021-00340-w" rel="external nofollow noopener" target="_blank">Hart et al</a>.
+</div>
+
+<p>The last category represents machine learning models based on experimental data. This usually takes input as chemical compositions and output as materials properties. The machine learning models can be generic machine learning models (e.g. random forest classifier) for property prediction. Alternatively, generative models can be built for inverse materials design or materials optimization. The issue with this machine learning method is rooted in the quality of experimental data. It is of central importance to ensure the compiled data follow the <a href="https://www.nature.com/articles/sdata201618" rel="external nofollow noopener" target="_blank">FAIR principle</a> because of the “Garbage in, Garbage out” principle. More generally, all the data used in materials design loop (see the below figure) should be Findable, Accessible, Interoperable and Reusable. For materials dataset, it is crucial to examine the processing conditions of how materials are made, especially for high-entropy alloys which can be manufactured  either via conventional arc melting and casting or through additive manufacturing with high cooling rates. Moreover, the curation of new data should strictly follow the data principle as well. <strong>Collective efforts are needed among the materials researcher community to safeguard the data quality. Researchers who collect the data should take the caution of data provenance and data governance. Design algorithms that are resistant to data noise are also promising future directions.</strong></p>
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-10 mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/ml-hea-design/data-centric-materials-design.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data centric framework" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Data-centric framework for materials design, source: <a href="https://www.sciencedirect.com/science/article/pii/S209580992200056X" rel="external nofollow noopener" target="_blank">Chen et al</a>.
+</div>
+
+          </article>
+
+        </div>
+
+      
+    </div>
+
+    <!-- Footer -->    <footer class="sticky-bottom mt-5">
+      <div class="container">
+        © Copyright 2024 Cheng  Zeng. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="external nofollow noopener">al-folio</a> theme.
+Last updated: May 01, 2024.
+      </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Bootsrap & MDB scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+
+    <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script defer src="/website/assets/js/masonry.js" type="text/javascript"></script>
+    
+  <!-- Medium Zoom JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script defer src="/website/assets/js/zoom.js"></script>
+
+  <!-- Bootstrap Table -->
+  <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+  <!-- Load Common JS -->
+  <script src="/website/assets/js/no_defer.js"></script>
+  <script defer src="/website/assets/js/common.js"></script>
+  <script defer src="/website/assets/js/copy_code.js" type="text/javascript"></script>
+
+    
+
+    <!-- MathJax -->
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        tags: 'ams'
+      }
+    };
+  </script>
+  <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    
+    
+
+<!-- Scrolling Progress Bar -->
+<script type="text/javascript">
+  /*
+   * This JavaScript code has been adapted from the article 
+   * https://css-tricks.com/reading-position-indicator/ authored by Pankaj Parashar, 
+   * published on the website https://css-tricks.com on the 7th of May, 2014.
+   * Couple of changes were made to the original code to make it compatible 
+   * with the `al-foio` theme.
+   */
+  const progressBar = $("#progress");
+  /*
+   * We set up the bar after all elements are done loading.
+   * In some cases, if the images in the page are larger than the intended
+   * size they'll have on the page, they'll be resized via CSS to accomodate
+   * the desired size. This mistake, however, breaks the computations as the
+   * scroll size is computed as soon as the elements finish loading.
+   * To account for this, a minimal delay was introduced before computing the
+   * values.
+   */
+  window.onload = function () {
+    setTimeout(progressBarSetup, 50);
+  };
+  /*
+   * We set up the bar according to the browser.
+   * If the browser supports the progress element we use that.
+   * Otherwise, we resize the bar thru CSS styling
+   */
+  function progressBarSetup() {
+    if ("max" in document.createElement("progress")) {
+      initializeProgressElement();
+      $(document).on("scroll", function() {
+        progressBar.attr({ value: getCurrentScrollPosition() });
+      });
+      $(window).on("resize", initializeProgressElement);
+    } else {
+      resizeProgressBar();
+      $(document).on("scroll", resizeProgressBar);
+      $(window).on("resize", resizeProgressBar);
+    }
+  }
+  /*
+   * The vertical scroll position is the same as the number of pixels that
+   * are hidden from view above the scrollable area. Thus, a value > 0 is
+   * how much the user has scrolled from the top
+   */
+  function getCurrentScrollPosition() {
+    return $(window).scrollTop();
+  }
+
+  function initializeProgressElement() {
+    let navbarHeight = $("#navbar").outerHeight(true);
+    $("body").css({ "padding-top": navbarHeight });
+    $("progress-container").css({ "padding-top": navbarHeight });
+    progressBar.css({ top: navbarHeight });
+    progressBar.attr({
+      max: getDistanceToScroll(),
+      value: getCurrentScrollPosition(),
+    });
+  }
+  /*
+   * The offset between the html document height and the browser viewport
+   * height will be greater than zero if vertical scroll is possible.
+   * This is the distance the user can scroll
+   */
+  function getDistanceToScroll() {
+    return $(document).height() - $(window).height();
+  }
+
+  function resizeProgressBar() {
+    progressBar.css({ width: getWidthPercentage() + "%" });
+  }
+  // The scroll ratio equals the percentage to resize the bar
+  function getWidthPercentage() {
+    return (getCurrentScrollPosition() / getDistanceToScroll()) * 100;
+  }
+</script>
+
+  </body>
+</html>
