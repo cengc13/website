@@ -9,7 +9,7 @@ profile:
   image_circular: false # crops the image to make it circular
   address: >
     <p>Postdoctoral Fellow</p>
-    <p>Email:c.zeng [at] northeastern [dot] edu</p>
+    <p>Email:cheng_zeng1 [at] alumni [dot] brown [dot] edu</p>
 
 news: true  # includes a list of news items
 latest_posts: false  # includes a list of the newest posts
