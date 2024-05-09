@@ -9,10 +9,14 @@ category: Current research
 
 Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.
 
-I introduced a machine learning frameworking combining two pipelines to quantify important corrosion metrics using machine learning models.
-Three corrosion metrics are considered, including single-phase formability, FCC111 surface energy and Pilling-Bedworth ratios.
+I introduced a machine learning framework combining two pipelines to quantify three corrosion metrics using machine learning models.
+Corrosion metrics include single-phase formability, FCC111 surface energy and Pilling-Bedworth ratios.
+Singe-phase formation indicates whether a homogeneous phase will be formed given the composition of a high-entropy alloy (HEA).
+A homogeneous phase suggests the absence of fast corrosion channels and incliness of forming a more protective passive oxide layer against corrosion.
 The single-phase formability is predicted by a random forest classifier trained on experimental data whose inputs and outputs are simply chemical compositions and labels to indicate whether single phase or multiple phase structures are formed.
-The surface energy and Pilling-Bedworth ratios are predicted by machine learning potentials trained on systematically generated first-principles data.
+Surface energy relates the tendency of dissolution of a surface atom to the current density during corrosion.
+Piling-Bedworth ratios (PBR) are associated with metal/oxide stresses upond oxidation of a surface alloy. Ideally, we would like to see PBR values in the range of one and two, which can form a protective oxide layer while not causing significant stresses in oxide layers (that can result in cracks of oxides).
+The surface energy and Pilling-Bedworth ratios are computed by machine learning potentials trained on systematically generated first-principles data.
 The machine learning potentials used in this work belong to the group of [momentum tensor potentials](https://iopscience.iop.org/article/10.1088/2632-2153/abc9fe), which uses moment tensor contraction to define atomic energies. Each moment consists of two components---one is radial basis functions (e.g. Chebyshev polynomials) and the other is tensor of a certain rank to describe angular local environments.
 The workflow of this framework is shown in the below figure.
 
@@ -36,4 +40,4 @@ This methodology was applied to AlCrFeCoNi high-entropy alloys. Compositions of 
     Single phase formability (a), Pilling-Bedworth ratios (b) and FCC111 surface energies (c) of AlCrFeCoNi as a function of Al and Cr compositions. In part (a), single phase (SP) and multiple phase training points are indicated by respective red squares and green circles. Decision boundary from <a href='https://www.sciencedirect.com/science/article/pii/S1359645419307050'>Wu et al</a> is represented by a grey dashed line.
 </div>
 
-This work is now published in Computational Materials Science [here](https://www.sciencedirect.com/science/article/pii/S0927025624001460).
+This work is now published and more details can be found in the paper at Computational Materials Science [here](https://www.sciencedirect.com/science/article/pii/S0927025624001460).
