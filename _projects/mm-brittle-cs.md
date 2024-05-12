@@ -3,7 +3,7 @@ layout: page
 title: "Machine learning enabled multiscale simulations for brittle particle cold spray"
 description: Atomistic-mesoscale simulation framework to understand size and shape effects of particle feedstock for brittle particle cold spray
 img: assets/img/projects/mm-ml-brittle-cs/mm-ml-thumbnail.png
-importance: 2
+importance: 3
 category: Current research
 ---
 
