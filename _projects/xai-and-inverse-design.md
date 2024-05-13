@@ -1,0 +1,16 @@
+---
+layout: page
+title: A data-efficient and interpretable approach to inverse materials design
+description: Disentangled representation of compositions/structures and properties in a semi-supervised variational autoencoder
+img: assets/img/projects/hea-xai-inverse-materials-design/xai-inverse-mater.png
+importance: 3
+category: Current research
+---
+
+Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations, if any, are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.
+
+Conventional inverse materials design use unsupervised machine learning where the input and output are both chemical compositions, crystal structures or microstructure images without considering the composition/structure-property relationship explicitly. The unsupervised learning project high-dimentional features encoding compositions/structures into a low-dimensional latent space and reconstruct the features in the output. Sampling in the latent space generates a new composition/structure. This unsupervised scheme is theorized to learn the entangled composition/structure-property relationship in an implicit manner, which can only be modeled through a seperate surrogate model. The surrogate model and latent space representation combined enables the sampling of materials with desired properties. However, this entangled and implicit scheme has three drawbacks. First, the entangled representation of composition/structure-property relationship is by nature lacking interpretability. Second, without inclusion of target property, the learned latent space can fail to form reliable composition/structure-property relationship. Lastly, this unsupervised approach is not suitable for inverse design of materials with multiple desired properties as all these info can be highly entangled in the latent space.
+
+In collaboration with [Zulqarnain Khan](https://scholar.google.com/citations?view_op=list_works&hl=en&hl=en&user=rYq6RQ4AAAAJ&sortby=pubdate), we propose to use a custom semi-supervised variational autoencoder to disentangle the relationship between compositions and multiple materials property. This approach includes a recognition (encoder) and a genreative (decoder) model. By using informative priors for the target properties and inputs, we can learn the composition-property relationship in a disentangled and data-efficient way. Besides, it allows us to generate a target material with pre-defined mutliple materials properties. Adding post-hoc analysis using existing techniques such as shapley values (SHAP), it innovates a data-efficient and interpretable paradigm for inverse materials design with multi-objectives.
+
+More details will be added once the proposal/publication is out.
