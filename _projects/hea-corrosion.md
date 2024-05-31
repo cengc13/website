@@ -3,7 +3,7 @@ layout: page
 title: Discovery of high-entropy alloys for corrosion protection
 description: A machine learning framework to evaluate corrosion performance for given compositions of high-entropy alloys
 img: assets/img/projects/hea-corrosion/corrosion-three-metrics.png
-importance: 2
+importance: 1
 category: Current research
 ---
 

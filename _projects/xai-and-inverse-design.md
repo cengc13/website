@@ -3,7 +3,7 @@ layout: page
 title: A data-efficient and interpretable approach to inverse materials design
 description: Disentangled representation of compositions/structures and properties in a semi-supervised variational autoencoder
 img: assets/img/projects/hea-xai-inverse-materials-design/xai-inverse-mater.png
-importance: 3
+importance: 2
 category: Current research
 ---
 
