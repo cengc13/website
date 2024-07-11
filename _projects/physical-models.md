@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Atomistic models to expedite catalyst design
+title: Eigenforce models to expedite catalyst design
 description: Force-displacement models for strain effect, surface relaxation and lateral interaction
 img: assets/img/projects/physical-models/model-thumbnail.png
 importance: 2
