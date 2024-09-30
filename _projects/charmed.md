@@ -1,6 +1,6 @@
 ---
 layout: page
-title: A data-efficient and interpretable approach to inverse materials design
+title: Inverse design of single-phase high-entropy alloys
 description: Disentangled representation of compositions/structures and properties in a semi-supervised variational autoencoder (VAE)
 img: assets/img/projects/hea-xai-inverse-materials-design/xai-inverse-mater.png
 importance: 2
