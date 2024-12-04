@@ -88,7 +88,7 @@ This project uses MongoDB as the database. All data acquired are stored in raw f
 
 Project title: **AI’s Ethical Place in Criminal Justice: An Analysis and Case Study of COMPAS and the Ethics of Pre-Trial Computer-Aided Decision Tools**
 
-Team Members: Ben Xiong, Jillian Green, Christopher Rohlicek, Akshay Shah, Qingyan Guo, Cheng Zeng, Emmanuel Peters
+Team Members: Ben Xiong, Jillian Green, Christopher Rohlicek, Akshay Shah, Qingyan Guo, Cheng Zeng, Emmanuel Peters (No author order preference)
 
 <div class="row justify-content-sm-center">
         {% include figure.html path="assets/img/projects/course-projects/algorithm-justice.png" title="Algorithmic justice"  width=500
