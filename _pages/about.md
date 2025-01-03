@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: Computational Materials Scientist at <a href="https://www.northeastern.edu/">Northeastern University</a>.
+subtitle: Computational Materials Scientist at <a href="https://www.ufl.edu/">University of Florida</a>.
 profile:
   align: right
   image: prof_pic.jpg
