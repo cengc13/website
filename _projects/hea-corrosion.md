@@ -4,7 +4,7 @@ title: Discovery of high-entropy alloys for corrosion protection
 description: A machine learning framework to evaluate corrosion performance for given compositions of high-entropy alloys
 img: assets/img/projects/hea-corrosion/corrosion-three-metrics.png
 importance: 1
-category: Current research
+category: Past research
 ---
 
 Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.

@@ -4,7 +4,7 @@ title: "Perspective of materials design with machine learning"
 description: Methods and algorithms for machine learning assisted materials design
 img: assets/img/projects/ml-hea-design/ml-hea-thumbnail.png
 importance: 3
-category: Current research
+category: Past research
 ---
 
 Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.

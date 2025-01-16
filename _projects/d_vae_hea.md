@@ -4,7 +4,7 @@ title: Inverse design of single-phase high-entropy alloys
 description: Disentangled representation of compositions/structures and properties in a semi-supervised variational autoencoder (VAE)
 img: assets/img/projects/hea-xai-inverse-materials-design/xai-inverse-materials.png
 importance: 2
-category: Current research
+category: Past research
 ---
 
 Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations, if any, are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.
