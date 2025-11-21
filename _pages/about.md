@@ -21,4 +21,4 @@ Hi! I’m currently a postdoctoral researcher at the University of Florida. Befo
 
 My research lies at the intersection of **computational materials science, computational chemistry, and artificial intelligence**. I develop **generative models, machine learning interatomic potentials, and physics-based phenomenological models** to accelerate the discovery and design of complex materials for a sustainable future.
 
-I’m currently on the faculty job market—welcome to connect!
+I’m currently on the academic job market—welcome to connect!
