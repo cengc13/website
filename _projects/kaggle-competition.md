@@ -122,8 +122,8 @@ Complex time series forecasting to predict the point of scales based on historic
 
 ##### Competition blogs
 
-- [Initial blog](http://0.0.0.0:8080/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog.html)
-- [Midway blog](http://0.0.0.0:8080/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html)
-- [Final blog](http://0.0.0.0:8080/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html)
+- [Initial blog](https://cengc13.github.io/website/kaggle/2020/06/25/kaggle-m5-accuracy-start-blog.html)
+- [Midway blog](https://cengc13.github.io/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html)
+- [Final blog](https://cengc13.github.io/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html)
 
 **I finished this competition with a rank of 645/5558 teams.**
