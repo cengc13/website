@@ -8,8 +8,8 @@ profile:
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   address: >
-    <p>Contact: +1 (401) 396-6668 </p>
-    <p>Email:c.zeng@ufl.edu</p>
+    <p>(401) 396-6668 </p>
+    <p>c.zeng@ufl.edu</p>
 
 news: true  # includes a list of news items
 latest_posts: false  # includes a list of the newest posts`
