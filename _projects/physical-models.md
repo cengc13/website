@@ -57,4 +57,4 @@ Inspired by the [pioneering work](https://www.sciencedirect.com/science/article/
     One-dimensional schematic of elastic interactions between adsorbates on a surface (Left). DFT calculated lateral interaction versus Model predictions (Right).
 </div>
 
-The force--displacement framework enables fast evaluation of strain effect, surface relaxation and lateral interaction with only a small number of DFT calculations. The methods and algorithms developed form a trilogy of atomistic models to expedite rational catalyst design for heterogeneous catalysis.
+The force--displacement framework enables fast evaluation of strain effect, surface relaxation and lateral interaction with only a small number of DFT calculations. These methods combined provide a scalable solution to rapid design of electrocatalysts.
