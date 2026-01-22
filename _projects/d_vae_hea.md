@@ -29,7 +29,7 @@ The disentangled variational encoder consists of a recognition model (encoder) a
 
 Using a well-trained VAE, we can now map the latent variables for all data points and we color it by the ground truth label (binary phase formation), as shown in the left panel of Figure below. One can see that the high-dimensional composition space is transformed to a compact low-dimensional latent representation where most data points are concentrated in a small region.
 More importantly, the target property is explicitly liberated from the latent space as points at the same latent positions can be either multiple-phase or single-phase alloys.
-In constrast, the latent space is implicitly associated with other properties. For instance, in the right panel of Figure below, we created three groups of element lists and we combined four elements from each list and made four-element equimolar high-entropy alloys. We found that different types of alloys are actually located in well-separated regions in the latent space.
+In constrast, the latent space is implicitly associated with other properties. For instance, in the right panel of Figure below, we created two groups of element lists and we combined four elements from each list and made four-element equimolar high-entropy alloys. We found that different types of alloys are actually located in well-separated regions in the latent space.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-12 mt-3 mt-md-0">
