@@ -14,11 +14,16 @@ data scientists and machine learning practitioners under Google LLC.
 
 This place hosts website links for blogs documenting my learning journey for past Kaggle machine learning competitions.
 
+I participated in four competitions and won **1 Gold and 2x Silver** medals as independent participant and team leader. I reached the highest global rank of **270/144681** in 2020, and became a kaggle competitions master in half a year.
+
 ---
 
 ### **Competitions**
 
 #### Bengali.AI Handwritten Grapheme Classification
+
+**I completed this competitions as the leader of Team "Zzz..." and we won a silver medal through this effort, ranking 90$$^{\rm{th}}$$ out of 2059 teams.**
+
 Computer vision for multi-class classification
 
 <div class="row justify-content-sm-center">
@@ -41,11 +46,14 @@ Computer vision for multi-class classification
 - [Midway blog](https://cengc13.github.io/website/kaggle/2020/02/25/kaggle-bengali-midway.html)
 - [Final blog](https://cengc13.github.io/website/kaggle/2020/03/03/kaggle-bengali-final.html)
 
-**I completed this competitions as the leader of Team "Zzz..." and we won a silver medal through this effort, ranking 90$$^{\rm{th}}$$ out of 2059 teams.**
+
 
 ---
 
 #### Jigsaw Multilingual Toxic Comment Classification
+
+**I completed this competitions with a solo gold medal, ranking 5$$^{\rm{th}}$$ out of 1621 teams.**
+
 Natural language processing for zero- and few-shot learning in multilingual language classification.
 
 <div class="row justify-content-sm-center">
@@ -70,11 +78,14 @@ Natural language processing for zero- and few-shot learning in multilingual lang
 - [Midway blog](https://cengc13.github.io/website/kaggle/2020/04/26/kaggle-jigsaw-midway-blog.html)
 - [Final blog](https://cengc13.github.io/website/kaggle/2020/05/08/kaggle-jigsaw-final-blog.html)
 
-**I completed this competitions with a solo gold medal, ranking 5$$^{\rm{th}}$$ out of 1621 teams.**
+
 
 ---
 
 #### Tweet Sentiment Extraction
+
+**I completed this competitions with a solo silver medal, ranking 90$$^{\rm{th}}$$ out of 2225 teams.**
+
 Natural language processing to find the text segment that supports the tweet sentiment.
 
 <div class="row justify-content-sm-center">
@@ -98,11 +109,14 @@ Natural language processing to find the text segment that supports the tweet sen
 - [Midway blog](https://cengc13.github.io/website/kaggle/2020/06/09/kaggle-tweet-midway-blog.html)
 - [Final blog](https://cengc13.github.io/website/kaggle/2020/06/23/kaggle-tweet-final-blog.html)
 
-**I completed this competitions with a solo silver medal, ranking 90$$^{\rm{th}}$$ out of 2225 teams.**
+
 
 ---
 
 #### M5 Forecasting - Accuracy
+
+**I finished this competition with a rank of 645/5558 teams.**
+
 Complex time series forecasting to predict the point of scales based on historical observations.
 
 <div class="row justify-content-sm-center">
@@ -126,4 +140,3 @@ Complex time series forecasting to predict the point of scales based on historic
 - [Midway blog](https://cengc13.github.io/website/kaggle/2020/06/28/kaggle-m5-accuracy-midway-blog.html)
 - [Final blog](https://cengc13.github.io/website/kaggle/2020/07/05/kaggle-m5-accuracy-final-blog.html)
 
-**I finished this competition with a rank of 645/5558 teams.**
