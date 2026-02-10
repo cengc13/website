@@ -50,4 +50,4 @@ To complete the understanding of catalytic performance of nanoparticle catalysts
 </div>
 
 The NFT paper is [available](https://pubs.aip.org/aip/jcp/article/156/6/064104/2840702/A-nearsighted-force-training-approach-to) at J. Chem. Phys.
-The Co--Pt phase stability work is available at Journal of Physical Chemistry C [here](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.3c04639). The work regarding Co--Pt catalytic activity and stability is under preparation.
+The Co--Pt phase stability work is available at Journal of Physical Chemistry C [here](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.3c04639). The work regarding Co--Pt nanoparticle catalytic activity and stability is under preparation.
