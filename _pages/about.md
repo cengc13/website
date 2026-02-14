@@ -17,7 +17,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: false  # includes social icons at the bottom of the page
 ---
 
-Hi! I’m currently a postdoctoral researcher at the University of Florida. Before joining UF, I was a postdoctoral fellow at the Experiential AI Institute and the Roux Institute of Northeastern University. I received my Ph.D. in Chemical Engineering and an M.S. in Data Science in 2022 from Brown University.
+Hi! I’m currently a postdoctoral researcher at the University of Florida. Before joining UF, I was a postdoctoral fellow at the Institute of Experiential AI and Roux Institute of Northeastern University. I received my Ph.D. in Chemical Engineering and an M.S. in Data Science in 2022 from Brown University.
 
 My research lies at the intersection of **AI, Materials Science and Chemistry**. I develop and deploy **generative models, machine learning interatomic potentials, and phenomenological models** to accelerate materials design for a sustainable future.
 
