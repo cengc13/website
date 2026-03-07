@@ -10,9 +10,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Eigenforce models to accelerate catalyst design | Cheng  Zeng</title>
+    <title>2026 03 04_molcrystalflow_code_and_data | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
-    <meta name="description" content="Force-displacement models for strain effect, surface relaxation and lateral interaction">
+    <meta name="description" content="Cheng Zeng's personal website
+">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -36,7 +37,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/projects/physical-models/">
+    <link rel="canonical" href="https://cengc13.github.io/website/news/2026-03-04_MolCrystalFlow_code_and_data/">
 
     <!-- Dark Mode -->
     
@@ -107,136 +108,27 @@
     <!-- Content -->
     <div class="container mt-5">
       
-        <!-- page.html -->
-        <div class="post">
+        <!-- _layouts/post.html -->
 
-          <header class="post-header">
-            <h1 class="post-title">Eigenforce models to accelerate catalyst design</h1>
-            <p class="post-description">Force-displacement models for strain effect, surface relaxation and lateral interaction</p>
-          </header>
+<div class="post">
 
-          <article>
-            <p>Cheng Zeng’s research work at Brown was supported by Brown’s Presidential fellowship and Open graduate education program.
-Computaitonal modeling uses resources at Brown’s Center for Computation and Visualization (CCV).</p>
+  <header class="post-header">
+    <h1 class="post-title">2026 03 04_molcrystalflow_code_and_data</h1>
+    <p class="post-meta">March 5, 2026</p>
+    <p class="post-tags">
+      <a href="/website/blog/2026"> <i class="fas fa-calendar fa-sm"></i> 2026 </a>
 
-<p>Fundamentally, the bonding between the surface and important reaction intermediates dictates the kinetics of elementary reactions on a heterogeneous catalyst.
-Strain is known to modify the surface adsorption of key intermediates during catalytic reactions, offering a tunable approach to rational catalyst design.
-A <a href="https://www.nature.com/articles/s41929-018-0054-0" rel="external nofollow noopener" target="_blank">recent work</a> from the Peterson group introduced the eigenstress model to provide intuitive  understanding of strain effect.
-Instead of stress/strain which is hard to define in atomistic systems, I used atomic forces and displacement to quantify the strain effect for improved oxygen reduction activity of Co–Pt and Fe–Pt alloys. The force–displacement model is termed “Eigenforce model”. The work is <a href="https://pubs.aip.org/aip/jcp/article-abstract/150/4/041704/1023696/Face-centered-tetragonal-FCT-Fe-and-Co-alloys-of?redirectedFrom=fulltext" rel="external nofollow noopener" target="_blank">published</a> at J. Chem. Phys. In collaboration with experiment groups, we used the model to describe anisotropic strain effects and to identify high-performance ternary Pt alloys for oxygen reduction, the work of which has been <a href="https://pubs.acs.org/doi/abs/10.1021/jacs.0c08962" rel="external nofollow noopener" target="_blank">published</a> on JACS. In a <a href="https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.2c07246" rel="external nofollow noopener" target="_blank">recent systematic study</a> published on J. Phys. Chem. C, I generalized the strain effect for different adsorption systems using the simple eigenforce model.</p>
+    </p>
+  </header>
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-6 mt-3 mt-md-0">
-        <figure>
-
-  <picture>
+  <article class="post-content">
     
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/physical-models/simple-eigenforce-model.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Eigenforce model illustration" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
+    <div id="markdown-content">
+      <p>MolCrystalFlow data is available at <a href="https://zenodo.org/records/18879915" rel="external nofollow noopener" target="_blank">zenodo</a>. Code is available at <a href="https://github.com/Liu-Group-UF/MolCrystalFlow" rel="external nofollow noopener" target="_blank">Github</a>.</p>
 
     </div>
-    <div class="col-sm-5 mt-3 mt-md-0" style="top:0px">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/physical-models/results-eigenforce-model.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Eigenforce model results" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
+  </article>
 </div>
-<div class="caption">
-    Schematic illustration of the simple eigenforce model (Left). Eigenforce model predictions <i>versus</i> DFT calculated strain effects for a variety of adsorption systems (Right).
-</div>
-
-<p>In the simple eigenforce model, adsorbate-induced eigenforces are considered unchanged during atomic displacements. Despite the success of simple constant-force model, adsorption and strain induced surface relaxation should be taken into account as well to achieve a more rigorous description of strain effect. Using simple ball and spring analysis, I introduced an atomistic model to quantify changes of eigenforces during displacements and to account for important surface relaxation terms, including strain induced relaxation, adsorbate induced relaxation and relaxation due to strain and adsorption coupling.
-I also discuss why simple constant-force model gives good predictions for strain effect in many systems.</p>
-
-<div class="row justify-content-sm-center">
-    <div class="col-sm-6 mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/physical-models/relaxation-coupling.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Coupling of strain and adsorption" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-    <div class="col-sm-6 mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/physical-models/decoupling-spring-constants.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Decoupling spring constants" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-</div>
-<div class="caption">
-    Schematic of coupling of strain and adsorption (Left). Strategy to decouple spring constants in atomistic simulations (Right).
-</div>
-
-<p>The strain effect and surface relaxation of single adsorption are now well described by the above two models. Nevertheless, in real catalysis scenario, multiple adsorbates may exist on the catalyst surface. A complete picture is out of reach without inclusion of lateral interactions between adsorbates.
-Inspired by the <a href="https://www.sciencedirect.com/science/article/pii/0039602877904691" rel="external nofollow noopener" target="_blank">pioneering work</a> of Lau and Kohn, I further developed the eigenforce framework to quantify the elastic interaction between adsorbates on a metallic surface and the elastic component is ascribed to the cooperative/frustrated surface relaxation due to coexistence of multiple adsorbates. Besides, I found that non-elastic counterpart can be well approximated by a simple two-body fitting using a small number of DFT calculations. Combining both elastic and non-elastic terms, a full picture of lateral interaction for arbitrary adsorbate coverage can be completed.</p>
-
-<div class="row justify-content-sm-center">
-    <div class="col-sm-5 mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/physical-models/elastic-li.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Elastic lateral interation" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-    <div class="col-sm-6 mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-
-    <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/physical-models/DFT_vs_model.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="DFT versus Model" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-</div>
-<div class="caption">
-    One-dimensional schematic of elastic interactions between adsorbates on a surface (Left). DFT calculated lateral interaction versus Model predictions (Right).
-</div>
-
-<p>The force–displacement framework enables fast evaluation of strain effect, surface relaxation and lateral interaction with only a small number of DFT calculations. These methods combined provide a scalable solution to rapid design of electrocatalysts.</p>
-
-          </article>
-
-        </div>
 
       
     </div>
