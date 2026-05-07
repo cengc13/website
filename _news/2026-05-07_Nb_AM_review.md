@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our review article, “Additive Manufacturing of Refractory Niobium Alloys,” is now online in [Progress in Additive Manufacturing](https://link.springer.com/article/10.1007/s40964-026-01728-2#author-information). I am grateful for the opportunity to contribute by leading the physical simulations and data analytics components, supporting the design and processing of additively manufactured alloys.
+Our review article, “Additive Manufacturing of Refractory Niobium Alloys,” is now online in [Progress in Additive Manufacturing](https://link.springer.com/article/10.1007/s40964-026-01728-2#author-information). I am glad to contribute by leading the physical simulations and data analytics components.
