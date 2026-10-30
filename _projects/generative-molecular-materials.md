@@ -26,7 +26,7 @@ The paper is published at [Nature Computational Science](https://www.nature.com/
 
 ### **MolGuidance: guidance strategies for conditional generation**
 
-MolGuidance extends PropMolFlow by systematically studying advanced guidance strategies for conditional molecular generation with flow matching, with the aim of generating molecules that hit target properties more accurately.
+MolGuidance extends PropMolFlow by integrating three advanced property-guidance strategies (classifier-free guidance, autoguidance and model guidance) into an SE(3)-equivariant flow matching framework for conditional molecule generation.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-10 mt-3 mt-md-0">
@@ -37,7 +37,7 @@ MolGuidance extends PropMolFlow by systematically studying advanced guidance str
     MolGuidance: advanced guidance strategies for conditional molecular generation with flow matching.
 </div>
 
-An early version was accepted at the [ICML 2025 GenBio Workshop](https://openreview.net/forum?id=WhZrYbwrKb), and the full paper is published at [Journal of Chemical Information and Modeling](https://pubs.acs.org/doi/full/10.1021/acs.jcim.6c00964).
+An early version was accepted at the [ICML 2025 GenBio Workshop](https://openreview.net/forum?id=WhZrYbwrKb), and the full paper is published at [Journal of Chemical Information and Modeling](https://pubs.acs.org/doi/full/10.1021/acs.jcim.6c00964). The dataset is on [zenodo](https://zenodo.org/records/16847162).
 
 ### **MolCrystalFlow: molecular crystal structure prediction**
 

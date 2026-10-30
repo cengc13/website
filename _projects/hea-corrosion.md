@@ -12,10 +12,10 @@ Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the
 I introduced a machine learning framework combining two pipelines to quantify three corrosion metrics using machine learning models.
 Corrosion metrics include single-phase formability, FCC111 surface energy and Pilling-Bedworth ratios.
 Singe-phase formation indicates whether a homogeneous phase will be formed given the composition of a high-entropy alloy (HEA).
-A homogeneous phase suggests the absence of fast corrosion channels and incliness of forming a more protective passive oxide layer against corrosion.
+A homogeneous phase suggests the absence of fast corrosion channels and inclination toward forming a more protective passive oxide layer against corrosion.
 The single-phase formability is predicted by a random forest classifier trained on experimental data whose inputs and outputs are simply chemical compositions and labels to indicate whether single phase or multiple phase structures are formed.
 Surface energy relates the tendency of dissolution of a surface atom to the current density during corrosion.
-Piling-Bedworth ratios (PBR) are associated with metal/oxide stresses upond oxidation of a surface alloy. Ideally, we would like to see PBR values in the range of one and two, which can form a protective oxide layer while not causing significant stresses in oxide layers (that can result in cracks of oxides).
+Piling-Bedworth ratios (PBR) are associated with metal/oxide stresses upon oxidation of a surface alloy. Ideally, we would like to see PBR values in the range of one and two, which can form a protective oxide layer while not causing significant stresses in oxide layers (that can result in cracks of oxides).
 The surface energy and Pilling-Bedworth ratios are computed by machine learning potentials trained on systematically generated first-principles data.
 The machine learning potentials used in this work belong to the group of [momentum tensor potentials](https://iopscience.iop.org/article/10.1088/2632-2153/abc9fe), which uses moment tensor contraction to define atomic energies. Each moment consists of two components---one is radial basis functions (e.g. Chebyshev polynomials) and the other is tensor of a certain rank to describe angular local environments.
 The workflow of this framework is shown in the below figure.

@@ -8,7 +8,7 @@ category: Past research
 ---
 
 Cheng Zeng's research work at Brown was supported by Brown's Presidential fellowship and Open graduate education program.
-Computaitonal modeling uses resources at Brown's Center for Computation and Visualization (CCV).
+Computational modeling uses resources at Brown's Center for Computation and Visualization (CCV).
 
 Fundamentally, the bonding between the surface and important reaction intermediates dictates the kinetics of elementary reactions on a heterogeneous catalyst.
 Strain is known to modify the surface adsorption of key intermediates during catalytic reactions, offering a tunable approach to rational catalyst design.

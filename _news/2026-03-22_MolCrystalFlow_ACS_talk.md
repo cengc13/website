@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-I presented our MolCrystalFLow work at ACS Spring 2026 meeting in the Session "Deep Generative Models in Computational Chemistry".
+I presented our MolCrystalFlow work at ACS Spring 2026 meeting in the Session "Deep Generative Models in Computational Chemistry".

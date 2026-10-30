@@ -62,7 +62,7 @@ This web application is available on github [here](https://github.com/cengc13/da
 
 * Datasets used:
     * The covid national-level and state-level datasets  are from The New York Times, based on reports from state and local health agencies. They contain a series of data files with cumulative counts of coronavirus cases in the United States, at the national and state level, over time. They are regularly updated every day.
- The national level data is about 7 KB. The state level data is 463 KB. The covid datasets are scaped from the github repo of New York Times. These are raw texts that can be retrieved in a straightforward way using the “request” python module. The raw data will be updated every day. So the incremental updates using the web scraping method will be done automatically.
+ The national level data is about 7 KB. The state level data is 463 KB. The covid datasets are scraped from the github repo of New York Times. These are raw texts that can be retrieved in a straightforward way using the “request” python module. The raw data will be updated every day. So the incremental updates using the web scraping method will be done automatically.
     * The static survey data regarding the propensity to wearing masks (109 KB), state-level population data (1 KB),
     and state area data (884 B) are used to understand how the role of wearing face coverings and population density
     in the course of the pandemic.
@@ -71,7 +71,7 @@ This web application is available on github [here](https://github.com/cengc13/da
     * We figure out that there is a strong correlation between infection rate and population density in US states.
     * There exists a high negative correlation between the propensity to wear masks and the case fatality rate in states.
     * In the next steps, we aim to build a simple regression model to predict the trend of outbreak in US.
-    We use the historical covid data and demongraphic featurs ad predictors, and we target on prediction of
+    We use the historical covid data and demographic features as predictors, and we target on prediction of
     near-future case and death count.
 
 **Project Architecture**
