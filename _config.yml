@@ -9,9 +9,7 @@ last_name: Zeng
 email: c.zeng@ufl.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Cheng Zeng's personal website
-footer_text: >
-  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>
-  with <a href="https://github.com/alshedivat/al-folio" target="_blank">al-folio</a> theme.
+footer_text:
 keywords: Cheng Zeng, generative models, flow matching, molecular design, materials science, machine learning interatomic potentials, AI for chemistry  # add your own keywords or leave empty
 
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
