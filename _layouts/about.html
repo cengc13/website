@@ -33,11 +33,6 @@ layout: default
               {{ page.profile.address }}
             </div>
             {%- endif %}
-            {%- if site.enable_clustrmaps_globe and site.clustrmaps_globe_id %}
-            <div class="visitor-globe" style="max-width: 200px; margin: 1rem auto 0;">
-              <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d={{ site.clustrmaps_globe_id }}"></script>
-            </div>
-            {%- endif %}
           </div>
           {%- endif %}
 
