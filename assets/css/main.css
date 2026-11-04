@@ -368,6 +368,11 @@ blockquote {
 }
 .social .contact-icons {
   font-size: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0 1.5rem;
 }
 .social .contact-icons a i::before {
   color: var(--global-text-color);
@@ -919,6 +924,15 @@ nav[data-toggle=toc] .nav-link.active:hover {
 }
 .post .post-content blockquote.block-danger h1, .post .post-content blockquote.block-danger h2, .post .post-content blockquote.block-danger h3, .post .post-content blockquote.block-danger h4, .post .post-content blockquote.block-danger h5, .post .post-content blockquote.block-danger h6 {
   color: var(--global-danger-block-title);
+}
+
+.medium-zoom-overlay {
+  z-index: 1040;
+}
+
+.medium-zoom-image--opened {
+  z-index: 1041;
+  background-color: var(--global-bg-color);
 }
 
 /*******************************************************************************

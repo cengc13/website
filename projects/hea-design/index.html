@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Inverse design of single-phase high-entropy alloys | Cheng  Zeng</title>
+    <title>Machine learning high-entropy alloys | Cheng  Zeng</title>
     <meta name="author" content="Cheng  Zeng">
-    <meta name="description" content="Disentangled representation of compositions/structures and properties in a semi-supervised variational autoencoder (VAE)">
+    <meta name="description" content="Predictive models and inverse design for corrosion-resistant high-entropy alloys">
     <meta name="keywords" content="Cheng Zeng, generative models, flow matching, molecular design, materials science, machine learning interatomic potentials, AI for chemistry">
 
 
@@ -36,7 +36,7 @@
     <!-- Styles -->
     
     <link rel="stylesheet" href="/website/assets/css/main.css">
-    <link rel="canonical" href="https://cengc13.github.io/website/projects/d_vae_hea/">
+    <link rel="canonical" href="https://cengc13.github.io/website/projects/hea-design/">
 
     <!-- Dark Mode -->
     
@@ -111,12 +111,78 @@
         <div class="post">
 
           <header class="post-header">
-            <h1 class="post-title">Inverse design of single-phase high-entropy alloys</h1>
-            <p class="post-description">Disentangled representation of compositions/structures and properties in a semi-supervised variational autoencoder (VAE)</p>
+            <h1 class="post-title">Machine learning high-entropy alloys</h1>
+            <p class="post-description">Predictive models and inverse design for corrosion-resistant high-entropy alloys</p>
           </header>
 
           <article>
-            <p>Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations, if any, are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.</p>
+            <p>Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.</p>
+
+<p>This project covers two related lines of work on high-entropy alloys (HEAs): a machine learning framework for discovering corrosion-resistant HEAs, and a semi-supervised variational autoencoder for inverse design of single-phase HEAs.</p>
+
+<ul>
+  <li><a href="#discovery-of-high-entropy-alloys-for-corrosion-protection">Discovery of high-entropy alloys for corrosion protection</a></li>
+  <li><a href="#inverse-design-of-single-phase-high-entropy-alloys">Inverse design of single-phase high-entropy alloys</a></li>
+</ul>
+
+<h3 id="discovery-of-high-entropy-alloys-for-corrosion-protection"><strong>Discovery of high-entropy alloys for corrosion protection</strong></h3>
+
+<p>I introduced a machine learning framework combining two pipelines to quantify three corrosion metrics using machine learning models.
+Corrosion metrics include single-phase formability, FCC111 surface energy and Pilling-Bedworth ratios.
+Single-phase formation indicates whether a homogeneous phase will be formed given the composition of a high-entropy alloy (HEA).
+A homogeneous phase suggests the absence of fast corrosion channels and inclination toward forming a more protective passive oxide layer against corrosion.
+The single-phase formability is predicted by a random forest classifier trained on experimental data whose inputs and outputs are simply chemical compositions and labels to indicate whether single phase or multiple phase structures are formed.
+Surface energy relates the tendency of dissolution of a surface atom to the current density during corrosion.
+Pilling-Bedworth ratios (PBR) are associated with metal/oxide stresses upon oxidation of a surface alloy. Ideally, we would like to see PBR values in the range of one and two, which can form a protective oxide layer while not causing significant stresses in oxide layers (that can result in cracks of oxides).
+The surface energy and Pilling-Bedworth ratios are computed by machine learning potentials trained on systematically generated first-principles data.
+The machine learning potentials used in this work belong to the group of <a href="https://iopscience.iop.org/article/10.1088/2632-2153/abc9fe" rel="external nofollow noopener" target="_blank">moment tensor potentials</a>, which uses moment tensor contraction to define atomic energies. Each moment consists of two components—one is radial basis functions (e.g. Chebyshev polynomials) and the other is tensor of a certain rank to describe angular local environments.
+The workflow of this framework is shown in the below figure.</p>
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-12 mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/hea-corrosion/workflow.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Workflow of ML HEA corrosion" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Workflow of the machine learning framework for discovery of corrosion-resistant high-entropy alloys.
+</div>
+
+<p>This methodology was applied to AlCrFeCoNi high-entropy alloys. Compositions of Al and Cr were varied whereas the remaining Fe, Co and Ni have identical compositions. The results are given below. The identified low Al and around 18% Cr compositions for enhanced corrosion resistance agrees well with experiments.</p>
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-12 mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+
+    <!-- Fallback to the original file -->
+   <img src="/website/assets/img/projects/hea-corrosion/results.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Data centric framework" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Single phase formability (a), Pilling-Bedworth ratios (b) and FCC111 surface energies (c) of AlCrFeCoNi as a function of Al and Cr compositions. In part (a), single phase (SP) and multiple phase training points are indicated by respective red squares and green circles. Decision boundary from <a href="https://www.sciencedirect.com/science/article/pii/S1359645419307050" rel="external nofollow noopener" target="_blank">Wu et al</a> is represented by a grey dashed line.
+</div>
+
+<p>This work is now published and more details can be found in the paper at Computational Materials Science <a href="https://www.sciencedirect.com/science/article/pii/S0927025624001460" rel="external nofollow noopener" target="_blank">here</a>.</p>
+
+<h3 id="inverse-design-of-single-phase-high-entropy-alloys"><strong>Inverse design of single-phase high-entropy alloys</strong></h3>
 
 <p>Conventional inverse materials design use unsupervised machine learning where the input and output are both chemical compositions, crystal structures or microstructure images without considering the composition/structure-property relationship explicitly. The unsupervised learning project high-dimensional features encoding compositions/structures into a low-dimensional latent space and reconstruct the features in the output. Sampling in the latent space generates a new composition/structure. This unsupervised scheme is theorized to learn the entangled composition/structure-property relationship in an implicit manner, which can only be modeled through a separate surrogate model. The surrogate model and latent space representation combined enables the sampling of materials with desired properties. However, this entangled and implicit scheme has three drawbacks. First, the entangled representation of composition/structure-property relationship is by nature lacking interpretability. Second, without inclusion of target property, the learned latent space can fail to form reliable composition/structure-property relationship. Lastly, this unsupervised approach is not suitable for inverse design of materials with multiple desired properties as all these info can be highly entangled in the latent space.</p>
 
@@ -135,7 +201,7 @@ The dataset takes input and output as the chemical formulas and binary phase for
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/ss_vae.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Disentangled VAE" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/ss_vae.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Disentangled VAE" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
@@ -159,7 +225,7 @@ In contrast, the latent space is implicitly associated with other properties. Fo
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/latent_summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Latent representation" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/latent_summary.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Latent representation" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
@@ -182,7 +248,7 @@ The start alloy is Fe14Ni16Cr22Co14Al22Cu8 and the inverted alloy is Fe21Ni22Cr2
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/iterative_search_workflow.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Inversion of a material" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/iterative_search_workflow.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Inversion of a material" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
@@ -202,7 +268,7 @@ The start alloy is Fe14Ni16Cr22Co14Al22Cu8 and the inverted alloy is Fe21Ni22Cr2
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/inversion_sequence.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Step-by-step inversion" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/inversion_sequence.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Step-by-step inversion" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
@@ -225,7 +291,7 @@ One can see that the trained VAE pushes the initial multi-phase alloy towards an
     
 
     <!-- Fallback to the original file -->
-   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/shapley_interpretability.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="shapley analysis" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+   <img src="/website/assets/img/projects/hea-xai-inverse-materials-design/shapley_interpretability.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="shapley analysis" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
   </picture>
 
@@ -246,7 +312,7 @@ One can see that the trained VAE pushes the initial multi-phase alloy towards an
 
     <!-- Footer -->    <footer class="sticky-bottom mt-5">
       <div class="container">
-        © Copyright 2026 Cheng  Zeng. Last updated: October 30, 2026.
+        © Copyright 2026 Cheng  Zeng. Last updated: November 04, 2026.
       </div>
     </footer>
 
