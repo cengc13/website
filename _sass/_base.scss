@@ -306,6 +306,11 @@ blockquote {
 
   .contact-icons {
     font-size: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0 1.5rem;
 
     a {
       i::before {
@@ -1003,4 +1008,15 @@ nav[data-toggle="toc"] {
       color: var(--global-danger-block-title);
     }
   }
+}
+
+// Medium zoom: sit above the fixed navbar, and give transparent PNGs an
+// opaque backdrop so page text never shows through the zoomed figure.
+.medium-zoom-overlay {
+  z-index: 1040;
+}
+
+.medium-zoom-image--opened {
+  z-index: 1041;
+  background-color: var(--global-bg-color);
 }

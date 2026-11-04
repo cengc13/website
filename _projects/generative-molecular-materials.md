@@ -17,7 +17,7 @@ PropMolFlow uses flow matching parameterized by an SE(3)-equivariant graph neura
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-10 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/publication_preview/propmolflow.png" title="PropMolFlow" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html zoomable="true" path="assets/img/publication_preview/propmolflow.png" title="PropMolFlow" class="img-fluid rounded z-depth-1"%}
     </div>
 </div>
 <div class="caption">
@@ -32,7 +32,7 @@ MolGuidance extends PropMolFlow by integrating three advanced property-guidance 
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-10 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/publication_preview/molguidance.png" title="MolGuidance" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html zoomable="true" path="assets/img/publication_preview/molguidance.png" title="MolGuidance" class="img-fluid rounded z-depth-1"%}
     </div>
 </div>
 <div class="caption">
@@ -47,7 +47,7 @@ How molecules pack in a crystal determines many properties of molecular material
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-10 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/publication_preview/molcrystalflow.png" title="MolCrystalFlow" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html zoomable="true" path="assets/img/publication_preview/molcrystalflow.png" title="MolCrystalFlow" class="img-fluid rounded z-depth-1"%}
     </div>
 </div>
 <div class="caption">

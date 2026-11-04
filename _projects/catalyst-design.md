@@ -23,7 +23,7 @@ Instead of stress/strain which is hard to define in atomistic systems, I used at
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/simple-eigenforce-model.png" title="Eigenforce model illustration" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html zoomable="true" path="assets/img/projects/physical-models/simple-eigenforce-model.png" title="Eigenforce model illustration" class="img-fluid rounded z-depth-1"%}
     </div>
     <div class="col-sm-5 mt-3 mt-md-0" style="top:0px">
         {% include figure.html path="assets/img/projects/physical-models/results-eigenforce-model.png" title="Eigenforce model results" class="img-fluid rounded z-depth-1" zoomable="true"%}
@@ -38,10 +38,10 @@ I also discuss why simple constant-force model gives good predictions for strain
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/relaxation-coupling.png" title="Coupling of strain and adsorption" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html zoomable="true" path="assets/img/projects/physical-models/relaxation-coupling.png" title="Coupling of strain and adsorption" class="img-fluid rounded z-depth-1"%}
     </div>
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/physical-models/decoupling-spring-constants.png" title="Decoupling spring constants" class="img-fluid rounded z-depth-1"%}
+        {% include figure.html zoomable="true" path="assets/img/projects/physical-models/decoupling-spring-constants.png" title="Decoupling spring constants" class="img-fluid rounded z-depth-1"%}
     </div>
 </div>
 <div class="caption">
@@ -97,10 +97,10 @@ To complete the understanding of catalytic performance of nanoparticle catalysts
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/exascale-computing/atom-level-activity.png" title="Atom level limiting potential" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html zoomable="true" path="assets/img/projects/exascale-computing/atom-level-activity.png" title="Atom level limiting potential" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/exascale-computing/atom-level-stability.png" title="Atom level dissolution potential" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html zoomable="true" path="assets/img/projects/exascale-computing/atom-level-stability.png" title="Atom level dissolution potential" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
