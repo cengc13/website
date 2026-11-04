@@ -7,6 +7,8 @@ importance: 1
 category: Current research
 ---
 
+We acknowledge funding from NSF Grant OAC-2311632 and from the AI and Complex Computational Research Award of the University of Florida. We also acknowledge UFIT Research Computing for computational resources from HiPerGator and consultation.
+
 Designing new molecules and molecular materials with target properties requires searching a vast chemical and structural space. At the University of Florida, I develop **flow matching** generative models that sample 3D molecules and molecular crystals directly, and that can be steered toward desired properties. The work so far has three parts: property-guided molecule generation (PropMolFlow), guidance strategies for conditional generation (MolGuidance), and crystal packing prediction for molecular crystals (MolCrystalFlow).
 
 ### **PropMolFlow: property-guided molecule generation**
