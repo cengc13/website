@@ -3,7 +3,7 @@ layout: page
 title: Enabling exascale computing of chemical systems
 description: Machine learning potentials for large-size nanoparticle catalysts
 img: assets/img/projects/exascale-computing/exascale-thumbnail.png
-importance: 1
+importance: 2
 category: Past research
 ---
 
