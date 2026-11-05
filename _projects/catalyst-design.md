@@ -3,8 +3,9 @@ layout: page
 title: Catalyst design with eigenforce models and ML potentials
 description: Force-displacement models for strain and adsorption, and machine learning potentials for large nanoparticle catalysts
 img: assets/img/projects/catalyst-design/catalyst-design-thumbnail.png
-importance: 2
-category: Past research
+importance: 3
+category: Research
+period: Ph.D. · Brown University
 ---
 
 This work was carried out during my Ph.D. at Brown University. It was funded by DOE Basic Energy Science with the Award No. <a href='https://pamspublic.science.energy.gov/WebPAMSExternal/Interface/Common/ViewPublicAbstract.aspx?rv=ea42433a-4522-453d-8d7e-5379ff745b47&rtc=24&PRoleId=10'>SC0019441</a>. Cheng Zeng is also indebted to the financial support from Brown's presidential fellowship and open graduate education program. Computational simulations were undertaken using resources at Brown's Center for Computation and Visualization (CCV).

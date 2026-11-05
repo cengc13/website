@@ -6,7 +6,10 @@
     {%- else -%}
     <a href="{{ project.url | relative_url }}">
       {%- endif %}
-      <div class="card hoverable">
+      <div class="card hoverable{% if project.status == 'current' %} card-current{% endif %}">
+        {%- if project.status == 'current' %}
+        <span class="project-badge">Current</span>
+        {%- endif %}
         {%- if project.img %}
         {%- include figure.html
           path=project.img
@@ -14,6 +17,9 @@
         {%- endif %}
         <div class="card-body">
           <h3 class="card-title">{{ project.title }}</h3>
+          {%- if project.period %}
+          <p class="card-period">{{ project.period }}</p>
+          {%- endif %}
           <p class="card-text">{{ project.description }}</p>
           <div class="row ml-1 mr-1 p-0">
             {%- if project.github -%}

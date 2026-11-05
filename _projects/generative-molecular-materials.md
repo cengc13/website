@@ -4,7 +4,9 @@ title: Generative design of molecular materials
 description: Flow matching models for property-guided molecule generation and molecular crystal structure prediction
 img: assets/img/projects/generative-molecular-materials/propmolflow_toc.png
 importance: 1
-category: Current research
+category: Research
+status: current
+period: Postdoc · University of Florida
 ---
 
 We acknowledge funding from NSF Grant OAC-2311632 and from the AI and Complex Computational Research Award of the University of Florida. We also acknowledge UFIT Research Computing for computational resources from HiPerGator and consultation.

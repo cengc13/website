@@ -3,8 +3,9 @@ layout: page
 title: Machine learning high-entropy alloys
 description: Predictive models and inverse design for corrosion-resistant high-entropy alloys
 img: assets/img/projects/ml-hea-design/ml-hea-thumbnail.png
-importance: 1
-category: Past research
+importance: 2
+category: Research
+period: Postdoc · Northeastern University
 ---
 
 Cheng Zeng is grateful to Alfond Post Doc Research Fellowship for supporting the research work at the Roux institute of Northeastern University. Computational simulations are carried out using the Discovery cluster, supported by the Research Computing team at Northeastern University.
