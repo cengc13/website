@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Generative design of molecular materials
-description: Flow matching models for property-guided molecule generation and molecular crystal structure prediction
+description: Property-guided molecule generation and molecular crystal structure prediction
 img: assets/img/projects/generative-molecular-materials/propmolflow_toc.png
 importance: 1
 category: Research
