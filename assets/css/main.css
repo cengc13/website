@@ -526,8 +526,32 @@ footer.sticky-bottom {
 .projects a:hover .card-title {
   color: var(--global-theme-color);
 }
+.projects .card {
+  position: relative;
+}
 .projects .card img {
   width: 100%;
+}
+.projects .card-current {
+  border-top: 3px solid var(--global-theme-color);
+}
+.projects .project-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background-color: var(--global-theme-color);
+  border-radius: 999px;
+}
+.projects .card-period {
+  margin: -0.25rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--global-text-color-light);
 }
 .projects .card-item {
   width: auto;
