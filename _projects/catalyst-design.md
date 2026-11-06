@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Phenomenological models for strain and coverage effects, and ML potentials for nanoparticle catalysts
-description: Eigenforce models for strain and coverage effects, and machine learning potentials for large nanoparticle catalysts
+title: Catalyst design with eigenforce models and ML potentials
+description: Phenomenological models for strain and coverage effects, and ML potentials for nanoparticle catalysts
 img: assets/img/projects/catalyst-design/catalyst-design-thumbnail.png
 importance: 3
 category: Research
@@ -10,12 +10,12 @@ period: Ph.D. · Brown University
 
 This work was carried out during my Ph.D. at Brown University. It was funded by DOE Basic Energy Science with the Award No. <a href='https://pamspublic.science.energy.gov/WebPAMSExternal/Interface/Common/ViewPublicAbstract.aspx?rv=ea42433a-4522-453d-8d7e-5379ff745b47&rtc=24&PRoleId=10'>SC0019441</a>. Cheng Zeng also acknowledges financial support from Brown's Presidential Fellowship and Open Graduate Education Program. Computational simulations were undertaken using resources at Brown's Center for Computation and Visualization (CCV).
 
-The project has two parts: phenomenological eigenforce models, a physics-based force--displacement framework for strain effects, surface relaxation and lateral interactions on catalyst surfaces; and machine learning potentials trained with a nearsighted force-training approach, which scale atomistic simulations to nanoparticle catalysts of thousands of atoms. The two come together in a quantitative description of activity and stability across full-scale Co--Pt nanoparticles.
+The project has two parts: eigenforce models, a physics-based force--displacement framework for strain effects, surface relaxation and lateral interactions on catalyst surfaces; and machine learning potentials trained with a nearsighted force-training approach, which scale atomistic simulations to nanoparticle catalysts of thousands of atoms. The two come together in a quantitative description of activity and stability across full-scale Co--Pt nanoparticles.
 
-- [Phenomenological models for strain and coverage effects](#phenomenological-models-for-strain-and-coverage-effects)
+- [Eigenforce models to accelerate catalyst design](#eigenforce-models-to-accelerate-catalyst-design)
 - [Machine learning potentials for large nanoparticle catalysts](#machine-learning-potentials-for-large-nanoparticle-catalysts)
 
-### **Phenomenological models for strain and coverage effects**
+### **Eigenforce models to accelerate catalyst design**
 
 Fundamentally, the bonding between the surface and important reaction intermediates dictates the kinetics of elementary reactions on a heterogeneous catalyst.
 Strain is known to modify the surface adsorption of key intermediates during catalytic reactions, offering a tunable approach to rational catalyst design.
