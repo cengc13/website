@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Catalyst design with eigenforce models and ML potentials
-description: Phenomenological models for strain and coverage, and ML potentials for nanoparticles
+description: Phenomenological models for strain and coverage effects, and ML potentials for nanoparticles
 img: assets/img/projects/catalyst-design/catalyst-design-thumbnail.png
 importance: 3
 category: Research
